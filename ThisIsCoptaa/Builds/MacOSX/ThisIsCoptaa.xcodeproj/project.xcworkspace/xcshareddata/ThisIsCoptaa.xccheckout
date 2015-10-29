@@ -12,24 +12,28 @@
 	<dict>
 		<key>58EDE75DE1A640A0D36748430306F16F576AA9C7</key>
 		<string>https://github.com/RitheshKumar/Fall_2015.git</string>
+		<key>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</key>
+		<string>https://github.com/RitheshKumar/VoCopter-Project.git</string>
 		<key>DEBAC9C6799FD4E8074B3BAF720718E3C3499FA0</key>
 		<string>https://github.com/julianstorer/JUCE.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>VoCopter Project/ThisIsCoptaa/Builds/MacOSX/ThisIsCoptaa.xcodeproj</string>
+	<string>ThisIsCoptaa/Builds/MacOSX/ThisIsCoptaa.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>58EDE75DE1A640A0D36748430306F16F576AA9C7</key>
 		<string>../../../../../..</string>
+		<key>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</key>
+		<string>../../../../..</string>
 		<key>DEBAC9C6799FD4E8074B3BAF720718E3C3499FA0</key>
-		<string>../../../../../../../Juce/JUCE</string>
+		<string>../../../../../../Juce/JUCE</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/RitheshKumar/Fall_2015.git</string>
+	<string>https://github.com/RitheshKumar/VoCopter-Project.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>58EDE75DE1A640A0D36748430306F16F576AA9C7</string>
+	<string>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -38,7 +42,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>58EDE75DE1A640A0D36748430306F16F576AA9C7</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Fall_2015</string>
+			<string></string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
@@ -47,6 +51,14 @@
 			<string>DEBAC9C6799FD4E8074B3BAF720718E3C3499FA0</string>
 			<key>IDESourceControlWCCName</key>
 			<string>JUCE</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>VoCopter%20Project</string>
 		</dict>
 	</array>
 </dict>

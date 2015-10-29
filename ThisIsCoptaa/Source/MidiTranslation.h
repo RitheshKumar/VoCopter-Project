@@ -21,6 +21,7 @@ protected:
 
 private:
     File* filePtr;
+    //ScopedPointer<FileInputStream> fileInputStream;
     FileInputStream* fileInputStream;
     MidiFile fileMIDI;
     const MidiMessageSequence *midiSequence;

@@ -22,6 +22,7 @@ void MidiTranslation::readMidiData() {
 
     if (fileExists) {
 
+        FileInputStream* fileInputStream;
         fileInputStream = filePtr->createInputStream(); //delete the stream! 
         /*bool midiReadSuccessfully =*/ fileMIDI.readFrom(*fileInputStream); // note the *
         //Logger::writeToLog("Successfully read midi file:"+std::to_string(midiReadSuccessfully));
@@ -40,7 +41,7 @@ void MidiTranslation::readMidiData() {
             noteNumber[i] =  midiVal.getNoteNumber();
             //std::cout<<noteNumber[i]<<" "<<midiVal.getMidiNoteName(noteNumber[i],true,true,4)<<std::endl;
         }
-        
+        delete fileInputStream; 
  
         //Logger::writeToLog("The Note no. is: " + std::to_string(noteNumber));
         //Logger::writeToLog("Therefore the note is: " + midiVal.getMidiNoteName(noteNumber,true,true,4)); //octave no. for middle C is 4

@@ -10,10 +10,15 @@
 
 
 ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size()),pathWidth(280.00),
-                                             xOffset(/*offset*/0)
+                                             xOffset(/*offset*/)
 {
 
+    //paint Parameters
+    widthPartition = floorf(1000/(float)obstacleLength)/1000;
+    std::cout<<"Le TotalLength est: "<<floorf(obstacleLength*widthPartition*600)<<"\n";
+
     obstacleHeight.reserve(obstacleLength);
+    instantObstacleHeight.reserve(floorf(obstacleLength*widthPartition*600));
 
     //std::ostream_iterator<float> outputStream (std::cout,"\n");
     //std::copy (noteNumber.begin(), noteNumber.end(), outputStream);
@@ -27,11 +32,17 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
     for (int i=0; i<obstacleLength; i++) {
         obstacleHeight[i]=( noteNumber.at(i) )*0.8;///obstacleLength;//This is to generate the obstacle height.A ramp is called.
                                                    //This is where we must getheight information.
+        std::fill(instantObstacleHeight.begin()+i*widthPartition,instantObstacleHeight.begin()+i*widthPartition+widthPartition,obstacleHeight[i]);
         //std::cout<<obstacleHeight[i]<<std::endl;
     }
 
-    //paint Parameters
-    widthPartition = floorf(1000/(float)obstacleLength)/1000;
+    std::cout<<"Kamachi:\n";
+    //std::ostream_iterator<float> out_it (std::cout, ",");
+    //std::copy(instantObstacleHeight.begin(), instantObstacleHeight.end(), out_it);
+    std::fill(instantObstacleHeight.begin(), instantObstacleHeight.end(), 20.0);
+    for (int i = 0; i<instantObstacleHeight.size(); i++) {
+        std::cout<<instantObstacleHeight.at(i)<<std::endl;
+    }
 }
     
 ObstacleCreate::~ObstacleCreate () {

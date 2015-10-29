@@ -10,7 +10,7 @@
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent() : Obstacle(/*600*0.15*/), xpos(winWidth*0.15), ypos(winHeight*0.2)
+MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*0.15), ypos(winHeight*0.2)
 {
 
     //Obstacle(xpos);

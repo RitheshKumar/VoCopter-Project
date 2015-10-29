@@ -28,7 +28,7 @@ public:
     int obstacleLength;
 
 private:
-    std::vector<float> obstacleHeight;
+    std::vector<float> obstacleHeight,instantObstacleHeight;
     float widthPartition,pathWidth,obstacleWidth;
     int width,height,xOffset,count=0;
 
