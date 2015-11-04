@@ -43,7 +43,7 @@ void SimpleCorrelation::audioDeviceIOCallback (const float** inputChannelData, i
     }
 }
 
-SimpleCorrelation::SimpleCorrelation() : frequency(0.0), backgroundThread ("Audio Recorder Thread"), activeWriter (nullptr)
+SimpleCorrelation::SimpleCorrelation() : frequency(0.0), backgroundThread ("Audio Listener Thread"), activeWriter (nullptr)
 {
     isTracking = false;
     delayBuffer.resize(88200);

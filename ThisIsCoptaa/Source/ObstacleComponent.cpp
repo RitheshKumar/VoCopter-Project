@@ -17,8 +17,8 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
     widthPartition = floorf(1000/(float)obstacleLength)/1000;
     std::cout<<"Le TotalLength est: "<<floorf(obstacleLength*widthPartition*600)<<"\n";
 
-    obstacleHeight.reserve(obstacleLength);
-    instantObstacleHeight.reserve(floorf(obstacleLength*widthPartition*600));
+    obstacleHeight.resize(obstacleLength);
+    instantObstacleHeight.resize(floorf(obstacleLength*widthPartition*600));
 
     //std::ostream_iterator<float> outputStream (std::cout,"\n");
     //std::copy (noteNumber.begin(), noteNumber.end(), outputStream);
@@ -37,12 +37,12 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
     }
 
     std::cout<<"Kamachi:\n";
-    //std::ostream_iterator<float> out_it (std::cout, ",");
-    //std::copy(instantObstacleHeight.begin(), instantObstacleHeight.end(), out_it);
-    std::fill(instantObstacleHeight.begin(), instantObstacleHeight.end(), 20.0);
-    for (int i = 0; i<instantObstacleHeight.size(); i++) {
-        std::cout<<instantObstacleHeight.at(i)<<std::endl;
-    }
+    std::ostream_iterator<float> out_it (std::cout, ",");
+    std::copy(instantObstacleHeight.begin(), instantObstacleHeight.end(), out_it);
+    //std::copy(obstacleHeight.begin(), obstacleHeight.end(), out_it);
+    /*for (int i = 0; i<obstacleHeight.size(); i++) {
+        std::cout<<obstacleHeight.at(i)<<std::endl;
+    }*/
 }
     
 ObstacleCreate::~ObstacleCreate () {
