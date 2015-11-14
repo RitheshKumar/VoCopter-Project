@@ -1,0 +1,2 @@
+/Users/Rithesh/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/Test/build/CMakeFiles/gtest_main.dir
+/Users/Rithesh/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/Test/build/CMakeFiles/gtest.dir

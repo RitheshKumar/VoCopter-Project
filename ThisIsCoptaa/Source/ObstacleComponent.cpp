@@ -36,9 +36,8 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
         //std::cout<<obstacleHeight[i]<<std::endl;
     }
 
-    std::cout<<"Kamachi:\n";
-    std::ostream_iterator<float> out_it (std::cout, ",");
-    std::copy(instantObstacleHeight.begin(), instantObstacleHeight.end(), out_it);
+    //std::ostream_iterator<float> out_it (std::cout, ",");
+    //std::copy(instantObstacleHeight.begin(), instantObstacleHeight.end(), out_it);
     //std::copy(obstacleHeight.begin(), obstacleHeight.end(), out_it);
     /*for (int i = 0; i<obstacleHeight.size(); i++) {
         std::cout<<obstacleHeight.at(i)<<std::endl;
@@ -109,6 +108,5 @@ void ObstacleComponent::paint (Graphics &g) {
 
 void ObstacleComponent::timerCallback () {
     ObstacleCourse.setBounds(xpos-=5, 0, getWidth(), getHeight());
-    //std::cout<<"RamaNarayanan: "<<getHeight()/*ObstacleCourse.getObstacleHeight()*/<<std::endl;
 }
 

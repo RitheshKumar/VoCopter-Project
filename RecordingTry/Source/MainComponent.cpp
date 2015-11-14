@@ -39,39 +39,42 @@ public:
         // specify the number of input and output channels that we want to open
         //setAudioChannels (2, 2);
 
-        addAndMakeVisible (recordButton);
+        /*addAndMakeVisible (recordButton);
         recordButton.setButtonText ("Record");
         recordButton.addListener (this);
         recordButton.setColour (TextButton::buttonColourId, Colour (0xffff5c5c));
         recordButton.setColour (TextButton::textColourOnId, Colours::black);
         
         
-        addAndMakeVisible(pitchButton);
-        pitchButton.setButtonText("Track Pitch");
-        pitchButton.addListener(this);
-        pitchButton.setColour(TextButton::buttonColourId, Colours::yellow);
-        pitchButton.setColour(TextButton::textColourOnId, Colours::black);
         
         addAndMakeVisible(listenButton);
         listenButton.setButtonText("Listen");
         listenButton.addListener(this);
         listenButton.setColour(TextButton::buttonColourId, Colours::yellow);
-        listenButton.setColour(TextButton::textColourOnId, Colours::black);
+        listenButton.setColour(TextButton::textColourOnId, Colours::black);*/
+
+        addAndMakeVisible(pitchButton);
+        pitchButton.setButtonText("Track Pitch");
+        pitchButton.addListener(this);
+        pitchButton.setColour(TextButton::buttonColourId, Colours::yellow);
+        pitchButton.setColour(TextButton::textColourOnId, Colours::black);
 
         addAndMakeVisible(pitchLabel);
-        pitchLabel.setText(std::to_string(listen.frequency), dontSendNotification);
+        //pitchLabel.setText(std::to_string(listen.frequency), dontSendNotification);
         pitchLabel.setColour(Label::textColourId, Colours::yellow);
         
+        //deviceManager is used to manage the soundcard
         deviceManager.initialise (1, 2, 0, true, String::empty, 0);
+        //deviceManager.addAudioCallback(&listen);
+        deviceManager.addAudioCallback(&pitchTrack);
         //deviceManager.addAudioCallback (&recorder);
-        deviceManager.addAudioCallback(&listen);
         
     }
 
     ~MainContentComponent()
     {
         //deviceManager.removeAudioCallback (&recorder);
-        deviceManager.removeAudioCallback (&listen);
+        deviceManager.removeAudioCallback (&pitchTrack);
     }
 
     //=======================================================================
@@ -122,8 +125,8 @@ public:
         // This is called when the MainContentComponent is resized.
         // If you add any child components, this is where you should
         // update their positions.
-        recordButton.setBounds(round(getWidth()/2)-80,round(getHeight()/2)-190,80,20);
-        listenButton.setBounds(round(getWidth()/2)+20,round(getHeight()/2)-190,80,20);
+        //recordButton.setBounds(round(getWidth()/2)-80,round(getHeight()/2)-190,80,20);
+        //listenButton.setBounds(round(getWidth()/2)+20,round(getHeight()/2)-190,80,20);
         pitchLabel.setBounds(round(getWidth()/2)-30,round(getHeight()/2)-150,80,20);
         pitchButton.setBounds(round(getWidth()/2)-25,round(getHeight()/2)-120,80,20);
     }
@@ -136,18 +139,16 @@ private:
     //==============================================================================
 
     // Your private member variables go here...
-    TextButton recordButton,listenButton,pitchButton;
+    TextButton /*recordButton,listenButton,*/pitchButton;
     //AudioRecorder recorder;
-    AudioListener listen;
+    //AudioListener listen;
     SimpleCorrelation pitchTrack;
     Label pitchLabel;
     int isOn=1;
     AudioDeviceManager deviceManager;
-    ScopedPointer<AudioDeviceManager> sharedAudioDeviceManager;
     
     
-    
-    void startRecording()
+    /*void startRecording()
     {
         const File file (File::getSpecialLocation (File::userDocumentsDirectory)
                          .getNonexistentChildFile ("MyRecording", ".wav"));
@@ -176,7 +177,7 @@ private:
         listen.stopListening();
         listenButton.setButtonText("Listen");
         stopTimer();
-    }
+    }*/
 
     void startTracking()
     {
@@ -194,12 +195,12 @@ private:
     
     void buttonClicked (Button* button) override
     {
-        if (button == &recordButton)
+        /*if (button == &recordButton)
         {
-            /*if (recorder.isRecording())
+            if (recorder.isRecording())
                 stopRecording();
             else
-                startRecording();*/
+                startRecording();
         }
         if (button == &listenButton)
         {
@@ -212,7 +213,7 @@ private:
             {   stopListening();
                 isOn=1;
             }
-        }
+        }*/
         if (button == &pitchButton)
         {
             

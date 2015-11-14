@@ -41,17 +41,11 @@ public:
     
     
 private:
-    TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
-    ScopedPointer<AudioFormatWriter::ThreadedWriter> threadedWriter; // the FIFO used to buffer the incoming data
     double sampleRate;
     int64 nextSampleNum;
     std::vector<float> delayBuffer,aucorr,x1,x2;
     int startIndex,endIndex,minIndex;
     bool isTracking;
-    
-    CriticalSection writerLock;
-    AudioFormatWriter::ThreadedWriter* volatile activeWriter;
-    
 
 };
 

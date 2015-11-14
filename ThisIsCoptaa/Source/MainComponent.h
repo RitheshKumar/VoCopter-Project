@@ -31,7 +31,9 @@ public:
     
     void paint (Graphics&);
     void resized();
-
+    
+    //these are things that i added
+    //an audio app component has all these and extra audio related fns
     bool keyPressed(const KeyPress& key) override;
     void timerCallback() override;
    
