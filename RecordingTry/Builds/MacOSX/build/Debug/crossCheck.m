@@ -22,3 +22,10 @@ figure
 plot(D{1})
 x2 = D{1};
 title('x2');
+
+fileID = fopen('inputChannel.txt');
+D = textscan(fileID,'%d','Delimiter','\n','CollectOutput', true);
+figure
+plot(D{1})
+inputData = D{1};
+title('inputChannel');

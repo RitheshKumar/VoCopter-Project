@@ -43,7 +43,7 @@ public:
 private:
     double sampleRate;
     int64 nextSampleNum;
-    std::vector<float> delayBuffer,aucorr,x1,x2;
+    std::vector<float> delayBuffer,aucorr,x1,x2,myTestVec;
     int startIndex,endIndex,minIndex;
     bool isTracking;
 
