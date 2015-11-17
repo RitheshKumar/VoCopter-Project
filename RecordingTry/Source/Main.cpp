@@ -9,6 +9,7 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "TestSimpleCorrelation.h"
 
 Component* createMainContentComponent();
 
@@ -29,6 +30,7 @@ public:
         // This method is where you should put your application's initialisation code..
 
         mainWindow = new MainWindow (getApplicationName());
+        testingSimpleCorrelation.testFunction();
     }
 
     void shutdown() override
@@ -97,6 +99,7 @@ public:
 
 private:
     ScopedPointer<MainWindow> mainWindow;
+    TestSimpleCorrelation testingSimpleCorrelation;
 };
 
 //==============================================================================

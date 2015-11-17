@@ -10,10 +10,11 @@
 #define MAINCOMPONENT_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "AudioRecorder.h"
-#include "AudioListener.h"
-#include "SimpleCorrelation.h"
-#include "juce_Timer.h"
+//#include "AudioRecorder.h"
+//#include "AudioListener.h"
+//#include "SimpleCorrelation.h"
+#include "AudioProcess.h"
+//#include "juce_Timer.h"
 
 
 //==============================================================================
@@ -26,8 +27,8 @@
 
 
 class MainContentComponent   : public AudioAppComponent,
-                               private Button::Listener,
-                               private Timer
+                               private Button::Listener
+                               //private Timer
 
 {
 public:
@@ -37,7 +38,7 @@ public:
         setSize (800, 600);
 
         // specify the number of input and output channels that we want to open
-        //setAudioChannels (2, 2);
+        setAudioChannels (2, 2);
 
         /*addAndMakeVisible (recordButton);
         recordButton.setButtonText ("Record");
@@ -59,22 +60,23 @@ public:
         pitchButton.setColour(TextButton::buttonColourId, Colours::yellow);
         pitchButton.setColour(TextButton::textColourOnId, Colours::black);
 
-        addAndMakeVisible(pitchLabel);
-        //pitchLabel.setText(std::to_string(listen.frequency), dontSendNotification);
-        pitchLabel.setColour(Label::textColourId, Colours::yellow);
+        //addAndMakeVisible(pitchLabel);
+        ////pitchLabel.setText(std::to_string(listen.frequency), dontSendNotification);
+        //pitchLabel.setColour(Label::textColourId, Colours::yellow);
         
-        //deviceManager is used to manage the soundcard
+        ////deviceManager is used to manage the soundcard
         deviceManager.initialise (1, 2, 0, true, String::empty, 0);
-        //deviceManager.addAudioCallback(&listen);
-        deviceManager.addAudioCallback(&pitchTrack);
-        //deviceManager.addAudioCallback (&recorder);
+        ////deviceManager.addAudioCallback(&listen);
+        deviceManager.addAudioCallback(&processingAudio);
+        ////deviceManager.addAudioCallback (&recorder);
         
     }
 
     ~MainContentComponent()
     {
+        shutdownAudio();
         //deviceManager.removeAudioCallback (&recorder);
-        deviceManager.removeAudioCallback (&pitchTrack);
+        deviceManager.removeAudioCallback (&processingAudio);
     }
 
     //=======================================================================
@@ -97,7 +99,7 @@ public:
 
         // Right now we are not producing any data, in which case we need to clear the buffer
         // (to prevent the output of random noise)
-        //bufferToFill.clearActiveBufferRegion();
+        bufferToFill.clearActiveBufferRegion();
         
     }
 
@@ -114,7 +116,7 @@ public:
     {
         // (Our component is opaque, so we must completely fill the background with a solid colour)
         g.fillAll (Colours::black);
-        g.setColour(Colours::yellow);
+        //g.setColour(Colours::yellow);
         //g.fillRect(60,60+(int)listen.frequency,90,75); //The first is the axis,width,height,cornersize
 
         // You can add your drawing code here!
@@ -127,25 +129,26 @@ public:
         // update their positions.
         //recordButton.setBounds(round(getWidth()/2)-80,round(getHeight()/2)-190,80,20);
         //listenButton.setBounds(round(getWidth()/2)+20,round(getHeight()/2)-190,80,20);
-        pitchLabel.setBounds(round(getWidth()/2)-30,round(getHeight()/2)-150,80,20);
-        pitchButton.setBounds(round(getWidth()/2)-25,round(getHeight()/2)-120,80,20);
+        //pitchLabel.setBounds(round(getWidth()/2)-30,round(getHeight()/2)-150,80,20);
+        //pitchButton.setBounds(round(getWidth()/2)-25,round(getHeight()/2)-120,80,20);
     }
 
-   void timerCallback() override {
-        pitchLabel.setText(std::to_string(pitchTrack.frequency),dontSendNotification);
-    }
+   //void timerCallback() override {
+        //pitchLabel.setText(std::to_string(pitchTrack.frequency),dontSendNotification);
+    //}
 
 private:
     //==============================================================================
 
     // Your private member variables go here...
     TextButton /*recordButton,listenButton,*/pitchButton;
-    //AudioRecorder recorder;
-    //AudioListener listen;
-    SimpleCorrelation pitchTrack;
-    Label pitchLabel;
+    ////AudioRecorder recorder;
+    ////AudioListener listen;
+    //SimpleCorrelation pitchTrack;
+    AudioProcess processingAudio;
+    //Label pitchLabel;
     int isOn=1;
-    AudioDeviceManager deviceManager;
+    //AudioDeviceManager deviceManager;
     
     
     /*void startRecording()
@@ -179,7 +182,7 @@ private:
         stopTimer();
     }*/
 
-    void startTracking()
+    /*void startTracking()
     {
         pitchTrack.startTracking();
         pitchButton.setButtonText("StopTracking");
@@ -191,7 +194,7 @@ private:
         pitchTrack.stopTracking();
         pitchButton.setButtonText("Track Pitch");
         stopTimer();
-    }
+    }*/
     
     void buttonClicked (Button* button) override
     {
@@ -219,12 +222,18 @@ private:
             
             if (isOn==1)
             {
-                startTracking();
+                //startTracking();
+                processingAudio.startTracking();
+                pitchButton.setButtonText("StopTracking");
+                //startTimer(20);
                 isOn=0;
             }
             else
             {
-                stopTracking();
+                //stopTracking();
+                processingAudio.stopTracking();
+                pitchButton.setButtonText("Track Pitch");
+                //stopTimer();
                 isOn=1;
             }
         }

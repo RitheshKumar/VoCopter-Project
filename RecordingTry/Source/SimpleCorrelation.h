@@ -14,7 +14,7 @@
 #include <iostream>
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class SimpleCorrelation  : public AudioIODeviceCallback
+class SimpleCorrelation  
 {
 public:
     SimpleCorrelation ();
@@ -25,27 +25,19 @@ public:
     
     void stopTracking();
     
-    
+    void correlate ( float** inputData, int numSamples ); 
     //==============================================================================
-    void audioDeviceAboutToStart (AudioIODevice* device);
-    
-    void audioDeviceStopped() override;
-    
-    void audioDeviceIOCallback (const float** inputChannelData, int /*numInputChannels*/,
-                                float** outputChannelData, int numOutputChannels,
-                                int numSamples) override ;
+    float getFrequency() { return frequency;  }
 
-    void writeTheFile(std::vector<float>* vect,const char *fileName,int numSamples);
-    //void writeFile(std::vector<float>* vect,const char *fileName);
-    float frequency;
-    
+    void writeTheFile( std::vector<float>* vect, const char *fileName, int numSamples );
     
 private:
     double sampleRate;
     int64 nextSampleNum;
     std::vector<float> delayBuffer,aucorr,x1,x2,myTestVec;
     int startIndex,endIndex,minIndex;
-    bool isTracking;
+    //bool ifTracking;
+    float frequency;
 
 };
 
