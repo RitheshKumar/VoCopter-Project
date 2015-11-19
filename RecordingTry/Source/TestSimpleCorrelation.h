@@ -31,7 +31,7 @@ private:
     std::vector<float> audioFile, frequency;
     std::ifstream inputFile;
     
-    SimpleCorrelation correlationObject;
+    SimpleCorrelation *correlationObject;
 
 };
 

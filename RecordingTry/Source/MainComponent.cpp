@@ -64,19 +64,14 @@ public:
         ////pitchLabel.setText(std::to_string(listen.frequency), dontSendNotification);
         //pitchLabel.setColour(Label::textColourId, Colours::yellow);
         
-        ////deviceManager is used to manage the soundcard
-        deviceManager.initialise (1, 2, 0, true, String::empty, 0);
-        ////deviceManager.addAudioCallback(&listen);
-        deviceManager.addAudioCallback(&processingAudio);
-        ////deviceManager.addAudioCallback (&recorder);
+        
         
     }
 
     ~MainContentComponent()
     {
         shutdownAudio();
-        //deviceManager.removeAudioCallback (&recorder);
-        deviceManager.removeAudioCallback (&processingAudio);
+        
     }
 
     //=======================================================================
@@ -89,6 +84,23 @@ public:
         // but be careful - it will be called on the audio thread, not the GUI thread.
 
         // For more details, see the help for AudioProcessor::prepareToPlay()
+        
+        //myComments
+        //We get mac's default sampleRate. Juce finds the best sample rate for you
+        //Same goes for the bufferSize as well. You need to set it explicitly.
+        ////deviceManager is used to manage the soundcard
+        deviceSetting.sampleRate = 22050;
+        deviceSetting.bufferSize = 1024;  //BufferSize
+        deviceManager.initialise (1, 2, 0, true, String::empty, &deviceSetting );
+        
+        
+        processingAudio = new AudioProcess ( deviceSetting.sampleRate, deviceSetting.bufferSize, 1 );
+        deviceManager.addAudioCallback(processingAudio);
+        std::cout<<"Le SampleRate ="<<deviceSetting.sampleRate<<"\n";
+        //deviceManager.addAudioCallback (&recorder);
+        
+        
+        
     }
 
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override
@@ -109,6 +121,9 @@ public:
         // restarted due to a setting change.
 
         // For more details, see the help for AudioProcessor::releaseResources()
+        //deviceManager.removeAudioCallback (&recorder);
+        deviceManager.removeAudioCallback (processingAudio);
+        delete processingAudio;
     }
 
     //=======================================================================
@@ -130,7 +145,7 @@ public:
         //recordButton.setBounds(round(getWidth()/2)-80,round(getHeight()/2)-190,80,20);
         //listenButton.setBounds(round(getWidth()/2)+20,round(getHeight()/2)-190,80,20);
         //pitchLabel.setBounds(round(getWidth()/2)-30,round(getHeight()/2)-150,80,20);
-        //pitchButton.setBounds(round(getWidth()/2)-25,round(getHeight()/2)-120,80,20);
+        pitchButton.setBounds(round(getWidth()/2)-25,round(getHeight()/2)-120,80,20);
     }
 
    //void timerCallback() override {
@@ -145,10 +160,11 @@ private:
     ////AudioRecorder recorder;
     ////AudioListener listen;
     //SimpleCorrelation pitchTrack;
-    AudioProcess processingAudio;
+    AudioProcess *processingAudio;
     //Label pitchLabel;
     int isOn=1;
-    //AudioDeviceManager deviceManager;
+    AudioDeviceManager deviceManager;
+    AudioDeviceManager::AudioDeviceSetup  deviceSetting;
     
     
     /*void startRecording()
@@ -223,15 +239,18 @@ private:
             if (isOn==1)
             {
                 //startTracking();
-                processingAudio.startTracking();
+                processingAudio->startTracking();
                 pitchButton.setButtonText("StopTracking");
+                deviceSetting.sampleRate = 22050;
+                deviceSetting.bufferSize = 1024;  //BufferSize
+                deviceManager.initialise (1, 2, 0, true, String::empty, &deviceSetting );
                 //startTimer(20);
                 isOn=0;
             }
             else
             {
                 //stopTracking();
-                processingAudio.stopTracking();
+                processingAudio->stopTracking();
                 pitchButton.setButtonText("Track Pitch");
                 //stopTimer();
                 isOn=1;

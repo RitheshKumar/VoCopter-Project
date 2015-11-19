@@ -17,7 +17,7 @@
 class SimpleCorrelation  
 {
 public:
-    SimpleCorrelation ();
+    SimpleCorrelation ( int sampleRate, int numSamples, int numChannels );
     ~SimpleCorrelation();
     
     //==============================================================================
@@ -25,17 +25,17 @@ public:
     
     void stopTracking();
     
-    void correlate ( float** inputData, int numSamples, int numChannels ); 
+    void correlate ( const float** inputData ); 
     //==============================================================================
     float getFrequency() { return frequency;  }
 
-    void writeTheFile( std::vector<float>* vect, const char *fileName, int numSamples );
+    void writeTheFile( std::vector<float>* vect, const char *fileName );
     
 private:
     double sampleRate;
     int64 nextSampleNum;
     std::vector<float> diffVec,aucorr,x1,x2,myTestVec;
-    int startIndex,endIndex,minIndex;
+    int startIndex,endIndex,minIndex, _sampleRate, _numSamples, _numChannels;
     //bool ifTracking;
     float frequency;
 

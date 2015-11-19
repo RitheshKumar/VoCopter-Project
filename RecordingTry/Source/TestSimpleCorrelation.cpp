@@ -11,6 +11,7 @@
 TestSimpleCorrelation::TestSimpleCorrelation()  
 {
     audioFile = readFile  ( "./ACFAudio.txt" );
+    correlationObject = new SimpleCorrelation(  44100, 1024, 1 );
     //std::ostream_iterator<float> vectorOut (std::cout, "\n");
     //std::copy(audioFile.begin(), audioFile.end(), vectorOut);
     writeFile ( &audioFile, "./writtenAudio.txt" );
@@ -50,27 +51,13 @@ std::vector<float> TestSimpleCorrelation::readFile (const char *fileName ) {
 
 void TestSimpleCorrelation::testFunction () {
 
-    const int numSamples = 512*5; //audioFile.size();
-    
-    float **audioPointer = new float*[1];
-    audioPointer[0]      = new float [numSamples];
-    
-    std::vector<float> testVec(numSamples);
+    const float *ptr     = &( *( audioFile.begin() ) );
+    const float **audioPointer = &ptr;
 
-    for (int i = 0; i < numSamples; i++ ) {
-
-        audioPointer[0][i] = audioFile.at(i);
-        testVec.at(i)      = audioPointer[0][i];
-
-    }
-    
-    //std::ostream_iterator<float> myOut (std::cout, ",");
-    //std::copy(testVec.begin(), testVec.end(), myOut);
-
-    correlationObject.correlate ( audioPointer, numSamples, 1 );   //correlate expects a pointer to a pointer and
+    correlationObject->correlate ( audioPointer );   //correlate expects a pointer to a pointer and
                                                                 //this is not the same as a pointer to a 2D array!!
 
-    std::cout<<"The frequency is: "<<correlationObject.getFrequency()<< std::endl;
+    std::cout<<"The frequency is: "<<correlationObject->getFrequency()<< std::endl;
 }
 
 

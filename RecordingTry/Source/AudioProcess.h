@@ -18,7 +18,7 @@
 class AudioProcess  : public AudioIODeviceCallback
 {
 public:
-    AudioProcess ();
+    AudioProcess ( int sampleRate, int numSamples, int numChannels );
     ~AudioProcess();
     
     //==============================================================================
@@ -36,7 +36,7 @@ public:
                                 int numSamples) override ;
 
 private:
-    SimpleCorrelation correlation;
+    SimpleCorrelation *correlation;
     bool isTracking;
 
 };
