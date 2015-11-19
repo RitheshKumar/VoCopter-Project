@@ -25,7 +25,7 @@ public:
     
     void stopTracking();
     
-    void correlate ( float** inputData, int numSamples ); 
+    void correlate ( float** inputData, int numSamples, int numChannels ); 
     //==============================================================================
     float getFrequency() { return frequency;  }
 
@@ -34,7 +34,7 @@ public:
 private:
     double sampleRate;
     int64 nextSampleNum;
-    std::vector<float> delayBuffer,aucorr,x1,x2,myTestVec;
+    std::vector<float> diffVec,aucorr,x1,x2,myTestVec;
     int startIndex,endIndex,minIndex;
     //bool ifTracking;
     float frequency;

@@ -22,7 +22,7 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData, int nu
         int numSamples)
 {
 
-    if ( isTracking ) {
+    if ( /*isTracking*/1 ) {
 
         float **inputData = new float*[numInputChannels];
 
@@ -39,7 +39,15 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData, int nu
             }
         }
 
-        correlation.correlate( inputData, numSamples);
+        correlation.correlate( inputData, numSamples, numInputChannels ); //How can I actually pass a const float** as a parameter??
+
+        // We need to clear the output buffers, in case they're full of junk..
+        for (int i = 0; i < numOutputChannels; ++i) {
+            if (outputChannelData[i] != nullptr) {
+                FloatVectorOperations::clear (outputChannelData[i],numSamples);
+                //memcpy( outputChannelData[i], inputChannelData[0], sizeof(float)*numSamples );
+            }
+        }
              
      } 
     else
@@ -48,7 +56,7 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData, int nu
         for (int i = 0; i < numOutputChannels; ++i) {
             if (outputChannelData[i] != nullptr) {
                 FloatVectorOperations::clear (outputChannelData[i],numSamples);
-                memcpy( outputChannelData[i], inputChannelData[0], sizeof(float)*numSamples );
+                //memcpy( outputChannelData[i], inputChannelData[0], sizeof(float)*numSamples );
             }
         }
     }//*/

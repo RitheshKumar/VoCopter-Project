@@ -8,75 +8,76 @@
 
 #include "SimpleCorrelation.h"
 
-SimpleCorrelation::SimpleCorrelation() : frequency(0.0) 
-{
-    delayBuffer.resize(88200);
-}
+SimpleCorrelation::SimpleCorrelation() : frequency(0.0) {}
 
 SimpleCorrelation::~SimpleCorrelation() {}
 
 
-void SimpleCorrelation::correlate ( float** inputData, int numSamples ) 
+void SimpleCorrelation::correlate ( float** inputData, int numSamples, int numChannels ) 
 {
-    myTestVec.resize(numSamples);
+    //std::cout<<"numSamples: "<<numSamples<<std::endl;
+    x1.resize(2*numSamples-1);
+    x2.resize(2*numSamples-1);
+    aucorr.resize(2*numSamples-1);   //myTestVec.resize(numSamples);
 
-    for (int i = 0; i < numSamples; i++ ) {
-        myTestVec.at(i) = inputData[0][i];
+
+    for (int j = 0; j< numChannels; j++) {
+
+        for (int i = 0; i < numSamples; i++ ) {
+
+            x1.at(i)              = inputData[j][i];
+            x2.at(i+numSamples-1) = inputData[j][i];
+            //myTestVec.at(i)       = inputData[j][i];
+            
+        }
+
+        //writeTheFile(&myTestVec, "writtenAudio.txt", numSamples );
+
+        //std::cout<< "size of x1 : "<< x1.size() <<"\nsize of x2 : "<< x2.size() << std::endl;
+        //std::cout<< "size of aucorr: "<<aucorr.size() << std::endl;
+
+        for (int ii=0; ii<x2.size(); ii++)
+        {
+            for (int kk=0; kk<x2.size(); kk++) {
+                aucorr[ii]+=x1[kk]*x2[kk];
+            }
+            std::rotate(x2.begin(),x2.end()-1,x2.end());
+        }
+
+        writeTheFile(&aucorr,"./aucorr.txt",numSamples);
+
+        startIndex            = std::distance(aucorr.begin(),std::max_element(aucorr.begin(),aucorr.end()));
+        myTestVec.resize( startIndex );
+        std::copy ( aucorr.begin(), aucorr.begin() + startIndex , myTestVec.begin() );
+        //writeTheFile ( &myTestVec, "./x1.txt", startIndex);
+        
+        //std::cout<<"\naucorr.size() - startIndex - 1 = "<< aucorr.size() - startIndex - 1<< std::endl;
+
+        diffVec.resize( aucorr.size() - startIndex ); //store differences of the aucorr sub-vector formed from the middle
+
+        for ( int i = startIndex; i < aucorr.size() - 1; i++ ) {
+            diffVec.at( i - startIndex ) = aucorr.at(i+1) - aucorr.at(i);
+        }
+
+        for ( int i = 0; i < diffVec.size() - 1; i++ ) {
+            if ( ( diffVec[i] <= 0 && diffVec[i+1] <= 0 ) || ( diffVec[i] >= 0 && diffVec[i+1] >= 0 ) || ( diffVec[i] <= 0 && diffVec[i+1] >= 0 ) ) {
+                continue;
+            }
+            else {
+                endIndex = i+ startIndex + 1;
+                break;
+            }
+        }
+
+
+        if (startIndex != endIndex) {
+            frequency = 44100/(endIndex-startIndex);
+        }
+    
+        std::cout<<"\nFrequency: "<<frequency<<std::endl;
+        
     }
 
-    std::ostream_iterator<float> myOut ( std::cout, "\n" );
-    std::copy ( myTestVec.begin(), myTestVec.end(), myOut);  //Yes, I do receive the audioFile here fully.
-    /*aucorr.resize(2*numSamples-1);
-    x1.resize(2*numSamples-1); x2.resize(2*numSamples-1);
-    myTestVec.resize(numSamples);
-
-
-    for (int i = 0; inputData[i] != nullptr; i++) {
-
-            for (int j=0; j < numSamples; j++) {
-                x1.at(j) = 10.0f*inputData[i][j];
-                myTestVec.at(j) = 10.0f*inputData[i][j];
-            }
-
-            std::copy ( x1.begin(), x1.begin()+numSamples, x2.begin()+numSamples );
-
-            writeTheFile ( &x1, "./x1.txt", 2*numSamples-1 );
-            writeTheFile ( &x2, "./x2.txt", 2*numSamples-1 );
-
-            for (int ii=0; ii<x2.size(); ii++)
-            {
-                for (int kk=0; kk<=x2.size(); kk++) {
-                    aucorr[ii]+=x1[kk]*x2[kk];
-                }
-                std::rotate(x2.begin(),x2.end()-1,x2.end());
-            }
-            writeTheFile(&myTestVec,"./inputChannel.txt",numSamples);
-            writeTheFile(&aucorr,"./aucorr.txt",numSamples);
-
-            startIndex            = std::distance(aucorr.begin(),std::max_element(aucorr.begin(),aucorr.end()));
-            aucorr [ startIndex ] = 0.0f;
-            std::cout<<"Aucorr [startIndex] : "<<aucorr[startIndex]<<std::endl;
-            //minIndex =  std::distance(aucorr.begin(),std::min_element(aucorr.begin()+startIndex,aucorr.end())); //error is here
-            endIndex              =  std::distance ( aucorr.begin()+startIndex, 
-                                                     std::max_element ( aucorr.begin()+startIndex, aucorr.end() ) );
-            endIndex              += startIndex;
-            std::cout << startIndex << "," << endIndex;
-
-            if (startIndex != endIndex) {
-                frequency = 44100/(endIndex-startIndex);
-            }
-        
-            std::cout<<"\nFrequency: "<<frequency<<std::endl;
-
-            /*std::copy( &inputData[numInputChannels-1][0], &inputData[numInputChannels-1][0]+numSamples, x2.begin()+numSamples );
-            std::copy(x2.end()-numSamples, x2.end(), x1.begin());
-            std::copy( &inputData[numInputChannels-1][0], &inputData[numInputChannels-1][0]+numSamples, myTestVec.begin()+numSamples );
-            
-            //writeTheFile(&myTestVec,"./inputChannel.txt",numSamples);
-            writeTheFile(&aucorr,"./x1.txt",2*numSamples-1);
-            writeTheFile(&aucorr,"./x2.txt",2*numSamples-1);
-
-    }*/
 }
 
 

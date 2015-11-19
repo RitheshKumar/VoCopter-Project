@@ -50,7 +50,7 @@ std::vector<float> TestSimpleCorrelation::readFile (const char *fileName ) {
 
 void TestSimpleCorrelation::testFunction () {
 
-    const int numSamples = audioFile.size();
+    const int numSamples = 512*5; //audioFile.size();
     
     float **audioPointer = new float*[1];
     audioPointer[0]      = new float [numSamples];
@@ -64,10 +64,10 @@ void TestSimpleCorrelation::testFunction () {
 
     }
     
-    std::ostream_iterator<float> myOut (std::cout, "\n");
-    std::copy(testVec.begin(), testVec.end(), myOut);
+    //std::ostream_iterator<float> myOut (std::cout, ",");
+    //std::copy(testVec.begin(), testVec.end(), myOut);
 
-    correlationObject.correlate ( audioPointer, numSamples );   //correlate expects a pointer to a pointer and
+    correlationObject.correlate ( audioPointer, numSamples, 1 );   //correlate expects a pointer to a pointer and
                                                                 //this is not the same as a pointer to a 2D array!!
 
     std::cout<<"The frequency is: "<<correlationObject.getFrequency()<< std::endl;
