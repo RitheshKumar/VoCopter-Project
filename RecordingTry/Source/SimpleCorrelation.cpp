@@ -11,6 +11,9 @@
 SimpleCorrelation::SimpleCorrelation( int sampleRate, int numSamples, int numChannels )
                                     :  _sampleRate  ( sampleRate ),  _numSamples ( numSamples ),
                                        _numChannels ( numChannels ), frequency (0.0)             {
+    peakIdx.resize(0);
+    maxima.resize(0);
+    aucorr.resize(_numSamples);   //myTestVec.resize(_numSamples);
 }
 
 SimpleCorrelation::~SimpleCorrelation() {}
@@ -19,32 +22,18 @@ SimpleCorrelation::~SimpleCorrelation() {}
 void SimpleCorrelation::correlate ( const float** inputData ) 
 {
     //std::cout<<"_numSamples: "<<_numSamples<<std::endl;
-    x1.resize(2*_numSamples-1);
-    x2.resize(2*_numSamples-1);
-    aucorr.resize(2*_numSamples-1);   //myTestVec.resize(_numSamples);
-
 
     for (int j = 0; j< _numChannels; j++) {
 
         for (int i = 0; i < _numSamples; i++ ) {
 
-            x1.at(i)              = inputData[j][i];
-            x2.at(i+_numSamples-1) = inputData[j][i];
-            //myTestVec.at(i)       = inputData[j][i];
+                int iter = _numSamples - i;
+                for ( int k = iter; k < _numSamples; k++ ) {
+
+                    aucorr.at ( i ) += inputData[ j ][ k - iter ] * inputData[ j ][ k ];
+
+                }
             
-        }
-
-        //writeTheFile(&myTestVec, "writtenAudio.txt", _numSamples );
-
-        //std::cout<< "size of x1 : "<< x1.size() <<"\nsize of x2 : "<< x2.size() << std::endl;
-        //std::cout<< "size of aucorr: "<<aucorr.size() << std::endl;
-
-        for (int ii=0; ii<x2.size(); ii++)
-        {
-            for (int kk=0; kk<x2.size(); kk++) {
-                aucorr[ii]+=x1[kk]*x2[kk];
-            }
-            std::rotate(x2.begin(),x2.end()-1,x2.end());
         }
 
         writeTheFile(&aucorr,"./aucorr.txt");
@@ -56,7 +45,16 @@ void SimpleCorrelation::correlate ( const float** inputData )
         
         //std::cout<<"\naucorr.size() - startIndex - 1 = "<< aucorr.size() - startIndex - 1<< std::endl;
 
-        diffVec.resize( aucorr.size() - startIndex ); //store differences of the aucorr sub-vector formed from the middle
+        /*//moving average filter of windowSize
+        int windowSize = 5;
+        int windowIdx  = (int) windowSize/2;
+
+        for ( int i = windowIdx; i < _numSamples - windowIdx; i++ ) {
+            
+            aucorr.at(i) = std::accumulate ( &aucorr.at( i-windowIdx ), &aucorr.at( i+windowIdx ), 0.0 ) / windowSize;
+        }*/
+
+        /*diffVec.resize( aucorr.size() - startIndex ); //store differences of the aucorr sub-vector formed from the middle
 
         for ( int i = startIndex; i < aucorr.size() - 1; i++ ) {
             diffVec.at( i - startIndex ) = aucorr.at(i+1) - aucorr.at(i);
@@ -67,16 +65,29 @@ void SimpleCorrelation::correlate ( const float** inputData )
                 continue;
             }
             else {
-                endIndex = i+ startIndex + 1;
+                peakIdx.push_back( i+ startIndex + 1);
                 break;
             }
         }
 
+        endIndex = *std::max_element ( peakIdx.begin(), peakIdx.end());*/
+        
+        float maxVal=0.0;
+
+        for ( int i = 1; i < aucorr.size() - 1; i++ ) {
+            if ( aucorr[i-1] < aucorr[i] && aucorr[i] >= aucorr[i+1] ) {
+                if ( aucorr[i] >= maxVal ) {
+                        maxVal   = aucorr[i];
+                        endIndex = i;
+                }
+            }
+        }
 
         if (startIndex != endIndex) {
-            frequency = _sampleRate/(endIndex-startIndex);
+            frequency = _sampleRate/(startIndex-endIndex);
         }
     
+        std::cout<<"startIndex ="<<startIndex<<"\nendIndex ="<<endIndex<<std::endl;
         //std::cout<<"\nFrequency: "<<frequency<<std::endl;
         
     }

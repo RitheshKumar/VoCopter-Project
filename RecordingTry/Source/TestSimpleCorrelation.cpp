@@ -55,7 +55,7 @@ void TestSimpleCorrelation::testFunction () {
     const float **audioPointer = &ptr;
 
     correlationObject->correlate ( audioPointer );   //correlate expects a pointer to a pointer and
-                                                                //this is not the same as a pointer to a 2D array!!
+                                                     //this is not the same as a pointer to a 2D array!!
 
     std::cout<<"The frequency is: "<<correlationObject->getFrequency()<< std::endl;
 }

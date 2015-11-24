@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <fstream>
 #include <iostream>
+#include <numeric>
 #include "../JuceLibraryCode/JuceHeader.h"
 
 class SimpleCorrelation  
@@ -34,7 +35,8 @@ public:
 private:
     double sampleRate;
     int64 nextSampleNum;
-    std::vector<float> diffVec,aucorr,x1,x2,myTestVec;
+    std::vector<float> maxima,aucorr,myTestVec;
+    std::vector<int>   peakIdx;
     int startIndex,endIndex,minIndex, _sampleRate, _numSamples, _numChannels;
     //bool ifTracking;
     float frequency;
