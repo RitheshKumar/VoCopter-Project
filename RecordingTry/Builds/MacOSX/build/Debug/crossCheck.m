@@ -4,24 +4,31 @@ close all;
 
 %% 
 
-fileID = fopen('aucorr.txt');
+% fileID = fopen('aucorr.txﬂt');
+fileID = fopen('InputData.txt');
 D = textscan(fileID,'%f','Delimiter','\n','CollectOutput', true);
 % figure
 % plot(D{1})
 % aucorr = D{1};
 % title('aucorr');  
  
-
+%%
 [ACFAudio, fs] = audioread ('ACFAudio.wav');
-ACFAudio = ACFAudio(1:512*5);
+ACFAudio = (ACFAudio(1:512*2));
 
+% ACFAudio = [1:30,12:-1:8,9:14];
 
 matAucorr = xcorr(ACFAudio, ACFAudio );
 % figure 
 % plot(matAucorr); title( 'matAucorr' );
 
 numSamples = 1024;
+% numSamples = length(ACFAudio);
 myAucorr   = zeros( 1, numSamples);
+
+%%
+% ACFAudio = ones(1,numSamples);
+% matAucorr = xcorr(ACFAudio, ACFAudio);
 
 for i = 1:numSamples
     iter  = numSamples-i+1;

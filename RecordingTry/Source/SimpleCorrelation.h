@@ -26,7 +26,7 @@ public:
     
     void stopTracking();
     
-    void correlate ( const float** inputData ); 
+    float correlate ( const float** inputData ); 
     //==============================================================================
     float getFrequency() { return frequency;  }
 
@@ -37,7 +37,8 @@ private:
     int64 nextSampleNum;
     std::vector<float> maxima,aucorr,myTestVec;
     std::vector<int>   peakIdx;
-    int startIndex,endIndex,minIndex, _sampleRate, _numSamples, _numChannels;
+    int startIndex,endIndex,minIndex, iter,
+        _sampleRate, _numSamples, _numChannels;
     //bool ifTracking;
     float frequency;
 

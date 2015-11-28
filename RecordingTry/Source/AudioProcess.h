@@ -18,7 +18,7 @@
 class AudioProcess  : public AudioIODeviceCallback
 {
 public:
-    AudioProcess ( int sampleRate, int numSamples, int numChannels );
+    AudioProcess ( /*int sampleRate, int numSamples, int numChannels*/ );
     ~AudioProcess();
     
     //==============================================================================
@@ -35,9 +35,12 @@ public:
                                 float** outputChannelData, int numOutputChannels,
                                 int numSamples) override ;
 
+    float getFreq() { return freq; }
+
 private:
     SimpleCorrelation *correlation;
     bool isTracking;
+    float freq;
 
 };
 

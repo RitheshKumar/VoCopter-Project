@@ -26,9 +26,8 @@
 
 
 
-class MainContentComponent   : public AudioAppComponent,
-                               private Button::Listener
-                               //private Timer
+class MainContentComponent   : public Component,
+                               private Timer
 
 {
 public:
@@ -37,8 +36,6 @@ public:
     {
         setSize (800, 600);
 
-        // specify the number of input and output channels that we want to open
-        setAudioChannels (2, 2);
 
         /*addAndMakeVisible (recordButton);
         recordButton.setButtonText ("Record");
@@ -52,78 +49,31 @@ public:
         listenButton.setButtonText("Listen");
         listenButton.addListener(this);
         listenButton.setColour(TextButton::buttonColourId, Colours::yellow);
-        listenButton.setColour(TextButton::textColourOnId, Colours::black);*/
+        listenButton.setColour(TextButton::textColourOnId, Colours::black);
 
         addAndMakeVisible(pitchButton);
         pitchButton.setButtonText("Track Pitch");
         pitchButton.addListener(this);
         pitchButton.setColour(TextButton::buttonColourId, Colours::yellow);
-        pitchButton.setColour(TextButton::textColourOnId, Colours::black);
+        pitchButton.setColour(TextButton::textColourOnId, Colours::black);*/
 
-        //addAndMakeVisible(pitchLabel);
-        ////pitchLabel.setText(std::to_string(listen.frequency), dontSendNotification);
-        //pitchLabel.setColour(Label::textColourId, Colours::yellow);
+        addAndMakeVisible(pitchLabel);
+        pitchLabel.setText(std::to_string(processingAudio->getFreq()), dontSendNotification);
+        pitchLabel.setColour(Label::textColourId, Colours::yellow);
         
-        
+        processingAudio = new AudioProcess;
+
+        deviceManager.initialise( 1, 2, 0, true, String::empty, 0);
+        deviceManager.addAudioCallback( processingAudio );
+
+        startTimer(100);
         
     }
 
     ~MainContentComponent()
     {
-        shutdownAudio();
+        deviceManager.removeAudioCallback( processingAudio );
         
-    }
-
-    //=======================================================================
-    void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override
-    {
-        // This function will be called when the audio device is started, or when
-        // its settings (i.e. sample rate, block size, etc) are changed.
-
-        // You can use this function to initialise any resources you might need,
-        // but be careful - it will be called on the audio thread, not the GUI thread.
-
-        // For more details, see the help for AudioProcessor::prepareToPlay()
-        
-        //myComments
-        //We get mac's default sampleRate. Juce finds the best sample rate for you
-        //Same goes for the bufferSize as well. You need to set it explicitly.
-        ////deviceManager is used to manage the soundcard
-        deviceSetting.sampleRate = 22050;
-        deviceSetting.bufferSize = 1024;  //BufferSize
-        deviceManager.initialise (1, 2, 0, true, String::empty, &deviceSetting );
-        
-        
-        processingAudio = new AudioProcess ( deviceSetting.sampleRate, deviceSetting.bufferSize, 1 );
-        deviceManager.addAudioCallback(processingAudio);
-        std::cout<<"Le SampleRate ="<<deviceSetting.sampleRate<<"\n";
-        //deviceManager.addAudioCallback (&recorder);
-        
-        
-        
-    }
-
-    void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override
-    {
-        // Your audio-processing code goes here!
-
-        // For more details, see the help for AudioProcessor::getNextAudioBlock()
-
-        // Right now we are not producing any data, in which case we need to clear the buffer
-        // (to prevent the output of random noise)
-        bufferToFill.clearActiveBufferRegion();
-        
-    }
-
-    void releaseResources() override
-    {
-        // This will be called when the audio device stops, or when it is being
-        // restarted due to a setting change.
-
-        // For more details, see the help for AudioProcessor::releaseResources()
-        //deviceManager.removeAudioCallback (&recorder);
-        deviceManager.removeAudioCallback (processingAudio);
-        delete processingAudio;
     }
 
     //=======================================================================
@@ -144,27 +94,25 @@ public:
         // update their positions.
         //recordButton.setBounds(round(getWidth()/2)-80,round(getHeight()/2)-190,80,20);
         //listenButton.setBounds(round(getWidth()/2)+20,round(getHeight()/2)-190,80,20);
-        //pitchLabel.setBounds(round(getWidth()/2)-30,round(getHeight()/2)-150,80,20);
-        pitchButton.setBounds(round(getWidth()/2)-25,round(getHeight()/2)-120,80,20);
+        pitchLabel.setBounds(round(getWidth()/2)-30,round(getHeight()/2)-150,80,20);
+        //pitchButton.setBounds(round(getWidth()/2)-25,round(getHeight()/2)-120,80,20);
     }
 
-   //void timerCallback() override {
-        //pitchLabel.setText(std::to_string(pitchTrack.frequency),dontSendNotification);
-    //}
+   void timerCallback() override {
+        pitchLabel.setText(std::to_string(processingAudio->getFreq()),dontSendNotification);
+    }
 
 private:
     //==============================================================================
 
     // Your private member variables go here...
-    TextButton /*recordButton,listenButton,*/pitchButton;
+    //TextButton /*recordButton,listenButton,*/pitchButton;
     ////AudioRecorder recorder;
     ////AudioListener listen;
     //SimpleCorrelation pitchTrack;
     AudioProcess *processingAudio;
-    //Label pitchLabel;
-    int isOn=1;
+    Label pitchLabel;
     AudioDeviceManager deviceManager;
-    AudioDeviceManager::AudioDeviceSetup  deviceSetting;
     
     
     /*void startRecording()
@@ -212,9 +160,9 @@ private:
         stopTimer();
     }*/
     
-    void buttonClicked (Button* button) override
+    /*void buttonClicked (Button* button) override
     {
-        /*if (button == &recordButton)
+        if (button == &recordButton)
         {
             if (recorder.isRecording())
                 stopRecording();
@@ -232,7 +180,7 @@ private:
             {   stopListening();
                 isOn=1;
             }
-        }*/
+        }
         if (button == &pitchButton)
         {
             
@@ -241,9 +189,9 @@ private:
                 //startTracking();
                 processingAudio->startTracking();
                 pitchButton.setButtonText("StopTracking");
-                deviceSetting.sampleRate = 22050;
-                deviceSetting.bufferSize = 1024;  //BufferSize
-                deviceManager.initialise (1, 2, 0, true, String::empty, &deviceSetting );
+                //deviceSetting.sampleRate = 22050;
+                //deviceSetting.bufferSize = 1024;  //BufferSize
+                //deviceManager.initialise (1, 2, 0, true, String::empty, &deviceSetting );
                 //startTimer(20);
                 isOn=0;
             }
@@ -256,7 +204,7 @@ private:
                 isOn=1;
             }
         }
-    }
+    }*/
     
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
