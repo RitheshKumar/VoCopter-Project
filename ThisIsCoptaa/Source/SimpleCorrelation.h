@@ -12,12 +12,13 @@
 #include <stdio.h>
 #include <fstream>
 #include <iostream>
+#include <numeric>
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class SimpleCorrelation  : public AudioIODeviceCallback
+class SimpleCorrelation  
 {
 public:
-    SimpleCorrelation ();
+    SimpleCorrelation ( int sampleRate, int numSamples, int numChannels );
     ~SimpleCorrelation();
     
     //==============================================================================
@@ -25,33 +26,21 @@ public:
     
     void stopTracking();
     
-    
+    float correlate ( const float** inputData ); 
     //==============================================================================
-    void audioDeviceAboutToStart (AudioIODevice* device);
-    
-    void audioDeviceStopped() override;
-    
-    void audioDeviceIOCallback (const float** inputChannelData, int /*numInputChannels*/,
-                                float** outputChannelData, int numOutputChannels,
-                                int numSamples) override ;
+    float getFrequency() { return frequency;  }
 
-    void writeTheFile(std::vector<float>* vect,const char *fileName,int numSamples);
-    //void writeFile(std::vector<float>* vect,const char *fileName);
-    float frequency;
-    
+    void writeTheFile( std::vector<float>* vect, const char *fileName );
     
 private:
-    TimeSliceThread backgroundThread; // the thread that will write our audio data to disk
-    ScopedPointer<AudioFormatWriter::ThreadedWriter> threadedWriter; // the FIFO used to buffer the incoming data
     double sampleRate;
     int64 nextSampleNum;
-    std::vector<float> delayBuffer,aucorr,x1,x2;
-    int startIndex,endIndex,minIndex;
-    bool isTracking;
-    
-    CriticalSection writerLock;
-    AudioFormatWriter::ThreadedWriter* volatile activeWriter;
-    
+    std::vector<float> maxima,aucorr,myTestVec;
+    std::vector<int>   peakIdx;
+    int startIndex,endIndex,minIndex, iter,
+        _sampleRate, _numSamples, _numChannels;
+    //bool ifTracking;
+    float frequency;
 
 };
 

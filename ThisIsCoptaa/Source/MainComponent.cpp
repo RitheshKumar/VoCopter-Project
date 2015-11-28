@@ -26,10 +26,14 @@ MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*
     //xpos = getWidth()*0.15; ypos = getHeight()*0.6;
     //Rectangle<int> r (0,0,100,100);
     //Animation.animateComponent(&Obstacle, r, 1.0f, 3000, false, 0.0, 0.0);
+    processingAudio = new AudioProcess;
+    deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
+    deviceManager.addAudioCallback(processingAudio);
 }
 
 MainContentComponent::~MainContentComponent()
 {
+    deviceManager.removeAudioCallback(processingAudio);
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -51,6 +55,7 @@ void MainContentComponent::resized()
 
 bool MainContentComponent::keyPressed(const KeyPress& key)
 {
+    std::cout<<ypos<<",";
     switch (key.getTextCharacter()) {
         case 'w':
             Copter.setBounds(xpos,ypos-=5,/*getWidth()*0.3,getHeight()*0.3*/80,60);
@@ -67,6 +72,11 @@ bool MainContentComponent::keyPressed(const KeyPress& key)
 }
 
 void MainContentComponent::timerCallback() {
+    float freq  = processingAudio->getFreq() - 200;
+    if (freq < 322 && freq > 5) {
+        Copter.setBounds(xpos, ypos = freq, 80, 60);
+        std::cout<<freq<<",";
+    }
     
 }
 

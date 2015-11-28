@@ -1,92 +1,74 @@
+//
+//  SimpleCorrelation.cpp
+//  RecordingTry
+//
+//  Created by Rithesh Kumar Ravikumar on 9/8/15.
+//
+//
+
 #include "SimpleCorrelation.h"
 
-void SimpleCorrelation::audioDeviceIOCallback (const float** inputChannelData, int numInputChannels,
-        float** outputChannelData, int numOutputChannels,
-        int numSamples)
+SimpleCorrelation::SimpleCorrelation( int sampleRate, int numSamples, int numChannels )
+                                    :  _sampleRate  ( sampleRate ),  _numSamples ( numSamples ),
+                                       _numChannels ( numChannels ),  frequency (0.0)            {
+
+    iter   = 0;
+    peakIdx.resize(0);
+    maxima.resize(0);
+    aucorr.resize(_numSamples);   //myTestVec.resize(_numSamples);
+}
+
+SimpleCorrelation::~SimpleCorrelation() {}
+
+
+float SimpleCorrelation::correlate ( const float** inputData ) 
 {
-    aucorr.resize(2*numSamples-1);
-    x1.resize(2*numSamples-1); x2.resize(2*numSamples-1);
-    //std::ostream_iterator<float> out_it (std::cout, ",");
 
+    aucorr.resize(_numSamples);
+    for (int j = 0; j< _numChannels; j++) {
 
-    if (isTracking) {
-        for (int i = 0; i < numOutputChannels; ++i) {
-            if (inputChannelData[i] != nullptr) {
-                std::copy( &inputChannelData[numInputChannels-1][0], &inputChannelData[numInputChannels-1][0]+numSamples, x1.begin());
-                std::copy(x1.begin(),x1.begin()+numSamples, x2.begin()+numSamples);
-                
-                for (int ii=0; ii<x2.size(); ii++)
-                {
-                    for (int kk=0; kk<=x2.size(); kk++) {
-                        aucorr[ii]+=x1[kk]*x2[kk];
-                    }
-                    std::rotate(x2.begin(),x2.end()-1,x2.end());
+        for (int i = 0; i < _numSamples; i++ ) {
+
+                iter = _numSamples - i;
+                for ( int k = iter; k < _numSamples; k++ ) {
+
+                    aucorr.at ( i ) += inputData[ j ][ k - iter ] * inputData[ j ][ k ];
+
                 }
-
-                startIndex            = std::distance(aucorr.begin(),std::max_element(aucorr.begin(),aucorr.end()));
-                aucorr [ startIndex ] = 0.0f;
-                //minIndex =  std::distance(aucorr.begin(),std::min_element(aucorr.begin()+startIndex,aucorr.end())); //error is here
-                endIndex              =  std::distance(aucorr.begin()+startIndex,std::max_element(aucorr.begin(),aucorr.end()));
-                std::cout << startIndex << "," << endIndex;
-                frequency = 44100/(endIndex-startIndex);
             
-                Logger::writeToLog(std::to_string(frequency)+"\n");
+        }
 
-                writeTheFile(&aucorr,"./aucorr.txt",numSamples);
+        //writeTheFile(&aucorr,"./aucorr.txt");
+        
+        float maxVal=0.0;
 
-            } 
-        } }
-    else
-    {
-        // We need to clear the output buffers, in case they're full of junk..
-        for (int i = 0; i < numOutputChannels; ++i)
-            if (outputChannelData[i] != nullptr)
-                FloatVectorOperations::clear (outputChannelData[i],numSamples);
+        for ( int i = 1; i < aucorr.size() - 1; i++ ) {
+            if ( aucorr[i-1] < aucorr[i] && aucorr[i] >= aucorr[i+1] ) {
+                if ( aucorr[i] >= maxVal ) {
+                        maxVal   = aucorr[i];
+                        endIndex = i;
+                }
+            }
+        }
+
+        if (startIndex != endIndex) {
+            frequency = _sampleRate/(_numSamples-endIndex);
+        }
+    
+        //std::cout<<"\nendIndex ="<<endIndex<<std::endl;
+        //std::cout<<"\nFrequency: "<<frequency<<std::endl;
+        
     }
-}
+    aucorr.clear();
 
-SimpleCorrelation::SimpleCorrelation() : frequency(0.0), backgroundThread ("Audio Listener Thread"), activeWriter (nullptr)
-{
-    isTracking = false;
-    delayBuffer.resize(88200);
-}
-
-SimpleCorrelation::~SimpleCorrelation()
-{
-    stopTracking();
-}
-
-void SimpleCorrelation::stopTracking()
-{
-    // First, clear this pointer to stop the audio callback from using our writer object..
-    {
-        const ScopedLock sl (writerLock);
-        SimpleCorrelation::activeWriter = nullptr;
-    }
-
-    // Now we can delete the writer object. It's done in this order because the deletion could
-    // take a little time while remaining data gets flushed to disk, so it's best to avoid blocking
-    // the audio callback while this happens.
-    threadedWriter = nullptr;
-    isTracking = false;
+    if ( frequency> 1500) { return 0.0f;      }
+    else                  { return frequency; }
 
 }
 
-void SimpleCorrelation::startTracking()
-{
-    SimpleCorrelation::stopTracking();
-    isTracking = true;
-}
 
-void SimpleCorrelation::audioDeviceAboutToStart (AudioIODevice* device){}
-
-void SimpleCorrelation::audioDeviceStopped() {}
-
-void SimpleCorrelation::writeTheFile(std::vector<float>* vect,const char *fileName,int numSamples=0) {
+void SimpleCorrelation::writeTheFile(std::vector<float>* vect,const char *fileName) {
     std::ofstream outputFile(fileName);
     std::ostream_iterator<float> outputStream(outputFile,"\n");
     std::copy(vect->begin(),vect->end(),outputStream);
 }
-
-
-

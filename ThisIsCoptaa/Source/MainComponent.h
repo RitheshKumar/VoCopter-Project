@@ -12,7 +12,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CopterComponent.h"
 #include "ObstacleComponent.h"
-#include "juce_Timer.h"
+#include "AudioProcess.h"
 
 
 //==============================================================================
@@ -21,7 +21,6 @@
     your controls and content.
 */
 class MainContentComponent   : public Component,
-                               //private Viewport,
                                private Timer
 {
 public:
@@ -42,6 +41,9 @@ private:
     ObstacleComponent Obstacle;
     ComponentAnimator Animation;
     Viewport viewport;
+    
+    AudioProcess *processingAudio;
+    AudioDeviceManager deviceManager;
     
     int winWidth = 600, winHeight = 400;
     float xpos, ypos;
