@@ -22,8 +22,6 @@
 		685C34D929B1164DAE240401 /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 333D6C344EFD5415E5927A6F /* juce_events.mm */; };
 		6A50D01501EE73F12BD7A302 /* juce_opengl.mm in Sources */ = {isa = PBXBuildFile; fileRef = DA903BEC43E0FFF702ADC419 /* juce_opengl.mm */; };
 		72E40ECFBF6A6C0DC8D010DE /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0B8B2D6E26F7F573CCF76A /* QuickTime.framework */; };
-		7A16AB3F1BE9CB57004291F0 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A16AB391BE9CB57004291F0 /* AudioListener.cpp */; };
-		7A16AB401BE9CB57004291F0 /* AudioRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A16AB3B1BE9CB57004291F0 /* AudioRecorder.cpp */; };
 		7A16AB411BE9CB57004291F0 /* SimpleCorrelation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A16AB3D1BE9CB57004291F0 /* SimpleCorrelation.cpp */; };
 		7A2F36711BFA8CB300031CBF /* AudioProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A2F366F1BFA8CB300031CBF /* AudioProcess.cpp */; };
 		7A9291751BFBA68D00349371 /* TestSimpleCorrelation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A9291731BFBA68D00349371 /* TestSimpleCorrelation.cpp */; };
@@ -494,10 +492,6 @@
 		79BDD302FC892BF05F1577E6 /* juce_win32_Direct2DGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_Direct2DGraphicsContext.cpp; path = ../../../../../Juce/JUCE/modules/juce_graphics/native/juce_win32_Direct2DGraphicsContext.cpp; sourceTree = SOURCE_ROOT; };
 		79C04AAB2AE13136101031DD /* juce_PluginDescription.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_PluginDescription.cpp; path = ../../../../../Juce/JUCE/modules/juce_audio_processors/processors/juce_PluginDescription.cpp; sourceTree = SOURCE_ROOT; };
 		7A048D022BD01E5957905CBA /* juce_win32_Messaging.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_Messaging.cpp; path = ../../../../../Juce/JUCE/modules/juce_events/native/juce_win32_Messaging.cpp; sourceTree = SOURCE_ROOT; };
-		7A16AB391BE9CB57004291F0 /* AudioListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListener.cpp; path = ../../Source/AudioListener.cpp; sourceTree = "<group>"; };
-		7A16AB3A1BE9CB57004291F0 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = ../../Source/AudioListener.h; sourceTree = "<group>"; };
-		7A16AB3B1BE9CB57004291F0 /* AudioRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioRecorder.cpp; path = ../../Source/AudioRecorder.cpp; sourceTree = "<group>"; };
-		7A16AB3C1BE9CB57004291F0 /* AudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioRecorder.h; path = ../../Source/AudioRecorder.h; sourceTree = "<group>"; };
 		7A16AB3D1BE9CB57004291F0 /* SimpleCorrelation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleCorrelation.cpp; path = ../../Source/SimpleCorrelation.cpp; sourceTree = "<group>"; };
 		7A16AB3E1BE9CB57004291F0 /* SimpleCorrelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleCorrelation.h; path = ../../Source/SimpleCorrelation.h; sourceTree = "<group>"; };
 		7A2F366F1BFA8CB300031CBF /* AudioProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioProcess.cpp; path = ../../Source/AudioProcess.cpp; sourceTree = "<group>"; };
@@ -2674,10 +2668,6 @@
 				7A9291741BFBA68D00349371 /* TestSimpleCorrelation.h */,
 				7A2F366F1BFA8CB300031CBF /* AudioProcess.cpp */,
 				7A2F36701BFA8CB300031CBF /* AudioProcess.h */,
-				7A16AB391BE9CB57004291F0 /* AudioListener.cpp */,
-				7A16AB3A1BE9CB57004291F0 /* AudioListener.h */,
-				7A16AB3B1BE9CB57004291F0 /* AudioRecorder.cpp */,
-				7A16AB3C1BE9CB57004291F0 /* AudioRecorder.h */,
 				7A16AB3D1BE9CB57004291F0 /* SimpleCorrelation.cpp */,
 				7A16AB3E1BE9CB57004291F0 /* SimpleCorrelation.h */,
 				D7EA048A24DD24FEB2651673 /* MainComponent.cpp */,
@@ -2813,8 +2803,6 @@
 				7A16AB411BE9CB57004291F0 /* SimpleCorrelation.cpp in Sources */,
 				2E023076737DD8DABF41C954 /* juce_audio_processors.mm in Sources */,
 				C7A4F357EAF820CE67A722ED /* juce_audio_utils.mm in Sources */,
-				7A16AB3F1BE9CB57004291F0 /* AudioListener.cpp in Sources */,
-				7A16AB401BE9CB57004291F0 /* AudioRecorder.cpp in Sources */,
 				525BA724E97C3B77468AEFCF /* juce_core.mm in Sources */,
 				7A9291751BFBA68D00349371 /* TestSimpleCorrelation.cpp in Sources */,
 				F64FC95C2047C725DCF29202 /* juce_cryptography.mm in Sources */,

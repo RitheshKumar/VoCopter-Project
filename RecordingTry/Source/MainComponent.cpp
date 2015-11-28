@@ -58,7 +58,7 @@ public:
         pitchButton.setColour(TextButton::textColourOnId, Colours::black);*/
 
         addAndMakeVisible(pitchLabel);
-        pitchLabel.setText(std::to_string(processingAudio->getFreq()), dontSendNotification);
+        pitchLabel.setText(std::to_string(0.0), dontSendNotification);
         pitchLabel.setColour(Label::textColourId, Colours::yellow);
         
         processingAudio = new AudioProcess;
