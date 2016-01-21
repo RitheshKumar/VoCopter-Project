@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>019C93CA-28F3-41C7-81FC-3098FD5D65FA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>VoCopter2</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>58EDE75DE1A640A0D36748430306F16F576AA9C7</key>
+		<string>https://github.com/RitheshKumar/Fall_2015.git</string>
+		<key>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</key>
+		<string>https://github.com/RitheshKumar/VoCopter-Project.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>VoCopter2/Builds/MacOSX/VoCopter2.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>58EDE75DE1A640A0D36748430306F16F576AA9C7</key>
+		<string>../../../../../..</string>
+		<key>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/RitheshKumar/VoCopter-Project.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>58EDE75DE1A640A0D36748430306F16F576AA9C7</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C04E46FC63B165EAF190EFBC99E4FB4C312B94CA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>VoCopter%20Project</string>
+		</dict>
+	</array>
+</dict>
+</plist>

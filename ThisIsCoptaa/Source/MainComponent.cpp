@@ -55,7 +55,7 @@ void MainContentComponent::resized()
 
 bool MainContentComponent::keyPressed(const KeyPress& key)
 {
-    std::cout<<ypos<<",";
+    //std::cout<<ypos<<",";
     switch (key.getTextCharacter()) {
         case 'w':
             Copter.setBounds(xpos,ypos-=5,/*getWidth()*0.3,getHeight()*0.3*/80,60);
@@ -72,11 +72,11 @@ bool MainContentComponent::keyPressed(const KeyPress& key)
 }
 
 void MainContentComponent::timerCallback() {
-    float freq  = processingAudio->getFreq() - 200;
+    /*float freq  = processingAudio->getFreq() - 200;
     if (freq < 322 && freq > 5) {
-        Copter.setBounds(xpos, ypos = freq, 80, 60);
+        Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
         std::cout<<freq<<",";
-    }
+    }*/
     
 }
 
