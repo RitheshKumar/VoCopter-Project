@@ -24,6 +24,8 @@
 		63A287B30F71BB9C89834DEE /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8FF790ACECDA0FDEAE5108C3 /* juce_events.mm */; };
 		6A9B4D034D9A62B7EF46CBE4 /* juce_gui_extra.mm in Sources */ = {isa = PBXBuildFile; fileRef = 80476C109CF670A4CBA816A3 /* juce_gui_extra.mm */; };
 		757CC0F5E804D7046C8CBCF8 /* juce_cryptography.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4D85BDEF147BE4A12EBA1C4 /* juce_cryptography.mm */; };
+		7A218C981C5157530001820A /* MidiTranslation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A218C941C5157530001820A /* MidiTranslation.cpp */; };
+		7A218C991C5157530001820A /* ObstacleComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A218C961C5157530001820A /* ObstacleComponent.cpp */; };
 		7A5E85CC1C4FD63B005141DE /* CopterBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5E85C61C4FD63B005141DE /* CopterBody.cpp */; };
 		7A5E85CD1C4FD63B005141DE /* CopterComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5E85C81C4FD63B005141DE /* CopterComponent.cpp */; };
 		7A5E85CE1C4FD63B005141DE /* CopterFan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5E85CA1C4FD63B005141DE /* CopterFan.cpp */; };
@@ -462,6 +464,10 @@
 		7956517DDD8E50AE4CC78483 /* juce_ResizableBorderComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_ResizableBorderComponent.cpp; path = "../../../../../Juce/JUCE-OSX/modules/juce_gui_basics/layout/juce_ResizableBorderComponent.cpp"; sourceTree = SOURCE_ROOT; };
 		7A0357934F8EFD1D6F64DCFE /* juce_DrawableShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_DrawableShape.h; path = "../../../../../Juce/JUCE-OSX/modules/juce_gui_basics/drawables/juce_DrawableShape.h"; sourceTree = SOURCE_ROOT; };
 		7A17C5D65E8124DB9747629A /* juce_LocalisedStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_LocalisedStrings.h; path = "../../../../../Juce/JUCE-OSX/modules/juce_core/text/juce_LocalisedStrings.h"; sourceTree = SOURCE_ROOT; };
+		7A218C941C5157530001820A /* MidiTranslation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MidiTranslation.cpp; path = ../../Source/MidiTranslation.cpp; sourceTree = "<group>"; };
+		7A218C951C5157530001820A /* MidiTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiTranslation.h; path = ../../Source/MidiTranslation.h; sourceTree = "<group>"; };
+		7A218C961C5157530001820A /* ObstacleComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObstacleComponent.cpp; path = ../../Source/ObstacleComponent.cpp; sourceTree = "<group>"; };
+		7A218C971C5157530001820A /* ObstacleComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObstacleComponent.h; path = ../../Source/ObstacleComponent.h; sourceTree = "<group>"; };
 		7A2EE6CD077BA8FF27BB6D70 /* juce_ResizableBorderComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ResizableBorderComponent.h; path = "../../../../../Juce/JUCE-OSX/modules/juce_gui_basics/layout/juce_ResizableBorderComponent.h"; sourceTree = SOURCE_ROOT; };
 		7A505E8B0519C034E5DFDB90 /* juce_ModalComponentManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_ModalComponentManager.cpp; path = "../../../../../Juce/JUCE-OSX/modules/juce_gui_basics/components/juce_ModalComponentManager.cpp"; sourceTree = SOURCE_ROOT; };
 		7A5E85C61C4FD63B005141DE /* CopterBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopterBody.cpp; path = ../../Source/CopterBody.cpp; sourceTree = "<group>"; };
@@ -1660,6 +1666,10 @@
 		7A218C931C5156C30001820A /* Obstacle Component */ = {
 			isa = PBXGroup;
 			children = (
+				7A218C941C5157530001820A /* MidiTranslation.cpp */,
+				7A218C951C5157530001820A /* MidiTranslation.h */,
+				7A218C961C5157530001820A /* ObstacleComponent.cpp */,
+				7A218C971C5157530001820A /* ObstacleComponent.h */,
 			);
 			name = "Obstacle Component";
 			sourceTree = "<group>";
@@ -2754,6 +2764,7 @@
 			files = (
 				FF15B3F01C51D4D9E0B4606E /* MainComponent.cpp in Sources */,
 				D41A233C89097F2C6561BB73 /* Main.cpp in Sources */,
+				7A218C991C5157530001820A /* ObstacleComponent.cpp in Sources */,
 				A1D23AE46679EBDD525C2C7F /* juce_audio_basics.mm in Sources */,
 				1250A561A0A99CF0AFCC4557 /* juce_audio_devices.mm in Sources */,
 				541684B6A70E1C07E80C1C6D /* juce_audio_formats.mm in Sources */,
@@ -2770,6 +2781,7 @@
 				6A9B4D034D9A62B7EF46CBE4 /* juce_gui_extra.mm in Sources */,
 				06FEC769537F4D0B563B12D1 /* juce_opengl.mm in Sources */,
 				B1039B77A76B3E94371DCE7D /* juce_video.mm in Sources */,
+				7A218C981C5157530001820A /* MidiTranslation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

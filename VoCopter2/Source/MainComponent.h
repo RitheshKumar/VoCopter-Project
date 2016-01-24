@@ -11,6 +11,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CopterComponent.h"
+#include "MidiTranslation.h"
+#include "ObstacleComponent.h"
 
 
 //==============================================================================
