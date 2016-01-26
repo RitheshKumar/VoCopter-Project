@@ -45,8 +45,11 @@ private:
     AudioProcess *processingAudio;
     AudioDeviceManager deviceManager;
     
-    int winWidth = 600, winHeight = 400;
+    int winWidth = 600, winHeight = 400, cnt = 0;
     float xpos, ypos;
+    
+    //HeightValue Pointer
+//    float **curHeightValue = Obstacle.getHeightCoord();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

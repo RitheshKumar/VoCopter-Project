@@ -26,6 +26,7 @@ public:
     //int getObstacleHeight();
 
     int obstacleLength;
+    float ** getHeightValue() const { return heightValues; }
 
 private:
     std::vector<float> obstacleHeight,instantObstacleHeight;
@@ -33,6 +34,8 @@ private:
     int width,height,xOffset,count=0;
 
     void normalize(std::vector<float> *myVector);
+
+    float **heightValues;
 };
   
 class ObstacleComponent: private Timer,
@@ -48,6 +51,7 @@ public:
     void timerCallback () override;
 
     int getObstacleLength() { return obstacleLength;} 
+    float** getHeightCoord() const { return ObstacleCourse.getHeightValue(); }
 
 private:
     ObstacleCreate ObstacleCourse;

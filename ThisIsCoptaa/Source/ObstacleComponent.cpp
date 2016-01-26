@@ -15,7 +15,7 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
 
     //paint Parameters
     widthPartition = floorf(1000/(float)obstacleLength)/1000;
-    std::cout<<"Le TotalLength est: "<<floorf(obstacleLength*widthPartition*600)<<"\n";
+    //std::cout<<"Le TotalLength est: "<<floorf(obstacleLength*widthPartition*600)<<"\n";
 
     obstacleHeight.resize(obstacleLength);
     instantObstacleHeight.resize(floorf(obstacleLength*widthPartition*600));
@@ -42,6 +42,12 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
     /*for (int i = 0; i<obstacleHeight.size(); i++) {
         std::cout<<obstacleHeight.at(i)<<std::endl;
     }*/
+    
+    //This array is to store all the coordinate values of heights.
+    heightValues = new float*[2];
+    for (int i=0; i<2; i++ ) {
+        heightValues[i] = new float[obstacleLength];
+    }
 }
     
 ObstacleCreate::~ObstacleCreate () {
@@ -59,6 +65,7 @@ void ObstacleCreate::paint (Graphics &g) {
             g.drawLine( i*obstacleWidth,       0*(height-height*0.2),
                         (i+1)*obstacleWidth,   0*(height-height*0.2),
                         height*obstacleHeight[i]);
+            heightValues[0][i] = height*obstacleHeight[i];
 
             float floorThickness = 2*height - obstacleHeight[i]*height - pathWidth; //we calculate this by solving for x,
                                                                                     //obstacleHeight[i]*height/2 + pathWidth 
@@ -67,6 +74,9 @@ void ObstacleCreate::paint (Graphics &g) {
             g.drawLine( i*obstacleWidth,       1*(height),
                         (i+1)*obstacleWidth,   1*(height),
                         floorThickness);
+            heightValues[1][i] = floorThickness;
+
+            
     }
 }
 
@@ -108,5 +118,6 @@ void ObstacleComponent::paint (Graphics &g) {
 
 void ObstacleComponent::timerCallback () {
     ObstacleCourse.setBounds(xpos-=5, 0, getWidth(), getHeight());
+    
 }
 

@@ -17,8 +17,10 @@ MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*
 
     setSize (winWidth, winHeight);
     setWantsKeyboardFocus(true);
-    addAndMakeVisible(Obstacle);
-    addAndMakeVisible(Copter);
+    
+    //Notice that the order is important
+    addAndMakeVisible(Obstacle);  //ObstacleComponent class
+    addAndMakeVisible(Copter);    //CopterComponent Class
     //viewport.setViewedComponent(Copter,true);
     
     startTimer(50);
@@ -50,7 +52,7 @@ void MainContentComponent::resized()
     // It is even called when you say setSize
     //xpos *= getWidth()*0.15; ypos *= getWidth()*0.15;
     Copter.setBounds(xpos,ypos,/*getWidth()*0.3,getHeight()*0.3*/80,60);
-    Obstacle.setBounds(0, 0, getWidth()*Obstacle.getObstacleLength()/2, getHeight());
+    Obstacle.setBounds(0, 0, getWidth()*Obstacle.getObstacleLength()/2, getHeight());   //divided by 2 to represent 2 notes at a time in a window.
 }
 
 bool MainContentComponent::keyPressed(const KeyPress& key)
@@ -77,6 +79,6 @@ void MainContentComponent::timerCallback() {
         Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
         std::cout<<freq<<",";
     }*/
-    
+
 }
 
