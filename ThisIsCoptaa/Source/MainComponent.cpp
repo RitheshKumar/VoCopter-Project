@@ -79,6 +79,17 @@ bool MainContentComponent::keyPressed(const KeyPress& key)
     return false;
 }
 
+bool MainContentComponent::keyStateChanged(bool isKeyDown) {
+    
+    if ( !isKeyDown ) {
+        keyRelease = true;  //initiate timer callback
+    }
+    else {
+        keyRelease = false;
+    }
+    return false;
+}
+
 void MainContentComponent::timerCallback() {
     /*float freq  = processingAudio->getFreq() - 200;
     if (freq < 322 && freq > 5) {
@@ -87,11 +98,17 @@ void MainContentComponent::timerCallback() {
     }*/
     myObstacle.setBounds(obsX-=1, 0, getWidth()*20, getHeight());
     int currentHeight = myObstacle.getObstacleHeight();
+//    std::cout<<currentHeight<<std::endl;
     if( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ){
         addAndMakeVisible(hitLabel);
     }
     else {
         removeChildComponent(&hitLabel);
+    }
+    
+    if ( keyRelease == true ) {
+        ypos += 5;
+        Copter.setBounds((int)xpos,(int)ypos,80,60);
     }
     
 }

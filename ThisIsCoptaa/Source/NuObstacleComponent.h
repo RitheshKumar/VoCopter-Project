@@ -25,7 +25,9 @@ public:
     int getObstacleHeight(); 
 
 private:
-    int *obstacleHeight;
+    int *obstacleHeight,cnt;
+    
+    void normalize(std::vector<float> *myVector);
     
 };
     

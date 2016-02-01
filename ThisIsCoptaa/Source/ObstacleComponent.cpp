@@ -30,8 +30,7 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
     //std::copy (noteNumber.begin(), noteNumber.end(), outputStream);
 
     for (int i=0; i<obstacleLength; i++) {
-        obstacleHeight[i]=( noteNumber.at(i) )*0.8;///obstacleLength;//This is to generate the obstacle height.A ramp is called.
-                                                   //This is where we must getheight information.
+        obstacleHeight[i]=( noteNumber.at(i) )*0.8;///obstacleLength;//This is to generate the obstacle height.                                                   //This is where we must getheight information.
         std::fill(instantObstacleHeight.begin()+i*widthPartition,instantObstacleHeight.begin()+i*widthPartition+widthPartition,obstacleHeight[i]);
         //std::cout<<obstacleHeight[i]<<std::endl;
     }

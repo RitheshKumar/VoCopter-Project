@@ -35,6 +35,7 @@ public:
     //these are things that i added
     //an audio app component has all these and extra audio related fns
     bool keyPressed(const KeyPress& key) override;
+    bool keyStateChanged(bool isKeyDown) override;
     void timerCallback() override;
    
 private:
@@ -49,6 +50,7 @@ private:
     
     int winWidth = 600, winHeight = 400, cnt = 0;
     float xpos, ypos,obsX;
+    bool keyRelease;
     
     Label hitLabel;
     //HeightValue Pointer
