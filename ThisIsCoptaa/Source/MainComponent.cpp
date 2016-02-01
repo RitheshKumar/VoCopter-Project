@@ -10,7 +10,7 @@
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*0.15), ypos(winHeight*0.2)
+MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*0.15), ypos(winHeight*0.5-25), obsX(winWidth*0.15)
 {
 
     //Obstacle(xpos);
@@ -19,9 +19,12 @@ MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*
     setWantsKeyboardFocus(true);
     
     //Notice that the order is important
+    addAndMakeVisible(myObstacle);
     addAndMakeVisible(Obstacle);  //ObstacleComponent class
     addAndMakeVisible(Copter);    //CopterComponent Class
     //viewport.setViewedComponent(Copter,true);
+    hitLabel.setText("Copter Hit!", dontSendNotification);
+    hitLabel.setColour(Label::textColourId, Colours::red);
     
     startTimer(50);
     
@@ -41,6 +44,7 @@ MainContentComponent::~MainContentComponent()
 void MainContentComponent::paint (Graphics& g)
 {
     g.fillAll(Colours::skyblue);
+   
     
 }
 
@@ -52,7 +56,9 @@ void MainContentComponent::resized()
     // It is even called when you say setSize
     //xpos *= getWidth()*0.15; ypos *= getWidth()*0.15;
     Copter.setBounds(xpos,ypos,/*getWidth()*0.3,getHeight()*0.3*/80,60);
-    Obstacle.setBounds(0, 0, getWidth()*Obstacle.getObstacleLength()/2, getHeight());   //divided by 2 to represent 2 notes at a time in a window.
+//    Obstacle.setBounds(0, 0, getWidth()*Obstacle.getObstacleLength()/2, getHeight());   //divided by 2 to represent 2 notes at a time in a window.
+    myObstacle.setBounds(obsX, 0, getWidth(), getHeight());
+    hitLabel.setBounds(round(getWidth()/2)-40,round(getHeight()/2),80,50);
 }
 
 bool MainContentComponent::keyPressed(const KeyPress& key)
@@ -79,6 +85,14 @@ void MainContentComponent::timerCallback() {
         Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
         std::cout<<freq<<",";
     }*/
-
+    myObstacle.setBounds(obsX-=1, 0, getWidth()*20, getHeight());
+    int currentHeight = myObstacle.getObstacleHeight();
+    if( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ){
+        addAndMakeVisible(hitLabel);
+    }
+    else {
+        removeChildComponent(&hitLabel);
+    }
+    
 }
 

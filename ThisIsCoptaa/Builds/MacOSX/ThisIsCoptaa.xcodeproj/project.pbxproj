@@ -24,6 +24,7 @@
 		7A5B24251BEA682E00122FA6 /* ObstacleComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B241F1BEA682E00122FA6 /* ObstacleComponent.cpp */; };
 		7A8EAE881C0A0CD4005428E4 /* AudioProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A8EAE841C0A0CD4005428E4 /* AudioProcess.cpp */; };
 		7A8EAE891C0A0CD4005428E4 /* SimpleCorrelation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A8EAE861C0A0CD4005428E4 /* SimpleCorrelation.cpp */; };
+		7ADB44DD1C5EB8F40050FEE6 /* NuObstacleComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ADB44DB1C5EB8F40050FEE6 /* NuObstacleComponent.cpp */; };
 		8D3CCB3C2CF23DC6375A3396 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA763CF648192960A727BA7 /* QuartzCore.framework */; };
 		8EC2CE8C91AF20B4FF56938A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F08B5DA206FE9004E5BB36F /* QTKit.framework */; };
 		9819C27979B159FC108524F9 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747B334461FA04CCA0A91A33 /* OpenGL.framework */; };
@@ -500,6 +501,8 @@
 		7AA747D208209F8BE96814A0 /* juce_ApplicationCommandManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_ApplicationCommandManager.cpp; path = ../../../../../Juce/JUCE/modules/juce_gui_basics/commands/juce_ApplicationCommandManager.cpp; sourceTree = SOURCE_ROOT; };
 		7AC3C9CE99F85B879F1AEF5C /* juce_linux_FileChooser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_linux_FileChooser.cpp; path = ../../../../../Juce/JUCE/modules/juce_gui_basics/native/juce_linux_FileChooser.cpp; sourceTree = SOURCE_ROOT; };
 		7AC82A8B804DE99AA39B7FD8 /* juce_RelativeRectangle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_RelativeRectangle.h; path = ../../../../../Juce/JUCE/modules/juce_gui_basics/positioning/juce_RelativeRectangle.h; sourceTree = SOURCE_ROOT; };
+		7ADB44DB1C5EB8F40050FEE6 /* NuObstacleComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NuObstacleComponent.cpp; path = ../../Source/NuObstacleComponent.cpp; sourceTree = "<group>"; };
+		7ADB44DC1C5EB8F40050FEE6 /* NuObstacleComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NuObstacleComponent.h; path = ../../Source/NuObstacleComponent.h; sourceTree = "<group>"; };
 		7BA6D831B9BF58D3FE953B21 /* juce_FileSearchPath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_FileSearchPath.cpp; path = ../../../../../Juce/JUCE/modules/juce_core/files/juce_FileSearchPath.cpp; sourceTree = SOURCE_ROOT; };
 		7D1BA432DEA5FE8C46208F54 /* juce_LocalisedStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_LocalisedStrings.h; path = ../../../../../Juce/JUCE/modules/juce_core/text/juce_LocalisedStrings.h; sourceTree = SOURCE_ROOT; };
 		7DBE87A3DB986E4D01BE6A4F /* juce_win32_Direct2DGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_Direct2DGraphicsContext.cpp; path = ../../../../../Juce/JUCE/modules/juce_graphics/native/juce_win32_Direct2DGraphicsContext.cpp; sourceTree = SOURCE_ROOT; };
@@ -1804,6 +1807,8 @@
 				7A5B241E1BEA682E00122FA6 /* MidiTranslation.h */,
 				7A5B241F1BEA682E00122FA6 /* ObstacleComponent.cpp */,
 				7A5B24201BEA682E00122FA6 /* ObstacleComponent.h */,
+				7ADB44DB1C5EB8F40050FEE6 /* NuObstacleComponent.cpp */,
+				7ADB44DC1C5EB8F40050FEE6 /* NuObstacleComponent.h */,
 			);
 			name = "Copter Create";
 			sourceTree = "<group>";
@@ -2772,6 +2777,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ADB44DD1C5EB8F40050FEE6 /* NuObstacleComponent.cpp in Sources */,
 				CF7D1184CCD5329C850949EF /* MainComponent.cpp in Sources */,
 				4264325D0ABCDAC447D26D36 /* Main.cpp in Sources */,
 				7A5B24251BEA682E00122FA6 /* ObstacleComponent.cpp in Sources */,

@@ -48,13 +48,22 @@ ObstacleCreate::ObstacleCreate (/*int offset*/ ):obstacleLength(noteNumber.size(
     for (int i=0; i<2; i++ ) {
         heightValues[i] = new float[obstacleLength];
     }
+    
+    width = getWidth(); height = getHeight();
+    for (int i=0; i<obstacleLength; i++) {
+        
+       heightValues[0][i] = height*obstacleHeight[i];
+        
+       float floorThickness = 2*height - obstacleHeight[i]*height - pathWidth;
+       heightValues[1][i] = floorThickness;
+    }
 }
     
 ObstacleCreate::~ObstacleCreate () {
-        
+    
 }
     
-void ObstacleCreate::paint (Graphics &g) {
+void ObstacleCreate::paint (Graphics &g) { //Called everytime the timer callback is called
     
     width = getWidth(); height = getHeight();
     obstacleWidth = width*widthPartition; 

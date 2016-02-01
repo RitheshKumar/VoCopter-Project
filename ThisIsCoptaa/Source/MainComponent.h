@@ -13,6 +13,7 @@
 #include "CopterComponent.h"
 #include "ObstacleComponent.h"
 #include "AudioProcess.h"
+#include "NuObstacleComponent.h"
 
 
 //==============================================================================
@@ -37,6 +38,7 @@ public:
     void timerCallback() override;
    
 private:
+    NuObstacleComponent myObstacle;
     CopterComponent Copter;
     ObstacleComponent Obstacle;
     ComponentAnimator Animation;
@@ -46,8 +48,9 @@ private:
     AudioDeviceManager deviceManager;
     
     int winWidth = 600, winHeight = 400, cnt = 0;
-    float xpos, ypos;
+    float xpos, ypos,obsX;
     
+    Label hitLabel;
     //HeightValue Pointer
 //    float **curHeightValue = Obstacle.getHeightCoord();
     //==============================================================================
