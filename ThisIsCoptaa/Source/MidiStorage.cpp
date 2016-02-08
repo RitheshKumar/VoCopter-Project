@@ -1,21 +1,22 @@
 //
-//  MidiTranslation.cpp
+//  MidiStorage.cpp
 //  ThisIsCoptaa
 //
 //  Created by Rithesh Kumar Ravikumar on 10/15/15.
 //
 //
 
-#include "MidiTranslation.h"
+#include "MidiStorage.h"
 
-MidiTranslation::MidiTranslation() {
+MidiStorage::MidiStorage() : cnt(0), midiLen(0) {
     readMidiData();
+    midiLen = noteNumber.size();
 }
 
-MidiTranslation::~MidiTranslation() {
+MidiStorage::~MidiStorage() {
 
 }
-void MidiTranslation::readMidiData() {
+void MidiStorage::readMidiData() {
     
     filePtr = new File ("~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid");
     bool fileExists = filePtr->existsAsFile();
@@ -52,4 +53,20 @@ void MidiTranslation::readMidiData() {
         Logger::writeToLog("Error in Reading Midi File - It doesn't exist");
     }
     
+}
+
+
+bool MidiStorage::getMidiData(float *note) {
+    if( cnt != midiLen ) {
+        *note = noteNumber[cnt];
+        cnt++;
+        return true;
+    }
+    else if( cnt == midiLen ) {
+        return false;
+    }
+    else {
+        std::cout<<"getMidiData function error"<<std::endl;
+        return false;
+    }
 }

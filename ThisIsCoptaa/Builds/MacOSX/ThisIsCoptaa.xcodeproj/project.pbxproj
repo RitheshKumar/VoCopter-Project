@@ -20,8 +20,7 @@
 		7A5B24211BEA682E00122FA6 /* CopterBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B24171BEA682E00122FA6 /* CopterBody.cpp */; };
 		7A5B24221BEA682E00122FA6 /* CopterComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B24191BEA682E00122FA6 /* CopterComponent.cpp */; };
 		7A5B24231BEA682E00122FA6 /* CopterFan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B241B1BEA682E00122FA6 /* CopterFan.cpp */; };
-		7A5B24241BEA682E00122FA6 /* MidiTranslation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B241D1BEA682E00122FA6 /* MidiTranslation.cpp */; };
-		7A5B24251BEA682E00122FA6 /* ObstacleComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B241F1BEA682E00122FA6 /* ObstacleComponent.cpp */; };
+		7A5B24241BEA682E00122FA6 /* MidiStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B241D1BEA682E00122FA6 /* MidiStorage.cpp */; };
 		7A8EAE881C0A0CD4005428E4 /* AudioProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A8EAE841C0A0CD4005428E4 /* AudioProcess.cpp */; };
 		7A8EAE891C0A0CD4005428E4 /* SimpleCorrelation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A8EAE861C0A0CD4005428E4 /* SimpleCorrelation.cpp */; };
 		7ADB44DD1C5EB8F40050FEE6 /* NuObstacleComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ADB44DB1C5EB8F40050FEE6 /* NuObstacleComponent.cpp */; };
@@ -487,10 +486,8 @@
 		7A5B241A1BEA682E00122FA6 /* CopterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopterComponent.h; path = ../../Source/CopterComponent.h; sourceTree = "<group>"; };
 		7A5B241B1BEA682E00122FA6 /* CopterFan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopterFan.cpp; path = ../../Source/CopterFan.cpp; sourceTree = "<group>"; };
 		7A5B241C1BEA682E00122FA6 /* CopterFan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopterFan.h; path = ../../Source/CopterFan.h; sourceTree = "<group>"; };
-		7A5B241D1BEA682E00122FA6 /* MidiTranslation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MidiTranslation.cpp; path = ../../Source/MidiTranslation.cpp; sourceTree = "<group>"; };
-		7A5B241E1BEA682E00122FA6 /* MidiTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiTranslation.h; path = ../../Source/MidiTranslation.h; sourceTree = "<group>"; };
-		7A5B241F1BEA682E00122FA6 /* ObstacleComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObstacleComponent.cpp; path = ../../Source/ObstacleComponent.cpp; sourceTree = "<group>"; };
-		7A5B24201BEA682E00122FA6 /* ObstacleComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObstacleComponent.h; path = ../../Source/ObstacleComponent.h; sourceTree = "<group>"; };
+		7A5B241D1BEA682E00122FA6 /* MidiStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MidiStorage.cpp; path = ../../Source/MidiStorage.cpp; sourceTree = "<group>"; };
+		7A5B241E1BEA682E00122FA6 /* MidiStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiStorage.h; path = ../../Source/MidiStorage.h; sourceTree = "<group>"; };
 		7A67D39451A3EC86BA37D9EA /* juce_GlyphArrangement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_GlyphArrangement.cpp; path = ../../../../../Juce/JUCE/modules/juce_graphics/fonts/juce_GlyphArrangement.cpp; sourceTree = SOURCE_ROOT; };
 		7A8B4A90F1E75D42DD05BDC5 /* juce_MessageListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MessageListener.h; path = ../../../../../Juce/JUCE/modules/juce_events/messages/juce_MessageListener.h; sourceTree = SOURCE_ROOT; };
 		7A8E0E2369DA06B0A6DEEBD3 /* juce_Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Logger.cpp; path = ../../../../../Juce/JUCE/modules/juce_core/logging/juce_Logger.cpp; sourceTree = SOURCE_ROOT; };
@@ -1803,10 +1800,8 @@
 				7A5B241A1BEA682E00122FA6 /* CopterComponent.h */,
 				7A5B241B1BEA682E00122FA6 /* CopterFan.cpp */,
 				7A5B241C1BEA682E00122FA6 /* CopterFan.h */,
-				7A5B241D1BEA682E00122FA6 /* MidiTranslation.cpp */,
-				7A5B241E1BEA682E00122FA6 /* MidiTranslation.h */,
-				7A5B241F1BEA682E00122FA6 /* ObstacleComponent.cpp */,
-				7A5B24201BEA682E00122FA6 /* ObstacleComponent.h */,
+				7A5B241D1BEA682E00122FA6 /* MidiStorage.cpp */,
+				7A5B241E1BEA682E00122FA6 /* MidiStorage.h */,
 				7ADB44DB1C5EB8F40050FEE6 /* NuObstacleComponent.cpp */,
 				7ADB44DC1C5EB8F40050FEE6 /* NuObstacleComponent.h */,
 			);
@@ -2780,7 +2775,6 @@
 				7ADB44DD1C5EB8F40050FEE6 /* NuObstacleComponent.cpp in Sources */,
 				CF7D1184CCD5329C850949EF /* MainComponent.cpp in Sources */,
 				4264325D0ABCDAC447D26D36 /* Main.cpp in Sources */,
-				7A5B24251BEA682E00122FA6 /* ObstacleComponent.cpp in Sources */,
 				AE74791731C60EEF78600186 /* juce_audio_basics.mm in Sources */,
 				7A8EAE891C0A0CD4005428E4 /* SimpleCorrelation.cpp in Sources */,
 				AA34C9D434A3D702AADCE4CC /* juce_audio_devices.mm in Sources */,
@@ -2799,7 +2793,7 @@
 				9D549519186EE39BB292FDC4 /* juce_opengl.mm in Sources */,
 				1FF03D0AD318DDEF59E3E500 /* juce_video.mm in Sources */,
 				7A8EAE881C0A0CD4005428E4 /* AudioProcess.cpp in Sources */,
-				7A5B24241BEA682E00122FA6 /* MidiTranslation.cpp in Sources */,
+				7A5B24241BEA682E00122FA6 /* MidiStorage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

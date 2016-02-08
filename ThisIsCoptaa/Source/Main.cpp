@@ -10,7 +10,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.h"
-#include "MidiTranslation.h"
 
 
 //==============================================================================
@@ -72,8 +71,6 @@ public:
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
             setResizable(true, true);
-            //MidiTranslation myMidi;
-            //myMidi.readMidiData();
         }
         
         void closeButtonPressed() override

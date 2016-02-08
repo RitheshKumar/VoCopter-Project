@@ -8,29 +8,50 @@
 
 #include "NuObstacleComponent.h"
 
-NuObstacleComponent::NuObstacleComponent( ) : obstacleHeight( new int[3]/*noteNumber.size()*/ ), cnt(0) {
+NuObstacleComponent::NuObstacleComponent( ) : cnt(0),
+                                              obstacleLength(midiData.getMidiLen()),
+                                              obstacleHeight( new float[midiData.getMidiLen()+1] )
+{
+    
+    
+//    int height = 400;//, width = 600;
+
+    for (int i = 0; i<obstacleLength; i++) {
+        midiData.getMidiData(&obstacleHeight[i]);
+        obstacleHeight[i] = ( obstacleHeight[i] );//*100;//*0.8;
+        std::cout<<obstacleHeight[i]<<"\n";
+    }
+    std::cout<<std::endl;
+//    obstacleHeight[0] = round(height/2) - 130/2;
+//    obstacleHeight[1] = round(height/2) - 130/2 + 40;
+//    obstacleHeight[obstacleLength] =  -1;
     
     //normalize noteValues
-    normalize(&noteNumber);
+    normalizeRange(obstacleHeight);
     
-    int height = 400;//, width = 600;
-
-    obstacleHeight[0] = round(height/2) - 130/2;
-    obstacleHeight[1] = round(height/2) - 130/2 + 40;
-    obstacleHeight[2] =  -1;
-            
 }
 
 NuObstacleComponent::~NuObstacleComponent( ) {
 }
 
-void NuObstacleComponent::normalize(std::vector<float> *myVector) {
+void NuObstacleComponent::normalizeRange(float *myArray) {
     
-    float max = *std::max_element(myVector->begin(),myVector->end());
-    float min = *std::min_element(myVector->begin(),myVector->end());
+    float max = 0.0f,min = 20.0f;
     
-    for (int i=0; i<myVector->size(); i++) {
-        myVector->at(i) = (myVector->at(i)-min)/(max-min);
+    for (int i=0; i<obstacleLength; i++) {
+        if ( myArray[i]>max) {
+            max = myArray[i];
+        }
+        else if(myArray[i]<min) {
+            min = myArray[i];
+        }
+    }
+    
+    std::cout<<"Max: "<<max<<", Min: "<<min<<std::endl;
+    
+    for (int i=0; i<obstacleLength; i++) {
+        myArray[i] = (myArray[i]-min)*100/(max-min);
+        std::cout<<myArray[i]<<std::endl;
     }
 }
 
@@ -39,9 +60,23 @@ void NuObstacleComponent::paint(Graphics &g) {
 
     g.fillAll(Colours::black);
     g.setColour(Colours::cornflowerblue);
-    g.drawLine( 0, round(getHeight()/2), 400, round(getHeight()/2), 130 );
-    g.drawLine(400, round(getHeight()/2)+40, 800, round(getHeight()/2)+40, 130 );
+//    g.drawLine( 0, round(getHeight()/2), 400, round(getHeight()/2), 130 );
+//    g.drawLine(400, round(getHeight()/2)+40, 800, round(getHeight()/2)+40, 130 );
     
+    for (int i=0; i<obstacleLength; i++) {
+
+        if ( obstacleHeight[i] < 0.5f ) {
+            g.drawLine( i*400,       round(getHeight()/2)-obstacleHeight[i],
+                       (i+1)*400,    round(getHeight()/2)-obstacleHeight[i],
+                       130);
+        }
+        else {
+            g.drawLine( i*400,       round(getHeight()/2)+obstacleHeight[i],
+                       (i+1)*400,    round(getHeight()/2)+obstacleHeight[i],
+                       130);
+        }
+
+    }
 
 }
 
@@ -56,11 +91,11 @@ int NuObstacleComponent::getObstacleHeight() {
         else {
             cnt++;
         }
-        std::cout<<temp<<std::endl;
+//        std::cout<<temp<<std::endl;
         return temp;
     }
     else {
-        std::cout<<*obstacleHeight<<std::endl;
+//        std::cout<<*obstacleHeight<<std::endl;
         return *obstacleHeight;
     }
 }

@@ -41,7 +41,6 @@ public:
 private:
     NuObstacleComponent myObstacle;
     CopterComponent Copter;
-    ObstacleComponent Obstacle;
     ComponentAnimator Animation;
     Viewport viewport;
     
@@ -53,8 +52,6 @@ private:
     bool keyRelease;
     
     Label hitLabel;
-    //HeightValue Pointer
-//    float **curHeightValue = Obstacle.getHeightCoord();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

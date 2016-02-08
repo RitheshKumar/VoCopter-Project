@@ -10,10 +10,9 @@
 #define __ThisIsCoptaa__NuObstacleComponent__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MidiTranslation.h"
+#include "MidiStorage.h"
 
-class NuObstacleComponent : public Component,
-                            public MidiTranslation
+class NuObstacleComponent : public Component
 {
 public:
 
@@ -25,9 +24,12 @@ public:
     int getObstacleHeight(); 
 
 private:
-    int *obstacleHeight,cnt;
+    MidiStorage midiData;
     
-    void normalize(std::vector<float> *myVector);
+    int cnt,obstacleLength;
+    float *obstacleHeight;
+    
+    void normalizeRange(float *myArray);
     
 };
     

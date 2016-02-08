@@ -10,7 +10,7 @@
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*0.15), ypos(winHeight*0.5-25), obsX(winWidth*0.15)
+MainContentComponent::MainContentComponent() : xpos(winWidth*0.15), ypos(winHeight*0.5-25), obsX(winWidth*0.15)
 {
 
     //Obstacle(xpos);
@@ -19,8 +19,7 @@ MainContentComponent::MainContentComponent() : Obstacle(/*600*/), xpos(winWidth*
     setWantsKeyboardFocus(true);
     
     //Notice that the order is important
-    addAndMakeVisible(myObstacle);
-    addAndMakeVisible(Obstacle);  //ObstacleComponent class
+    addAndMakeVisible(myObstacle); //NuObstacleComponent class
     addAndMakeVisible(Copter);    //CopterComponent Class
     //viewport.setViewedComponent(Copter,true);
     hitLabel.setText("Copter Hit!", dontSendNotification);
@@ -96,9 +95,9 @@ void MainContentComponent::timerCallback() {
         Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
         std::cout<<freq<<",";
     }*/
-    myObstacle.setBounds(obsX-=1, 0, getWidth()*20, getHeight());
+    myObstacle.setBounds(obsX-=5, 0, getWidth()*20, getHeight());
     int currentHeight = myObstacle.getObstacleHeight();
-//    std::cout<<currentHeight<<std::endl;
+    std::cout<<currentHeight<<std::endl;
     if( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ){
         addAndMakeVisible(hitLabel);
     }
