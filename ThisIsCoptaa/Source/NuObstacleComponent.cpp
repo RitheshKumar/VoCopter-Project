@@ -8,7 +8,8 @@
 
 #include "NuObstacleComponent.h"
 
-NuObstacleComponent::NuObstacleComponent( ) : cnt(0),
+NuObstacleComponent::NuObstacleComponent(std::string midiFilePath) : midiData(midiFilePath),
+                                              cnt(0),
                                               obstacleLength(midiData.getMidiLen()),
                                               obstacleHeight( new float[midiData.getMidiLen()+1] )
 {

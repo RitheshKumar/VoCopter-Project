@@ -8,7 +8,7 @@
 
 #include "MidiStorage.h"
 
-MidiStorage::MidiStorage() : cnt(0), midiLen(0) {
+MidiStorage::MidiStorage(std::string fileName) : filePath(fileName), cnt(0), midiLen(0) {
     readMidiData();
     midiLen = noteNumber.size();
 }
@@ -18,7 +18,7 @@ MidiStorage::~MidiStorage() {
 }
 void MidiStorage::readMidiData() {
     
-    filePtr = new File ("~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid");
+    filePtr = new File (filePath);
     bool fileExists = filePtr->existsAsFile();
 
     if (fileExists) {

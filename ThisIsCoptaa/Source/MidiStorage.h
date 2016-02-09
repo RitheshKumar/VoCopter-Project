@@ -13,7 +13,7 @@
 
 class MidiStorage {
 public:
-    MidiStorage();
+    MidiStorage(std::string fileName);
     ~MidiStorage();
 
     bool getMidiData( float * note );
@@ -29,6 +29,7 @@ private:
     MidiMessage midiVal;
     
     std::vector<float> noteNumber;
+    std::string filePath;
     int cnt, midiLen;
 
     void readMidiData();

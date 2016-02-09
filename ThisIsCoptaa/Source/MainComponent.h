@@ -41,7 +41,7 @@ public:
 private:
     TextButton startButton, stopButton;
     
-    NuObstacleComponent myObstacle;
+    NuObstacleComponent *myObstacle;
     CopterComponent Copter;
     ComponentAnimator Animation;
     Viewport viewport;

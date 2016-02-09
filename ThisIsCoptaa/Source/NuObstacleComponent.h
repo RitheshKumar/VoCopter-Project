@@ -16,7 +16,7 @@ class NuObstacleComponent : public Component
 {
 public:
 
-    NuObstacleComponent ( );
+    NuObstacleComponent ( std::string midiFilePath );
     ~NuObstacleComponent( );
 
     void paint(Graphics &g);
