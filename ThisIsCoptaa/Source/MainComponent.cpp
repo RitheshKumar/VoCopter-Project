@@ -13,23 +13,35 @@
 MainContentComponent::MainContentComponent() : xpos(winWidth*0.15), ypos(winHeight*0.5-25), obsX(winWidth*0.15)
 {
 
-    //Obstacle(xpos);
 
     setSize (winWidth, winHeight);
+    std::cout<<winWidth<<","<<winHeight<<std::endl;
     setWantsKeyboardFocus(true);
     
     //Notice that the order is important
-    addAndMakeVisible(myObstacle); //NuObstacleComponent class
-    addAndMakeVisible(Copter);    //CopterComponent Class
-    //viewport.setViewedComponent(Copter,true);
+    addAndMakeVisible(startButton);
+    startButton.setButtonText("Start!");
+    startButton.addListener(this);
+    stopButton.setButtonText("Stop");
+    stopButton.addListener(this);
+    
+    startButton.setColour(TextButton::buttonColourId, Colours::green);
+    startButton.setColour(TextButton::textColourOnId, Colours::black);
+    stopButton.setColour(TextButton::buttonColourId, Colours::red);
+    stopButton.setColour(TextButton::textColourOnId, Colours::black);
+    
+    
+//    addAndMakeVisible(myObstacle); //NuObstacleComponent class
+//    addAndMakeVisible(Copter);    //CopterComponent Class
+    
     hitLabel.setText("Copter Hit!", dontSendNotification);
     hitLabel.setColour(Label::textColourId, Colours::red);
+    gameOverLabel.setFont(Font(40));
+    gameOverLabel.setText("Game Over", dontSendNotification);
+    gameOverLabel.setColour(Label::textColourId, Colours::red);
+//    gameOverLabel.setText(, <#juce::NotificationType notification#>)
     
-    startTimer(50);
     
-    //xpos = getWidth()*0.15; ypos = getHeight()*0.6;
-    //Rectangle<int> r (0,0,100,100);
-    //Animation.animateComponent(&Obstacle, r, 1.0f, 3000, false, 0.0, 0.0);
     processingAudio = new AudioProcess;
     deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
     deviceManager.addAudioCallback(processingAudio);
@@ -53,11 +65,15 @@ void MainContentComponent::resized()
     // If you add any child components, this is where you should
     // update their positions.
     // It is even called when you say setSize
-    //xpos *= getWidth()*0.15; ypos *= getWidth()*0.15;
+    
+    startButton.setBounds(getWidth()/2-50, getHeight()/2-20, 100, 40);
+    
     Copter.setBounds(xpos,ypos,/*getWidth()*0.3,getHeight()*0.3*/80,60);
-//    Obstacle.setBounds(0, 0, getWidth()*Obstacle.getObstacleLength()/2, getHeight());   //divided by 2 to represent 2 notes at a time in a window.
     myObstacle.setBounds(obsX, 0, getWidth(), getHeight());
+    stopButton.setBounds(getWidth()-45, 20, 40, 20);
     hitLabel.setBounds(round(getWidth()/2)-40,round(getHeight()/2),80,50);
+    
+    gameOverLabel.setBounds(getWidth()/2-100,getHeight()/2-30, 200, 60 );
 }
 
 bool MainContentComponent::keyPressed(const KeyPress& key)
@@ -96,9 +112,9 @@ void MainContentComponent::timerCallback() {
         std::cout<<freq<<",";
     }*/
     myObstacle.setBounds(obsX-=5, 0, getWidth()*20, getHeight());
-    int currentHeight = myObstacle.getObstacleHeight();
-    std::cout<<currentHeight<<std::endl;
-    if( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ){
+    
+    int currentHeight = myObstacle.getObstacleHeight() + 135;
+    if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){
         addAndMakeVisible(hitLabel);
     }
     else {
@@ -112,3 +128,23 @@ void MainContentComponent::timerCallback() {
     
 }
 
+
+void MainContentComponent::buttonClicked (Button *button) {
+    
+    if (button == &startButton) {
+        removeChildComponent(&startButton);
+        addAndMakeVisible(myObstacle);
+        addAndMakeVisible(Copter);
+        addAndMakeVisible(stopButton);
+        startTimer(50);
+    }
+    if (button == &stopButton) {
+        gameOver();
+    }
+}
+
+void MainContentComponent::gameOver() {
+    stopTimer();
+    removeAllChildren();
+    addAndMakeVisible(&gameOverLabel);
+}

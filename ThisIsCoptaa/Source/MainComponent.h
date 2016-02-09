@@ -11,7 +11,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CopterComponent.h"
-#include "ObstacleComponent.h"
 #include "AudioProcess.h"
 #include "NuObstacleComponent.h"
 
@@ -22,6 +21,7 @@
     your controls and content.
 */
 class MainContentComponent   : public Component,
+                               public ButtonListener,
                                private Timer
 {
 public:
@@ -39,6 +39,8 @@ public:
     void timerCallback() override;
    
 private:
+    TextButton startButton, stopButton;
+    
     NuObstacleComponent myObstacle;
     CopterComponent Copter;
     ComponentAnimator Animation;
@@ -51,7 +53,11 @@ private:
     float xpos, ypos,obsX;
     bool keyRelease;
     
-    Label hitLabel;
+    Label hitLabel,gameOverLabel;
+    
+    //Private Functions
+    void buttonClicked (Button *button) override;
+    void gameOver();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

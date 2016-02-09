@@ -19,12 +19,13 @@ NuObstacleComponent::NuObstacleComponent( ) : cnt(0),
     for (int i = 0; i<obstacleLength; i++) {
         midiData.getMidiData(&obstacleHeight[i]);
         obstacleHeight[i] = ( obstacleHeight[i] );//*100;//*0.8;
-        std::cout<<obstacleHeight[i]<<"\n";
+//        std::cout<<obstacleHeight[i]<<"\n";
     }
+    obstacleHeight[obstacleLength] =  -1;
     std::cout<<std::endl;
 //    obstacleHeight[0] = round(height/2) - 130/2;
 //    obstacleHeight[1] = round(height/2) - 130/2 + 40;
-//    obstacleHeight[obstacleLength] =  -1;
+    
     
     //normalize noteValues
     normalizeRange(obstacleHeight);
@@ -47,11 +48,11 @@ void NuObstacleComponent::normalizeRange(float *myArray) {
         }
     }
     
-    std::cout<<"Max: "<<max<<", Min: "<<min<<std::endl;
+//    std::cout<<"Max: "<<max<<", Min: "<<min<<std::endl;
     
     for (int i=0; i<obstacleLength; i++) {
         myArray[i] = (myArray[i]-min)*100/(max-min);
-        std::cout<<myArray[i]<<std::endl;
+//        std::cout<<myArray[i]<<std::endl;
     }
 }
 
@@ -91,11 +92,9 @@ int NuObstacleComponent::getObstacleHeight() {
         else {
             cnt++;
         }
-//        std::cout<<temp<<std::endl;
         return temp;
     }
     else {
-//        std::cout<<*obstacleHeight<<std::endl;
         return *obstacleHeight;
     }
 }
