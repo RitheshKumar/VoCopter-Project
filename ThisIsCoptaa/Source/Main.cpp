@@ -13,7 +13,8 @@
 
 
 //==============================================================================
-class ThisIsCoptaaApplication  : public JUCEApplication
+class ThisIsCoptaaApplication  : public JUCEApplication,
+                                 public UnitTestRunner
 {
 public:
     //==============================================================================
@@ -65,6 +66,11 @@ public:
                                                     Colours::lightgrey,
                                                     DocumentWindow::allButtons)
         {
+            //Run Tests First
+            testRunner.runAllTests();
+            
+            
+            //Set Window Properties
             setUsingNativeTitleBar (true);
             setContentOwned (new MainContentComponent(), true);
 
@@ -89,11 +95,14 @@ public:
         */
 
     private:
+        Array<UnitTest*> myTests = UnitTest::getAllTests();
+        UnitTestRunner testRunner;
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
 
 private:
     ScopedPointer<MainWindow> mainWindow;
+    
 };
 
 //==============================================================================

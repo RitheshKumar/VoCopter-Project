@@ -21,7 +21,7 @@ SimpleCorrelation::SimpleCorrelation( int sampleRate, int numSamples, int numCha
 SimpleCorrelation::~SimpleCorrelation() {}
 
 
-float SimpleCorrelation::correlate ( const float** inputData ) 
+float SimpleCorrelation::correlate ( const float** inputData )
 {
 
     aucorr.resize(_numSamples);

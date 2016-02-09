@@ -26,7 +26,7 @@ public:
     
     void stopTracking();
     
-    float correlate ( const float** inputData ); 
+    float correlate ( const float** inputData );
     //==============================================================================
     float getFrequency() { return frequency;  }
 
@@ -43,5 +43,40 @@ private:
     float frequency;
 
 };
+
+
+class SimpleCorrelationTests  : public UnitTest
+{
+public:
+    SimpleCorrelationTests() : UnitTest ("SimpleCorrelation"),
+                               _ppfInputData( new float*[3])
+    {
+        testObj = new SimpleCorrelation( 44100, 1000, 3 );
+    
+        for( int i = 0; i<3; i++ ) {
+            _ppfInputData[i] = new float[1000];
+            std::fill(_ppfInputData[i],_ppfInputData[i]+1000,0);
+        }
+    }
+    
+    ~SimpleCorrelationTests() { delete testObj; }
+    
+    void runTest() override
+    {
+        beginTest ("ZeroCheck");
+        
+        const float **tmp = (const float**) _ppfInputData;
+        
+        float freq = testObj->correlate( tmp );
+
+        expect(freq == 0);
+        
+    }
+private:
+    SimpleCorrelation *testObj;
+    float **_ppfInputData;
+};
+
+static SimpleCorrelationTests simpleCorrelationTest;
 
 #endif /* defined(__RecordingTry__SimpleCorrelation__) */

@@ -19,7 +19,6 @@ MainContentComponent::MainContentComponent() : myObstacle(new
 
 
     setSize (winWidth, winHeight);
-    std::cout<<winWidth<<","<<winHeight<<std::endl;
     setWantsKeyboardFocus(true);
     
     //Notice that the order is important
@@ -116,8 +115,8 @@ void MainContentComponent::timerCallback() {
         Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
         std::cout<<freq<<",";
     }*/
-    myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
-    
+    myObstacle->setBounds(obsX-=1, 0, getWidth()*20, getHeight());
+    std::cout<<obsX<<std::endl;
     int currentHeight = myObstacle->getObstacleHeight() + 135;
     if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){
         addAndMakeVisible(hitLabel);
