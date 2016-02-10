@@ -10,7 +10,7 @@
 
 AudioProcess::AudioProcess ( /*int sampleRate, int numSamples, int numChannels*/ )  {
     isTracking = false;
-    correlation = new SimpleCorrelation ( 44100, 1024, 1 );
+    correlation = new SimpleCorrelation (  );
     freq = 0.0f;
 }
 
@@ -30,7 +30,8 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
 
     if ( /*isTracking*/1 ) {
 
-        freq = correlation->correlate( inputChannelData ); //How can I actually pass a const float** as a parameter??
+        correlation->correlate( (const float**) inputChannelData, freq,
+                                    numSamples, numInputChannels, 44100 ); //How can I actually pass a const float** as a parameter??
                                                            //You can't!
 
              
