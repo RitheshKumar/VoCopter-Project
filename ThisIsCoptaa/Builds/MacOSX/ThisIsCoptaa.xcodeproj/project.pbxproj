@@ -480,6 +480,7 @@
 		7978E7F441D904F75E66AB03 /* juce_UndoableAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_UndoableAction.h; path = ../../../../../Juce/JUCE/modules/juce_data_structures/undomanager/juce_UndoableAction.h; sourceTree = SOURCE_ROOT; };
 		79C40BDCE4174BF5714A9021 /* juce_graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_graphics.h; path = ../../../../../Juce/JUCE/modules/juce_graphics/juce_graphics.h; sourceTree = SOURCE_ROOT; };
 		7A238877766CF2E817382EA0 /* juce_RelativePointPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_RelativePointPath.h; path = ../../../../../Juce/JUCE/modules/juce_gui_basics/positioning/juce_RelativePointPath.h; sourceTree = SOURCE_ROOT; };
+		7A2469E41C6D62E1006E8A2D /* FileRW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileRW.h; path = ../../Source/FileRW.h; sourceTree = "<group>"; };
 		7A5B24171BEA682E00122FA6 /* CopterBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopterBody.cpp; path = ../../Source/CopterBody.cpp; sourceTree = "<group>"; };
 		7A5B24181BEA682E00122FA6 /* CopterBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopterBody.h; path = ../../Source/CopterBody.h; sourceTree = "<group>"; };
 		7A5B24191BEA682E00122FA6 /* CopterComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopterComponent.cpp; path = ../../Source/CopterComponent.cpp; sourceTree = "<group>"; };
@@ -990,6 +991,7 @@
 		0390EBFE0A53A0C810A1F1B9 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				7A2469E61C6D62F0006E8A2D /* Auxiliaries */,
 				7A8EAE8A1C0A0CDF005428E4 /* Get Pitch */,
 				7A8EAE831C0A0C00005428E4 /* Copter Create */,
 				861E2D533C8989F82EEE5430 /* MainComponent.cpp */,
@@ -1749,6 +1751,16 @@
 			name = geometry;
 			sourceTree = "<group>";
 		};
+		7A2469E61C6D62F0006E8A2D /* Auxiliaries */ = {
+			isa = PBXGroup;
+			children = (
+				7A5B241D1BEA682E00122FA6 /* MidiStorage.cpp */,
+				7A5B241E1BEA682E00122FA6 /* MidiStorage.h */,
+				7A2469E41C6D62E1006E8A2D /* FileRW.h */,
+			);
+			name = Auxiliaries;
+			sourceTree = "<group>";
+		};
 		7A3A9F31DD327AC34889E41F /* components */ = {
 			isa = PBXGroup;
 			children = (
@@ -1800,8 +1812,6 @@
 				7A5B241A1BEA682E00122FA6 /* CopterComponent.h */,
 				7A5B241B1BEA682E00122FA6 /* CopterFan.cpp */,
 				7A5B241C1BEA682E00122FA6 /* CopterFan.h */,
-				7A5B241D1BEA682E00122FA6 /* MidiStorage.cpp */,
-				7A5B241E1BEA682E00122FA6 /* MidiStorage.h */,
 				7ADB44DB1C5EB8F40050FEE6 /* NuObstacleComponent.cpp */,
 				7ADB44DC1C5EB8F40050FEE6 /* NuObstacleComponent.h */,
 			);

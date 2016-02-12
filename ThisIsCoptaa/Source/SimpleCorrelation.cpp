@@ -61,12 +61,6 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int nu
 }
 
 
-void SimpleCorrelation::writeTheFile(std::vector<float>* vect,const char *fileName) {
-    std::ofstream outputFile(fileName);
-    std::ostream_iterator<float> outputStream(outputFile,"\n");
-    std::copy(vect->begin(),vect->end(),outputStream);
-}
-
 
 //____________________________________________________________________________________
 //_____________________________**********************_________________________________

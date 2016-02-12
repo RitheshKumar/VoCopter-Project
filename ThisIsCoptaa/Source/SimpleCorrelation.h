@@ -27,8 +27,6 @@ public:
     void correlate ( const float** inputData, float &freq, int numSamples, int numChannels, int sampleRate );
     //==============================================================================
     float getFrequency() { return frequency;  }
-
-    void writeTheFile( std::vector<float>* vect, const char *fileName );
     
 private:
     int64 nextSampleNum;
