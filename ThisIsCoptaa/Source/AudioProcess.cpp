@@ -8,9 +8,8 @@
 
 #include "AudioProcess.h"
 
-AudioProcess::AudioProcess ( /*int sampleRate, int numSamples, int numChannels*/ )  {
+AudioProcess::AudioProcess ()  {
     isTracking = false;
-    correlation = new SimpleCorrelation (  );
     freq = 0.0f;
 }
 
@@ -45,7 +44,13 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
     }
 }
 
-void AudioProcess::audioDeviceAboutToStart (AudioIODevice* device){}
+void AudioProcess::audioDeviceAboutToStart (AudioIODevice* device){
+
+    int blockSize = 2*(int)device->getCurrentBufferSizeSamples();
+    float sampleRate  = (int) device->getCurrentSampleRate();
+    correlation = new SimpleCorrelation( blockSize, 2, sampleRate );
+
+}
 
 void AudioProcess::audioDeviceStopped() {}
 

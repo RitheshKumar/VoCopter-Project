@@ -18,7 +18,7 @@
 class AudioProcess  : public AudioIODeviceCallback
 {
 public:
-    AudioProcess ( /*int sampleRate, int numSamples, int numChannels*/ );
+    AudioProcess ();
     ~AudioProcess();
     
     //==============================================================================
