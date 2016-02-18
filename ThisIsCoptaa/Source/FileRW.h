@@ -31,21 +31,27 @@ public:
     }
 
 
-    static void fileRead( float ** &outFile, int &numSamples, char *fileName ) {
+    static void fileRead( float ** &outFile, int numSamples, char *fileName ) {
 
         std::ifstream inputFile( fileName );
         //numSamples = inputFile.gcount();
-        numSamples = 1000;
-        outFile = new float*[1];
-        outFile[0] = new float[ numSamples ];
+        outFile = new float*[3];
+        for (int c=0; c<3; c++ ) {
+            outFile[c] = new float[ numSamples ];
+        }
 
         int curIdx = 0;
         while ( curIdx<numSamples ) {
             inputFile>>outFile[0][curIdx];
-            std::cout<<outFile[0][curIdx]<<std::endl;
             curIdx++;
         }
 
+        for ( int c=1; c<3; c++ ) {
+            for ( int sample = 0; sample<curIdx; sample++ ) {
+                outFile[c][sample]  = outFile[0][sample];
+            }
+        }
+        
     }
 };
 

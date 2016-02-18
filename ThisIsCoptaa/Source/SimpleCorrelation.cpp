@@ -109,7 +109,7 @@ void SimpleCorrelation::correlate2 ( const float** inputData, float &freq, int n
         
     }
 
-    FileRW::fileWrite( _ppfAucorr, _iAcfBufLen, 1, (char *)"CorrelationOutput.txt" );
+    FileRW::fileWrite( _ppfAucorr, _iAcfBufLen, 1, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/CorrelationOutput.txt" );
 
     if ( freq> 1500) { freq =  0.0f;  }
 
@@ -140,7 +140,7 @@ public:
                                _ppfInputData( new float*[3]),
                                _freq(0),
                                _sampleRate(44100),
-                               _numSamples(1000),
+                               _numSamples(4096),
                                _numChannels(3)
     {
     
@@ -167,19 +167,13 @@ public:
         
         expect(_freq == 0 );
         
-        
-        beginTest("Write Correlated Output");
-        FileRW::fileWrite( _ppfInputData, _numSamples, 1, (char *)"inputSample.txt" );
-        testObj -> correlate2( (const float**) _ppfInputData, _freq, _numSamples);
 
         beginTest("Write Audio Correlated Output");
-        int numAudioSamples = 0;
+ 
+        FileRW::fileRead( _ppfAudioFile, _numSamples, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/audioIn.txt");
+        testObj -> correlate2( (const float**) _ppfAudioFile, _freq, _numSamples);
+        std::cout<<"Output Frequency : "<<_freq<<"\n";
 
-        FileRW::fileRead( _ppfAudioFile, numAudioSamples, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/audioIn.txt");
-        FileRW::fileWrite( _ppfAudioFile, numAudioSamples, 1, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/audioOut.txt");
-
-
-        //testObj -> correlate2( (const float**) _pfAudioFile, _freq, numAudioSamples);
     }
 private:
     float **_ppfInputData, _freq, **_ppfAudioFile;
@@ -194,15 +188,15 @@ private:
         if( strcmp("init",string) == 0 ){
             
             for( int c = 0; c<_numChannels; c++ ) {
-                _ppfInputData[c] = new float[1000];
-                std::fill(_ppfInputData[c],_ppfInputData[c]+1000, setValue);
+                _ppfInputData[c] = new float[_numSamples];
+                std::fill(_ppfInputData[c],_ppfInputData[c]+_numSamples, setValue);
             }
             
         }
         else if( strcmp("set",string) == 0 ){
             
             for( int c = 0; c<_numChannels; c++ ) {
-                std::fill(_ppfInputData[c],_ppfInputData[c]+1000, setValue);
+                std::fill(_ppfInputData[c],_ppfInputData[c]+_numSamples, setValue);
             }
         }
     }
