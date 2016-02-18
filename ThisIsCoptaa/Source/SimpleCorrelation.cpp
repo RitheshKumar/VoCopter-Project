@@ -83,6 +83,8 @@ void SimpleCorrelation::correlate2 ( const float** inputData, float &freq, int n
 {
 
     int acfSize = 2*numSamples-1;
+    startIndex = numSamples;
+
     for (int c = 0; c< _iNumChannels; c++) {
 
 
@@ -94,7 +96,8 @@ void SimpleCorrelation::correlate2 ( const float** inputData, float &freq, int n
 
         float maxVal=0.0;
 
-        for ( int i = 1; i < acfSize - 1; i++ ) {
+
+        for ( int i = startIndex; i < acfSize - 1; i++ ) {
             if ( _ppfAucorr[c][i-1] < _ppfAucorr[c][i] && _ppfAucorr[c][i] >= _ppfAucorr[c][i+1] ) {
                 if ( _ppfAucorr[c][i] >= maxVal ) {
                         maxVal   = _ppfAucorr[c][i];
@@ -103,9 +106,10 @@ void SimpleCorrelation::correlate2 ( const float** inputData, float &freq, int n
             }
         }
 
-        if (startIndex != endIndex) {
-            freq = _fSampleRate/(numSamples-endIndex);
+        if (startIndex != endIndex && endIndex != 0) {
+            freq = _fSampleRate/(endIndex+1-numSamples); //since indexing starts from 0
         }
+
         
     }
 
@@ -153,26 +157,33 @@ public:
     
     void runTest() override
     {
-        beginTest ("ZeroCheck");
-        
-        testObj->correlate2( (const float**) _ppfInputData, _freq, _numSamples );
-        
-        expect(_freq == 0);
-        
-        beginTest ("DC Check");
-        
-        setVal( _ppfInputData, "set", 1.5f );
-        
-        testObj->correlate2( (const float**) _ppfInputData, _freq, _numSamples );
-        
-        expect(_freq == 0 );
+        beginTest ("ZeroCheck"); {
+
+            testObj->correlate2( (const float**) _ppfInputData, _freq, _numSamples );
+            
+            expect(_freq == 0);
+        }
         
 
-        beginTest("Write Audio Correlated Output");
+        beginTest ("DC Check"); {
+        
+            setVal( _ppfInputData, "set", 1.5f );
+            
+            testObj->correlate2( (const float**) _ppfInputData, _freq, _numSamples );
+            
+            expect(_freq == 0 );
+        }
+        
+
+        beginTest("Write Audio Correlated Output"); {
  
-        FileRW::fileRead( _ppfAudioFile, _numSamples, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/audioIn.txt");
-        testObj -> correlate2( (const float**) _ppfAudioFile, _freq, _numSamples);
-        std::cout<<"Output Frequency : "<<_freq<<"\n";
+            FileRW::fileRead( _ppfAudioFile, _numSamples, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/audioIn.txt");
+
+            testObj -> correlate2( (const float**) _ppfAudioFile, _freq, _numSamples);
+
+            expect(_freq == 441);
+
+        }
 
     }
 private:
