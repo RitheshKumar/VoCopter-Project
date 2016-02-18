@@ -25,11 +25,9 @@ public:
     
     //==============================================================================
     
-    void correlate ( const float** inputData, float &freq, int numSamples, int numChannels, int sampleRate );
-    void correlate2 ( const float** inputData, float &freq, int numSamples );
+    void correlate ( const float** inputData, float &freq, int numSamples );
 
     //==============================================================================
-    float getFrequency() { return frequency;  }
     
 private:
     int64 nextSampleNum;

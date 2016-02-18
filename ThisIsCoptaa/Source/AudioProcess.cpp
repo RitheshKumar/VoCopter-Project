@@ -23,16 +23,11 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
                                                 float** outputChannelData, int numOutputChannels,
                                                                            int numSamples)        {
 
-    //std::ofstream outputFile ( "./InputData.txt" );
-    //std::ostream_iterator<float> outputStream( outputFile, "\n" );
-    //std::copy( myData[0], myData[0] + numSamples, outputStream);
 
     if ( /*isTracking*/1 ) {
 
-        correlation->correlate( (const float**) inputChannelData, freq,
-                                    numSamples, numInputChannels, 44100 ); 
-                                                           
-
+        correlation->correlate( (const float**) inputChannelData, freq, numSamples ); 
+        
              
      } 
     // We need to clear the output buffers, in case they're full of junk..
@@ -46,9 +41,10 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
 
 void AudioProcess::audioDeviceAboutToStart (AudioIODevice* device){
 
-    int blockSize = 2*(int)device->getCurrentBufferSizeSamples();
+    int   blockSize = 2*(int)device->getCurrentBufferSizeSamples(),
+        numChannels = ( device->getActiveInputChannels() ).toInteger();  //getActiveInputChannels() returns a juce::BigInteger
     float sampleRate  = (int) device->getCurrentSampleRate();
-    correlation = new SimpleCorrelation( blockSize, 2, sampleRate );
+    correlation = new SimpleCorrelation( blockSize, numChannels, sampleRate );
 
 }
 

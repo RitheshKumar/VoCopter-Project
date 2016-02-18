@@ -115,8 +115,9 @@ void MainContentComponent::timerCallback() {
         Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
         std::cout<<freq<<",";
     }*/
+//    std::cout<<processingAudio->getFreq()<<std::endl;
     myObstacle->setBounds(obsX-=1, 0, getWidth()*20, getHeight());
-    std::cout<<obsX<<std::endl;
+//    std::cout<<obsX<<std::endl;
     int currentHeight = myObstacle->getObstacleHeight() + 135;
     if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){
         addAndMakeVisible(hitLabel);

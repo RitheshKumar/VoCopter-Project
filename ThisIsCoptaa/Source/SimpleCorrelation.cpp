@@ -39,47 +39,7 @@ SimpleCorrelation::~SimpleCorrelation() {
 
 
 
-void SimpleCorrelation::correlate ( const float** inputData, float &freq, int numSamples, int numChannels, int sampleRate )
-{
-
-    aucorr.resize(numSamples);
-    for (int j = 0; j< numChannels; j++) {
-
-        for (int i = 0; i < numSamples; i++ ) {
-
-                iter = numSamples - i;
-                for ( int k = iter; k < numSamples; k++ ) {
-
-                    aucorr.at ( i ) += inputData[ j ][ k - iter ] * inputData[ j ][ k ];
-
-                }
-            
-        }
-
-        float maxVal=0.0;
-
-        for ( int i = 1; i < aucorr.size() - 1; i++ ) {
-            if ( aucorr[i-1] < aucorr[i] && aucorr[i] >= aucorr[i+1] ) {
-                if ( aucorr[i] >= maxVal ) {
-                        maxVal   = aucorr[i];
-                        endIndex = i;
-                }
-            }
-        }
-
-        if (startIndex != endIndex) {
-            frequency = sampleRate/(numSamples-endIndex);
-        }
-        
-    }
-    aucorr.clear();
-
-    if ( frequency> 1500) { freq =  0.0f;      }
-    else                  { freq = frequency; }
-
-}
-
-void SimpleCorrelation::correlate2 ( const float** inputData, float &freq, int numSamples )
+void SimpleCorrelation::correlate ( const float** inputData, float &freq, int numSamples )
 {
 
     int acfSize = 2*numSamples-1;
@@ -159,7 +119,7 @@ public:
     {
         beginTest ("ZeroCheck"); {
 
-            testObj->correlate2( (const float**) _ppfInputData, _freq, _numSamples );
+            testObj->correlate( (const float**) _ppfInputData, _freq, _numSamples );
             
             expect(_freq == 0);
         }
@@ -169,7 +129,7 @@ public:
         
             setVal( _ppfInputData, "set", 1.5f );
             
-            testObj->correlate2( (const float**) _ppfInputData, _freq, _numSamples );
+            testObj->correlate( (const float**) _ppfInputData, _freq, _numSamples );
             
             expect(_freq == 0 );
         }
@@ -179,7 +139,7 @@ public:
  
             FileRW::fileRead( _ppfAudioFile, _numSamples, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/audioIn.txt");
 
-            testObj -> correlate2( (const float**) _ppfAudioFile, _freq, _numSamples);
+            testObj -> correlate( (const float**) _ppfAudioFile, _freq, _numSamples);
 
             expect(_freq == 441);
 
