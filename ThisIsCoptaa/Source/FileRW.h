@@ -31,6 +31,18 @@ public:
     }
 
 
+    static void fileWrite( float  *inFile, int &fileSize,  char  *fileName ) {
+
+        std::ofstream outputFile(fileName);
+
+        for(int sample=0; sample<fileSize; sample++ ) {
+            outputFile<<inFile[sample]<<"\n";
+        }
+
+        outputFile.close();
+
+    }
+
     static void fileRead( float ** &outFile, int numSamples, char *fileName ) {
 
         std::ifstream inputFile( fileName );

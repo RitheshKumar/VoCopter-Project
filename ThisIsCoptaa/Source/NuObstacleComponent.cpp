@@ -7,6 +7,7 @@
 //
 
 #include "NuObstacleComponent.h"
+#include "fileRW.h"
 
 NuObstacleComponent::NuObstacleComponent(std::string midiFilePath) : midiData(midiFilePath),
                                               cnt(0),
@@ -23,6 +24,7 @@ NuObstacleComponent::NuObstacleComponent(std::string midiFilePath) : midiData(mi
 //        std::cout<<obstacleHeight[i]<<"\n";
     }
     obstacleHeight[obstacleLength] =  -1;
+    FileRW::fileWrite( obstacleHeight, obstacleLength, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/midiOut.txt" );
     std::cout<<std::endl;
 //    obstacleHeight[0] = round(height/2) - 130/2;
 //    obstacleHeight[1] = round(height/2) - 130/2 + 40;

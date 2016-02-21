@@ -17,6 +17,7 @@
 		58B570B48051225701835A7D /* RecentFilesMenuTemplate.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4210EA228C7E55CFEA348755 /* RecentFilesMenuTemplate.nib */; };
 		616CC99D98ED2C99FFCAA2AD /* juce_data_structures.mm in Sources */ = {isa = PBXBuildFile; fileRef = D2DE32579610009D8D538532 /* juce_data_structures.mm */; };
 		64511D70D2CDF4E14855D8E8 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 973E467F0814A15394D9EBB3 /* Accelerate.framework */; };
+		7A0FB1411C795916002F025F /* MathOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A0FB1401C795916002F025F /* MathOperation.cpp */; };
 		7A5B24211BEA682E00122FA6 /* CopterBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B24171BEA682E00122FA6 /* CopterBody.cpp */; };
 		7A5B24221BEA682E00122FA6 /* CopterComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B24191BEA682E00122FA6 /* CopterComponent.cpp */; };
 		7A5B24231BEA682E00122FA6 /* CopterFan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B241B1BEA682E00122FA6 /* CopterFan.cpp */; };
@@ -479,6 +480,7 @@
 		784FD40453D3E301E9CF7D5A /* juce_BufferingAudioSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_BufferingAudioSource.h; path = ../../../../../Juce/JUCE/modules/juce_audio_basics/sources/juce_BufferingAudioSource.h; sourceTree = SOURCE_ROOT; };
 		7978E7F441D904F75E66AB03 /* juce_UndoableAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_UndoableAction.h; path = ../../../../../Juce/JUCE/modules/juce_data_structures/undomanager/juce_UndoableAction.h; sourceTree = SOURCE_ROOT; };
 		79C40BDCE4174BF5714A9021 /* juce_graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_graphics.h; path = ../../../../../Juce/JUCE/modules/juce_graphics/juce_graphics.h; sourceTree = SOURCE_ROOT; };
+		7A0FB1401C795916002F025F /* MathOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MathOperation.cpp; path = ../../Source/MathOperation.cpp; sourceTree = "<group>"; };
 		7A238877766CF2E817382EA0 /* juce_RelativePointPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_RelativePointPath.h; path = ../../../../../Juce/JUCE/modules/juce_gui_basics/positioning/juce_RelativePointPath.h; sourceTree = SOURCE_ROOT; };
 		7A2469E41C6D62E1006E8A2D /* FileRW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileRW.h; path = ../../Source/FileRW.h; sourceTree = "<group>"; };
 		7A5B24171BEA682E00122FA6 /* CopterBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CopterBody.cpp; path = ../../Source/CopterBody.cpp; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 		7A5B241D1BEA682E00122FA6 /* MidiStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MidiStorage.cpp; path = ../../Source/MidiStorage.cpp; sourceTree = "<group>"; };
 		7A5B241E1BEA682E00122FA6 /* MidiStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiStorage.h; path = ../../Source/MidiStorage.h; sourceTree = "<group>"; };
 		7A67D39451A3EC86BA37D9EA /* juce_GlyphArrangement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_GlyphArrangement.cpp; path = ../../../../../Juce/JUCE/modules/juce_graphics/fonts/juce_GlyphArrangement.cpp; sourceTree = SOURCE_ROOT; };
+		7A838AD41C76DED000B4CE26 /* MathOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathOperation.h; path = ../../Source/MathOperation.h; sourceTree = "<group>"; };
 		7A8B4A90F1E75D42DD05BDC5 /* juce_MessageListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_MessageListener.h; path = ../../../../../Juce/JUCE/modules/juce_events/messages/juce_MessageListener.h; sourceTree = SOURCE_ROOT; };
 		7A8E0E2369DA06B0A6DEEBD3 /* juce_Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Logger.cpp; path = ../../../../../Juce/JUCE/modules/juce_core/logging/juce_Logger.cpp; sourceTree = SOURCE_ROOT; };
 		7A8EAE841C0A0CD4005428E4 /* AudioProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioProcess.cpp; path = ../../Source/AudioProcess.cpp; sourceTree = "<group>"; };
@@ -1757,6 +1760,8 @@
 				7A5B241D1BEA682E00122FA6 /* MidiStorage.cpp */,
 				7A5B241E1BEA682E00122FA6 /* MidiStorage.h */,
 				7A2469E41C6D62E1006E8A2D /* FileRW.h */,
+				7A838AD41C76DED000B4CE26 /* MathOperation.h */,
+				7A0FB1401C795916002F025F /* MathOperation.cpp */,
 			);
 			name = Auxiliaries;
 			sourceTree = "<group>";
@@ -2792,6 +2797,7 @@
 				B9511A7CC24613315FDAC97C /* juce_audio_processors.mm in Sources */,
 				165EE14F0922F570AFA37A1A /* juce_core.mm in Sources */,
 				A743753F616CC0B69A545B50 /* juce_cryptography.mm in Sources */,
+				7A0FB1411C795916002F025F /* MathOperation.cpp in Sources */,
 				616CC99D98ED2C99FFCAA2AD /* juce_data_structures.mm in Sources */,
 				BF4EDF2894651A47C1221626 /* juce_events.mm in Sources */,
 				7A5B24221BEA682E00122FA6 /* CopterComponent.cpp in Sources */,
