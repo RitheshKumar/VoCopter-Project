@@ -7,10 +7,10 @@
 //
 
 #include "MidiStorage.h"
+#include "MathOperation.h"
 
 MidiStorage::MidiStorage(std::string fileName) : filePath(fileName), cnt(0), midiLen(0) {
     readMidiData();
-    midiLen = noteNumber.size();
 }
 
 MidiStorage::~MidiStorage() {
@@ -20,6 +20,7 @@ void MidiStorage::readMidiData() {
     
     filePtr = new File (filePath);
     bool fileExists = filePtr->existsAsFile();
+    int NumEvents;
 
     if (fileExists) {
 
@@ -32,7 +33,7 @@ void MidiStorage::readMidiData() {
         midiSequence = fileMIDI.getTrack(1);    //Track indices start from 1; Also we want only one track to exist
         //Logger::writeToLog("Total No. of events in the track is : "+ std::to_string( midiSequence->getNumEvents()));
 
-        int NumEvents = midiSequence->getNumEvents();
+        NumEvents = midiSequence->getNumEvents();
         noteNumber.resize(NumEvents);
 
         //std::cout<<"The sequence of notes are:\n";
@@ -52,6 +53,11 @@ void MidiStorage::readMidiData() {
     else {
         Logger::writeToLog("Error in Reading Midi File - It doesn't exist");
     }
+
+    //Filter Outliers
+    MathOperation::filterOutliers(&noteNumber.at(0), NumEvents) ;
+    midiLen = NumEvents;
+    
     
 }
 

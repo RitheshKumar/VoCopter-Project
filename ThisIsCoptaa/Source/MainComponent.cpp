@@ -116,7 +116,7 @@ void MainContentComponent::timerCallback() {
         std::cout<<freq<<",";
     }*/
 //    std::cout<<processingAudio->getFreq()<<std::endl;
-    myObstacle->setBounds(obsX-=1, 0, getWidth()*20, getHeight());
+    myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
 //    std::cout<<obsX<<std::endl;
     int currentHeight = myObstacle->getObstacleHeight() + 135;
     if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){

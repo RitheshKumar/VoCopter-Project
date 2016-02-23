@@ -8,7 +8,7 @@
 
 #include "MathOperation.h"
 
-float MathOperation::filterOutliers( float *pfInput, int iInputLen ) {
+float MathOperation::filterOutliers( float *pfInput, int &iInputLen ) {
     float *pfInputCpy = new float[ iInputLen ] ;
     std::memcpy(pfInputCpy, pfInput, sizeof(float)*iInputLen);
 
@@ -27,12 +27,19 @@ float MathOperation::filterOutliers( float *pfInput, int iInputLen ) {
     } 
 
 
+    int count =0;
     float meanAbsDev = findMedian( pfCalcDiff, iInputLen );
+    
     for( int sample = 0; sample < iInputLen; sample++ ) {
         if( 5*meanAbsDev < pfCalcDiff[sample] ) {
-            pfInput[sample] = -1;
+            count++;
+            for ( int iter = sample-count; iter< iInputLen-1; iter++){
+                pfInput[iter] = pfInput[iter+1];
+            }
         }
     }
+    
+    iInputLen = iInputLen-count;
 
     return meanAbsDev;
 
@@ -147,11 +154,11 @@ public:
     
     void runTest() override
     {
-        float med;
+        float med; int size;
         beginTest ("ZeroCheck"); {
             
-            float inputVal[14] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-            med = testObj->filterOutliers( inputVal, 14 );
+            float inputVal[14] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0}; size=14;
+            med = testObj->filterOutliers( inputVal, size );
             
             expect(med == 0);
         }
@@ -169,11 +176,11 @@ public:
             expect(med == 2.0 );
         
 
-            med = testObj->filterOutliers( inputVal2, 7);
+            size = 7;
+            med = testObj->filterOutliers( inputVal2, size);
             expect(med == 1.0 );
-            for ( int sample = 0; sample< 7; sample++ ) {
-                std::cout<<inputVal2[sample]<<", ";
-            } std::cout<<"\n";
+           
+
         }
         
         

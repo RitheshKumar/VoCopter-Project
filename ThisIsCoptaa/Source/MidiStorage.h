@@ -10,6 +10,8 @@
 #define __ThisIsCoptaa__MidiStorage__
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "MathOperation.h"
+#include "FileRW.h"
 
 class MidiStorage {
 public:

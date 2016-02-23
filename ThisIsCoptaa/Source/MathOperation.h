@@ -19,7 +19,7 @@ public:
     ~MathOperation(){}
 
     static void normalize( float *pfInput, int iInputLen );
-    static float filterOutliers( float *pfInput, int iInputLen );
+    static float filterOutliers( float *pfInput, int &iInputLen );
     static float findMedian( float *pfInput, int iInputLen );
     static float findMeanAbsDev( float *pfInput, int iInputLen );
     static float findMeanAbsDev( float *pfInput, int iInputLen, float median );
