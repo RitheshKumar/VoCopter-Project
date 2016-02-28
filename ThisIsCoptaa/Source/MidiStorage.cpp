@@ -8,6 +8,7 @@
 
 #include "MidiStorage.h"
 #include "MathOperation.h"
+#include "FileRW.h"
 
 MidiStorage::MidiStorage(std::string fileName) : filePath(fileName), cnt(0), midiLen(0) {
     readMidiData();
@@ -57,6 +58,8 @@ void MidiStorage::readMidiData() {
     //Filter Outliers
     MathOperation::filterOutliers(&noteNumber.at(0), NumEvents) ;
     midiLen = NumEvents;
+    
+    
     
     
 }

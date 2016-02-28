@@ -26,11 +26,16 @@ NuObstacleComponent::NuObstacleComponent(std::string midiFilePath) : midiData(mi
     }
     obstacleHeight[obstacleLength] =  -2;
 
-//    FileRW::fileWrite( obstacleHeight, obstacleLength, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/midiOut.txt" );
     
-    
+    FileRW::fileWrite( obstacleHeight, obstacleLength, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/broomba.txt");
+
+
     //normalize noteValues
     normalizeRange(obstacleHeight);
+    
+    //The Value received from midiStorage and normalized range all tally with Matlab results
+//    FileRW::fileWrite( obstacleHeight, obstacleLength, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/glissandoOut.txt");
+
     
 }
 
@@ -54,7 +59,7 @@ void NuObstacleComponent::normalizeRange(float *myArray) {
     //std::cout<<"Max: "<<max<<", Min: "<<min<<std::endl;
     
     for (int i=0; i<obstacleLength; i++) {
-        myArray[i] = (myArray[i]-min)*100/(max-min);
+        myArray[i] = (myArray[i]-min)/(max-min);
         //std::cout<<myArray[i]<<std::endl;
     }
 }
@@ -70,16 +75,30 @@ void NuObstacleComponent::paint(Graphics &g) {
             continue;
         }
 
+        //if ( obstacleHeight[i] < 0.5f ) {
+        //    g.drawLine( i*400,       round(getHeight()/2)-obstacleHeight[i],
+        //               (i+1)*400,    round(getHeight()/2)-obstacleHeight[i],
+        //               130);
+        //}
+        //else {
+        //    g.drawLine( i*400,       round(getHeight()/2)+obstacleHeight[i],
+        //               (i+1)*400,    round(getHeight()/2)+obstacleHeight[i],
+        //               130);
+         //}
         if ( obstacleHeight[i] < 0.5f ) {
-            g.drawLine( i*400,       round(getHeight()/2)-obstacleHeight[i],
-                       (i+1)*400,    round(getHeight()/2)-obstacleHeight[i],
-                       130);
+            g.drawLine( i*20,       round(getHeight()/2)-30*obstacleHeight[i],
+                       (i+1)*20,    round(getHeight()/2)-30*obstacleHeight[i],
+                       75);
+            //std::cout<<round(getHeight()/2)-obstacleHeight[i];
         }
         else {
-            g.drawLine( i*400,       round(getHeight()/2)+obstacleHeight[i],
-                       (i+1)*400,    round(getHeight()/2)+obstacleHeight[i],
-                       130);
+            g.drawLine( i*20,       round(getHeight()/2)+30*obstacleHeight[i],
+                       (i+1)*20,    round(getHeight()/2)+30*obstacleHeight[i],
+                       75);
+            //std::cout<<round(getHeight()/2)+obstacleHeight[i];
         }
+
+        std::cout<<std::endl;
 
     }
 

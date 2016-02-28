@@ -7,9 +7,19 @@
 //
 
 #include "MathOperation.h"
+#include "FileRW.h"
 
 float MathOperation::filterOutliers( float *pfInput, int &iInputLen ) {
-    float *pfInputCpy = new float[ iInputLen ] ;
+    float *pfInputCpy = new float[ (int)iInputLen/2 ] ;
+    
+    //Take out repetitions
+    for (int sample=1; sample<iInputLen; sample++) {
+        if (pfInput[sample] == pfInput[sample-1] ) {
+            pfInput[sample] = -1;
+        }
+    }
+    
+    
     std::memcpy(pfInputCpy, pfInput, sizeof(float)*iInputLen);
 
     float      median = findMedian( pfInputCpy, iInputLen ),
@@ -28,10 +38,10 @@ float MathOperation::filterOutliers( float *pfInput, int &iInputLen ) {
 
 
     int count =0;
-    float meanAbsDev = findMedian( pfCalcDiff, iInputLen );
+    float medAbsDev = findMedian( pfCalcDiff, iInputLen );
     
     for( int sample = 0; sample < iInputLen; sample++ ) {
-        if( 5*meanAbsDev < pfCalcDiff[sample] ) {
+        if( 2*medAbsDev < pfCalcDiff[sample] || pfCalcDiff[sample] == 0  ) {
             count++;
             for ( int iter = sample-count; iter< iInputLen-1; iter++){
                 pfInput[iter] = pfInput[iter+1];
@@ -39,9 +49,11 @@ float MathOperation::filterOutliers( float *pfInput, int &iInputLen ) {
         }
     }
     
-    iInputLen = iInputLen-count;
+    iInputLen = iInputLen-count-1; //The last note is end note. Not needed. 
+    
+//    FileRW::fileWrite( pfInput, iInputLen, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/filtOut.txt");
 
-    return meanAbsDev;
+    return medAbsDev;
 
 }
 
