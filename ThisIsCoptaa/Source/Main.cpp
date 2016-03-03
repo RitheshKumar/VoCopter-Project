@@ -13,8 +13,8 @@
 
 
 //==============================================================================
-class ThisIsCoptaaApplication  : public JUCEApplication,
-                                 public UnitTestRunner
+class ThisIsCoptaaApplication  : public JUCEApplication
+                                 //public UnitTestRunner
 {
 public:
     //==============================================================================
@@ -67,7 +67,7 @@ public:
                                                     DocumentWindow::allButtons)
         {
             //Run Tests First
-            testRunner.runAllTests();
+//            testRunner.runAllTests();
             
             
             //Set Window Properties
@@ -95,8 +95,8 @@ public:
         */
 
     private:
-        Array<UnitTest*> myTests = UnitTest::getAllTests();
-        UnitTestRunner testRunner;
+//        Array<UnitTest*> myTests = UnitTest::getAllTests();
+//        UnitTestRunner testRunner;
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
 

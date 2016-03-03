@@ -161,7 +161,8 @@ public:
     }
     
     ~MathOperationTests() { 
-        delete testObj; 
+        delete testObj;
+        testObj = 0;
     }
     
     void runTest() override

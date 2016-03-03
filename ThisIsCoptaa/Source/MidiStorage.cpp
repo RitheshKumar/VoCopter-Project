@@ -15,18 +15,23 @@ MidiStorage::MidiStorage(std::string fileName) : filePath(fileName), cnt(0), mid
 }
 
 MidiStorage::~MidiStorage() {
-
+//    delete midiSequence; //You don't need this! The array in MidiMessage class uses the Array class, which deletes itself! 
 }
 void MidiStorage::readMidiData() {
     
-    filePtr = new File (filePath);
+    File *filePtr = new File (filePath);
     bool fileExists = filePtr->existsAsFile();
     int NumEvents;
 
     if (fileExists) {
 
-        FileInputStream* fileInputStream;
-        fileInputStream = filePtr->createInputStream(); //delete the stream! 
+        FileInputStream *fileInputStream = filePtr->createInputStream(); //delete the stream! 
+        MidiFile fileMIDI;
+        const MidiMessageSequence *midiSequence;
+        MidiMessageSequence::MidiEventHolder *midiEvent;
+        MidiMessage midiVal;
+
+
         /*bool midiReadSuccessfully =*/ fileMIDI.readFrom(*fileInputStream); // note the *
         //Logger::writeToLog("Successfully read midi file:"+std::to_string(midiReadSuccessfully));
         //Logger::writeToLog("No. of Tracks in file: "+std::to_string(fileMIDI.getNumTracks()));
@@ -44,7 +49,7 @@ void MidiStorage::readMidiData() {
             noteNumber[i] =  midiVal.getNoteNumber();
             //std::cout<<noteNumber[i]<<" "<<midiVal.getMidiNoteName(noteNumber[i],true,true,4)<<std::endl;
         }
-        delete fileInputStream; 
+//        delete fileInputStream; fileInputStream = 0;
  
         //Logger::writeToLog("The Note no. is: " + std::to_string(noteNumber));
         //Logger::writeToLog("Therefore the note is: " + midiVal.getMidiNoteName(noteNumber,true,true,4)); //octave no. for middle C is 4
@@ -60,7 +65,7 @@ void MidiStorage::readMidiData() {
     midiLen = NumEvents;
     
     
-    
+//    delete filePtr; filePtr = 0;
     
 }
 

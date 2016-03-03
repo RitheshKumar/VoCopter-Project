@@ -34,6 +34,7 @@ SimpleCorrelation::~SimpleCorrelation() {
         delete [] _ppfAucorr[c];
     }
     delete [] _ppfAucorr;
+    _ppfAucorr = 0;
 
 }
 
@@ -113,7 +114,7 @@ public:
         
     }
     
-    ~SimpleCorrelationTests() { delete testObj; }
+    ~SimpleCorrelationTests() { delete testObj; testObj = 0; }
     
     void runTest() override
     {

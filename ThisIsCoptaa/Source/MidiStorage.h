@@ -22,13 +22,13 @@ public:
     int  getMidiLen() { return midiLen; }
 
 private:
-    File* filePtr;
-    //ScopedPointer<FileInputStream> fileInputStream;
-    FileInputStream* fileInputStream;
-    MidiFile fileMIDI;
-    const MidiMessageSequence *midiSequence;
-    MidiMessageSequence::MidiEventHolder *midiEvent;
-    MidiMessage midiVal;
+    //File* filePtr;
+    ////ScopedPointer<FileInputStream> fileInputStream;
+    //FileInputStream* fileInputStream;
+    //MidiFile fileMIDI;
+    //const MidiMessageSequence *midiSequence;
+    //MidiMessageSequence::MidiEventHolder *midiEvent;
+    //MidiMessage midiVal;
     
     std::vector<float> noteNumber;
     std::string filePath;
