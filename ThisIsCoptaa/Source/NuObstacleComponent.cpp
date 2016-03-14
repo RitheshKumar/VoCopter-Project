@@ -11,7 +11,10 @@
 
 
 
-NuObstacleComponent::NuObstacleComponent(char *midiFilePath) : midiData(midiFilePath)
+NuObstacleComponent::NuObstacleComponent(char *midiFilePath) : midiData(midiFilePath),
+                                                               pathWidth(140),
+                                                               pathHeight(75),
+                                                               pathPosition(60)
 {
 //    int count = 0;
 //    for (int i=0; i< midiData.getMidiLen(); i++) {
@@ -73,6 +76,8 @@ void NuObstacleComponent::normalizeRange(float *myArray) {
 }
 
 
+
+
 void NuObstacleComponent::paint(Graphics &g) {
 
     g.fillAll(Colours::black);
@@ -94,15 +99,15 @@ void NuObstacleComponent::paint(Graphics &g) {
         //               130);
          //}
         if ( obstacleHeight[i] < 0.5f ) {
-            g.drawLine( i*140,       round(getHeight()/2)+60*(1-obstacleHeight[i]),
-                       (i+1)*140,    round(getHeight()/2)+60*(1-obstacleHeight[i]),
-                       75);
+            g.drawLine( i*pathWidth,       round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]),
+                       (i+1)*pathWidth,    round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]),
+                       pathHeight);
             //std::cout<<round(getHeight()/2)-obstacleHeight[i];
         }
         else {
-            g.drawLine( i*140,       round(getHeight()/2)-60*obstacleHeight[i],
-                       (i+1)*140,    round(getHeight()/2)-60*obstacleHeight[i],
-                       75);
+            g.drawLine( i*pathWidth,       round(getHeight()/2)-pathPosition*obstacleHeight[i],
+                       (i+1)*pathWidth,    round(getHeight()/2)-pathPosition*obstacleHeight[i],
+                       pathHeight);
             //std::cout<<round(getHeight()/2)+obstacleHeight[i];
         }
 
