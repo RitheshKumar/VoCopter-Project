@@ -10,7 +10,8 @@
 #include "FileRW.h"
 
 float MathOperation::filterOutliers( float *pfInput, int &iInputLen ) {
-    float *pfInputCpy = new float[ (int)iInputLen/2 ] ;
+
+    float *pfInputCpy = new float[ iInputLen ];
     
     //Take out repetitions
     for (int sample=1; sample<iInputLen; sample++) {

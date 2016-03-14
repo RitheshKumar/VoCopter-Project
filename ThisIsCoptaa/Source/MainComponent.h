@@ -43,13 +43,11 @@ private:
     
     NuObstacleComponent *myObstacle;
     CopterComponent Copter;
-    ComponentAnimator Animation;
-    Viewport viewport;
     
     AudioProcess *processingAudio;
     AudioDeviceManager deviceManager;
     
-    int winWidth = 600, winHeight = 400, cnt = 0;
+    int winWidth = 600, winHeight = 400, cnt = 0, currentHeight;
     float xpos, ypos,obsX;
     bool keyRelease;
     

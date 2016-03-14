@@ -74,7 +74,7 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int nu
         
     }
 
-    FileRW::fileWrite( _ppfAucorr, _iAcfBufLen, 1, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/CorrelationOutput.txt" );
+//    FileRW::fileWrite( _ppfAucorr, _iAcfBufLen, 1, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/CorrelationOutput.txt" );
 
     if ( freq> 1500) { freq =  0.0f;  }
 

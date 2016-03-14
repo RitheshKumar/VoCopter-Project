@@ -1,0 +1,13 @@
+1) MainContentComponent()
+    1.1) startButton, stopButton
+    1.2) myObstacle = new nuObstacleComponent("..path..");
+         1.2.1) midiData(midiFilePath)
+            1.2.1.1) 
+         1.2.2) obstacleLength
+         1.2.3) obstacleHeight =  new float[midiLen]
+         1.2.4) normalizeRange(obstacleHeight)
+    //1.3) CopterComponent
+    //1.4) processingAudio = new AudioProcess;
+    //1.5) deviceManager.initialize
+    //1.6) deviceManager.addAudioCallback
+    1.7) hitlabel, gameOverLabel

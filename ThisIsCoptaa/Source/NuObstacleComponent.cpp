@@ -9,9 +9,9 @@
 #include "NuObstacleComponent.h"
 #include "fileRW.h"
 
-NuObstacleComponent::NuObstacleComponent(std::string midiFilePath) : midiData(midiFilePath),
-                                                                     cnt(0),
-                                                                     obstacleLength(midiData.getMidiLen())
+
+
+NuObstacleComponent::NuObstacleComponent(char *midiFilePath) : midiData(midiFilePath)
 {
 //    int count = 0;
 //    for (int i=0; i< midiData.getMidiLen(); i++) {
@@ -19,9 +19,10 @@ NuObstacleComponent::NuObstacleComponent(std::string midiFilePath) : midiData(mi
 //        count++;
 //    }
 
+    obstacleLength = midiData.getMidiLen();
     int midiLen = midiData.getMidiLen() + 1;
-    float *randomVar  = new float[ midiLen ];
-    //obstacleHeight =  new float[ midiLen ];
+//    float *randomVar  = new float[ midiLen ];
+    obstacleHeight =  new float[ midiLen ];
 
     for (int i = 0; i<obstacleLength; i++) {
         midiData.getMidiData(&obstacleHeight[i]);
@@ -30,7 +31,7 @@ NuObstacleComponent::NuObstacleComponent(std::string midiFilePath) : midiData(mi
     obstacleHeight[obstacleLength] =  -2;
 
     
-    FileRW::fileWrite( obstacleHeight, obstacleLength, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/broomba.txt");
+//    FileRW::fileWrite( obstacleHeight, obstacleLength, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/broomba.txt");
 
 
     //normalize noteValues
@@ -88,7 +89,7 @@ void NuObstacleComponent::paint(Graphics &g) {
         //               130);
         //}
         //else {
-        //    g.drawLine( i*400,       round(getHeight()/2)+obstacleHeight[i],
+        //    g.drawLine( i*400,       round(getHeight()/2)+[i],
         //               (i+1)*400,    round(getHeight()/2)+obstacleHeight[i],
         //               130);
          //}
@@ -111,21 +112,21 @@ void NuObstacleComponent::paint(Graphics &g) {
 
 }
 
+int nthNote = 0,cnt=0;
 
 int NuObstacleComponent::getObstacleHeight() {
     if( *obstacleHeight!= -2) { //if ptr has not reached end of stream
-        int temp = *obstacleHeight;
         if ( (cnt%400 == 0) && (cnt != 0)) {
-            obstacleHeight++;
+            nthNote++;
             cnt++;
         }
         else {
             cnt++;
         }
-        return temp;
+        return obstacleHeight[nthNote];
     }
     else {
-        return *obstacleHeight;
+        return obstacleHeight[nthNote];
     }
 }
 

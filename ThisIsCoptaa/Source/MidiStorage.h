@@ -15,7 +15,7 @@
 
 class MidiStorage {
 public:
-    MidiStorage(std::string fileName);
+    MidiStorage(char *filePath);
     ~MidiStorage();
 
     bool getMidiData( float * note );
@@ -30,11 +30,10 @@ private:
     //MidiMessageSequence::MidiEventHolder *midiEvent;
     //MidiMessage midiVal;
     
-    std::vector<float> noteNumber;
-    std::string filePath;
+    float *noteNumber;
     int cnt, midiLen;
 
-    void readMidiData();
+    void readMidiData(char *filePath);
 };
 
 #endif /* defined(__ThisIsCoptaa__MidiStorage__) */

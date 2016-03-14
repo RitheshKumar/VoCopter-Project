@@ -10,16 +10,14 @@
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent() : xpos(winWidth*0.15),
+MainContentComponent::MainContentComponent() : currentHeight(0),
+                                               xpos(winWidth*0.15),
                                                ypos(winHeight*0.5-25),
-                                               obsX(winWidth*0.15)
+                                               obsX(winWidth*0.15),
+                                               keyRelease(0)
 {
 
 
-    setSize (winWidth, winHeight);
-    setWantsKeyboardFocus(true);
-
-    myObstacle = new NuObstacleComponent("~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
 
     //Notice that the order is important
     addAndMakeVisible(startButton);
@@ -34,20 +32,23 @@ MainContentComponent::MainContentComponent() : xpos(winWidth*0.15),
     stopButton.setColour(TextButton::textColourOnId, Colours::black);
     
     
+    myObstacle = new NuObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
 //    addAndMakeVisible(myObstacle); //NuObstacleComponent class
 //    addAndMakeVisible(Copter);    //CopterComponent Class
+    
+    
+    //    processingAudio = new AudioProcess();
+    //    deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
+    //    deviceManager.addAudioCallback(processingAudio);
     
     hitLabel.setText("Copter Hit!", dontSendNotification);
     hitLabel.setColour(Label::textColourId, Colours::red);
     gameOverLabel.setFont(Font(40));
     gameOverLabel.setText("Game Over", dontSendNotification);
     gameOverLabel.setColour(Label::textColourId, Colours::red);
-//    gameOverLabel.setText(, <#juce::NotificationType notification#>)
-    
-    
-//    processingAudio = new AudioProcess;
-//    deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
-//    deviceManager.addAudioCallback(processingAudio);
+
+    setSize (winWidth, winHeight);
+    setWantsKeyboardFocus(true);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -74,7 +75,7 @@ void MainContentComponent::resized()
     startButton.setBounds(getWidth()/2-50, getHeight()/2-20, 100, 40);
     
     Copter.setBounds(xpos,ypos,/*getWidth()*0.3,getHeight()*0.3*/80,60);
-//    myObstacle->setBounds(/*obsX*/0, 0, getWidth(), getHeight());
+    myObstacle->setBounds(/*obsX*/0, 0, getWidth(), getHeight());
     stopButton.setBounds(getWidth()-45, 20, 40, 20);
     hitLabel.setBounds(round(getWidth()/2)-40,round(getHeight()/2),80,50);
     
@@ -117,9 +118,9 @@ void MainContentComponent::timerCallback() {
         std::cout<<freq<<",";
     }*/
 //    std::cout<<processingAudio->getFreq()<<std::endl;
-//    myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
+    myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
 //    std::cout<<obsX<<std::endl;
-    /*int currentHeight = myObstacle->getObstacleHeight() + 135;
+    currentHeight = myObstacle->getObstacleHeight() + 135;
     if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){
         addAndMakeVisible(hitLabel);
     }
@@ -130,7 +131,7 @@ void MainContentComponent::timerCallback() {
     if ( keyRelease == true ) {
         ypos += 5;
         Copter.setBounds((int)xpos,(int)ypos,80,60);
-    }*/
+    }
     
 }
 
@@ -139,7 +140,7 @@ void MainContentComponent::buttonClicked (Button *button) {
     
     if (button == &startButton) {
         removeChildComponent(&startButton);
-        //addAndMakeVisible(myObstacle);
+        addAndMakeVisible(myObstacle);
         addAndMakeVisible(Copter);
         addAndMakeVisible(stopButton);
         startTimer(50);

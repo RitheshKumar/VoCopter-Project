@@ -16,7 +16,7 @@ class NuObstacleComponent : public Component
 {
 public:
 
-    NuObstacleComponent ( std::string midiFilePath );
+    NuObstacleComponent ( char *midiFilePath );
     ~NuObstacleComponent( );
 
     void paint(Graphics &g);
@@ -26,7 +26,7 @@ public:
 private:
     MidiStorage midiData;
     
-    int cnt,obstacleLength;
+    int obstacleLength;
     float *obstacleHeight;
     
     void normalizeRange(float *myArray);
