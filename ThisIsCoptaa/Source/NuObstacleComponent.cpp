@@ -75,7 +75,7 @@ void NuObstacleComponent::normalizeRange(float *myArray) {
     }
 }
 
-
+float prevHeight;
 
 
 void NuObstacleComponent::paint(Graphics &g) {
@@ -83,6 +83,7 @@ void NuObstacleComponent::paint(Graphics &g) {
     g.fillAll(Colours::black);
     g.setColour(Colours::cornflowerblue);
     
+    prevHeight = 0.f;
     for (int i=0; i<obstacleLength; i++) {
         if ( obstacleHeight[i] == -1 ) {
             continue;
@@ -98,20 +99,28 @@ void NuObstacleComponent::paint(Graphics &g) {
         //               (i+1)*400,    round(getHeight()/2)+obstacleHeight[i],
         //               130);
          //}
-        if ( obstacleHeight[i] < 0.5f ) {
+//        if ( obstacleHeight[i] < 0.5f ) {
             g.drawLine( i*pathWidth,       round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]),
                        (i+1)*pathWidth,    round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]),
                        pathHeight);
-            //std::cout<<round(getHeight()/2)-obstacleHeight[i];
-        }
-        else {
-            g.drawLine( i*pathWidth,       round(getHeight()/2)-pathPosition*obstacleHeight[i],
-                       (i+1)*pathWidth,    round(getHeight()/2)-pathPosition*obstacleHeight[i],
-                       pathHeight);
-            //std::cout<<round(getHeight()/2)+obstacleHeight[i];
-        }
+//            g.drawLine(i*(1.f*pathWidth/2.f),      prevHeight,
+//                       (i+1)*(1.f*pathWidth/2.f), round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]),
+//                       pathHeight);
+//            prevHeight = round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]);
+//            //std::cout<<round(getHeight()/2)-obstacleHeight[i];
+//        }
+//        else {
+//            g.drawLine( i*pathWidth,       round(getHeight()/2)-pathPosition*obstacleHeight[i],
+//                       (i+1)*pathWidth,    round(getHeight()/2)-pathPosition*obstacleHeight[i],
+//                       pathHeight);
+//            g.drawLine(i*(pathWidth/2.f),      prevHeight,
+//                       (i+1)*(pathWidth/2.f), round(getHeight()/2)-pathPosition*obstacleHeight[i],
+//                       pathHeight);
+//            prevHeight =round(getHeight()/2)-pathPosition*obstacleHeight[i];
+//            //std::cout<<round(getHeight()/2)+obstacleHeight[i];
+//        }
 
-        std::cout<<std::endl;
+//        std::cout<<std::endl;
 
     }
 
@@ -120,8 +129,9 @@ void NuObstacleComponent::paint(Graphics &g) {
 int nthNote = 0,cnt=0;
 
 int NuObstacleComponent::getObstacleHeight() {
+    std::cout<<obstacleHeight[nthNote]<<std::endl;
     if( *obstacleHeight!= -2) { //if ptr has not reached end of stream
-        if ( (cnt%400 == 0) && (cnt != 0)) {
+        if ( (cnt%(pathWidth/5) == 0) && (cnt != 0)) { //pathWidth
             nthNote++;
             cnt++;
         }

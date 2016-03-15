@@ -27,9 +27,9 @@ private:
     MidiStorage midiData;
     
     int obstacleLength;
-    int pathWidth,
-        pathHeight,
-        pathPosition;
+    const int pathWidth,
+              pathHeight,
+              pathPosition;
     float *obstacleHeight;
     
     void normalizeRange(float *myArray);
