@@ -17,5 +17,7 @@ public:
     ~CopterBody();
     
     void paint(Graphics &g);
+private:
+    juce::Image copterImage;
 };
 #endif

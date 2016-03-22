@@ -37,9 +37,9 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
 //    addAndMakeVisible(Copter);    //CopterComponent Class
     
     
-    //    processingAudio = new AudioProcess();
-    //    deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
-    //    deviceManager.addAudioCallback(processingAudio);
+    processingAudio = new AudioProcess();
+    deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
+    deviceManager.addAudioCallback(processingAudio);
     
     hitLabel.setText("Copter Hit!", dontSendNotification);
     hitLabel.setColour(Label::textColourId, Colours::red);
@@ -112,12 +112,12 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
 }
 
 void MainContentComponent::timerCallback() {
-    /*float freq  = processingAudio->getFreq() - 200;
+    float freq  = processingAudio->getFreq() - 200;
     if (freq < 322 && freq > 5) {
         Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
         std::cout<<freq<<",";
-    }*/
-//    std::cout<<processingAudio->getFreq()<<std::endl;
+    }
+    std::cout<<processingAudio->getFreq()<<std::endl;
     myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
 //    std::cout<<obsX<<std::endl;
     currentHeight = myObstacle->getObstacleHeight() + 135;

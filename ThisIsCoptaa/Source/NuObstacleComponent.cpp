@@ -41,9 +41,9 @@ NuObstacleComponent::NuObstacleComponent(char *midiFilePath) : midiData(midiFile
     normalizeRange(obstacleHeight);
     
     //The Value received from midiStorage and normalized range all tally with Matlab results
-    for (int i = 0; i<obstacleLength; i++) {
-        std::cout<<obstacleHeight[i]<<std::endl;
-    }
+//    for (int i = 0; i<obstacleLength; i++) {
+//        std::cout<<obstacleHeight[i]<<std::endl;
+//    }
 //    FileRW::fileWrite( obstacleHeight, obstacleLength, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/glissandoOut.txt");
 
     
@@ -67,7 +67,7 @@ void NuObstacleComponent::normalizeRange(float *myArray) {
         }
     }
     
-    std::cout<<"Max: "<<max<<", Min: "<<min<<std::endl;
+//    std::cout<<"Max: "<<max<<", Min: "<<min<<std::endl;
     
     for (int i=0; i<obstacleLength; i++) {
         myArray[i] = (myArray[i]-min)/(max-min);
@@ -129,7 +129,7 @@ void NuObstacleComponent::paint(Graphics &g) {
 int nthNote = 0,cnt=0;
 
 int NuObstacleComponent::getObstacleHeight() {
-    std::cout<<obstacleHeight[nthNote]<<std::endl;
+//    std::cout<<obstacleHeight[nthNote]<<std::endl;
     if( *obstacleHeight!= -2) { //if ptr has not reached end of stream
         if ( (cnt%(pathWidth/5) == 0) && (cnt != 0)) { //pathWidth
             nthNote++;

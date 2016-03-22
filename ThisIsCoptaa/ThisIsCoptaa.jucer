@@ -2,14 +2,46 @@
 
 <JUCERPROJECT id="AbgMos" name="ThisIsCoptaa" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.ThisIsCoptaa" includeBinaryInAppConfig="1"
-              jucerVersion="3.2.0">
+              jucerVersion="4.1.0">
   <MAINGROUP id="vpYWxq" name="ThisIsCoptaa">
     <GROUP id="{9BC4F308-D858-BEE7-A54D-2ED3EB87A70A}" name="Source">
+      <GROUP id="{421B6904-E874-304E-E69F-9D618DA444AB}" name="Auxiliaries">
+        <FILE id="V4Sag3" name="FileRW.h" compile="0" resource="0" file="Source/FileRW.h"/>
+        <FILE id="sq0IGm" name="MathOperation.cpp" compile="1" resource="0"
+              file="Source/MathOperation.cpp"/>
+        <FILE id="r3SdOo" name="MathOperation.h" compile="0" resource="0" file="Source/MathOperation.h"/>
+        <FILE id="FZWf2y" name="MidiStorage.cpp" compile="1" resource="0" file="Source/MidiStorage.cpp"/>
+        <FILE id="fkwqzY" name="MidiStorage.h" compile="0" resource="0" file="Source/MidiStorage.h"/>
+      </GROUP>
+      <GROUP id="{23661006-506F-6D95-3CC5-2FE350B01AC4}" name="AudioProcess">
+        <FILE id="wfs42J" name="AudioProcess.cpp" compile="1" resource="0"
+              file="Source/AudioProcess.cpp"/>
+        <FILE id="ocbvwQ" name="AudioProcess.h" compile="0" resource="0" file="Source/AudioProcess.h"/>
+        <FILE id="fCXffK" name="SimpleCorrelation.cpp" compile="1" resource="0"
+              file="Source/SimpleCorrelation.cpp"/>
+        <FILE id="oPHGbq" name="SimpleCorrelation.h" compile="0" resource="0"
+              file="Source/SimpleCorrelation.h"/>
+      </GROUP>
+      <GROUP id="{F0953F8D-67F4-BFE5-484E-F2379A628373}" name="GUI">
+        <FILE id="AYdBWz" name="CopterBody.cpp" compile="1" resource="0" file="Source/CopterBody.cpp"/>
+        <FILE id="tH20pr" name="CopterBody.h" compile="0" resource="0" file="Source/CopterBody.h"/>
+        <FILE id="LUHbDS" name="CopterComponent.cpp" compile="1" resource="0"
+              file="Source/CopterComponent.cpp"/>
+        <FILE id="LAvnqa" name="CopterComponent.h" compile="0" resource="0"
+              file="Source/CopterComponent.h"/>
+        <FILE id="jEaVuz" name="CopterFan.cpp" compile="1" resource="0" file="Source/CopterFan.cpp"/>
+        <FILE id="AYFIU8" name="CopterFan.h" compile="0" resource="0" file="Source/CopterFan.h"/>
+        <FILE id="k7lTDv" name="NuObstacleComponent.cpp" compile="1" resource="0"
+              file="Source/NuObstacleComponent.cpp"/>
+        <FILE id="p93oja" name="NuObstacleComponent.h" compile="0" resource="0"
+              file="Source/NuObstacleComponent.h"/>
+      </GROUP>
       <FILE id="wyGkWL" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="E77R7w" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="zGELZc" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
+    <FILE id="mCLkOl" name="copterFoto.png" compile="0" resource="1" file="Media/copterFoto.png"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">

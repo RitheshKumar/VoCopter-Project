@@ -85,7 +85,7 @@ bool MidiStorage::getMidiData(float *note) {
         return false;
     }
     else {
-        std::cout<<"getMidiData function error"<<std::endl;
+        Logger::writeToLog("getMidiData function error");
         return false;
     }
 }
