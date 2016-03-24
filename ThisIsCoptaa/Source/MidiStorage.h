@@ -30,10 +30,12 @@ private:
     //MidiMessageSequence::MidiEventHolder *midiEvent;
     //MidiMessage midiVal;
     
-    float *noteNumber;
-    int cnt, midiLen;
+    float *noteNumber,
+          *timeStamps;
+    int cnt, midiLen,tStampLen;
 
     void readMidiData(char *filePath);
+    void filterTimeStamps();
 };
 
 #endif /* defined(__ThisIsCoptaa__MidiStorage__) */

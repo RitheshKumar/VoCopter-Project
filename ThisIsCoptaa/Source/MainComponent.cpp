@@ -32,7 +32,7 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
     stopButton.setColour(TextButton::textColourOnId, Colours::black);
     
     
-    myObstacle = new NuObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
+    myObstacle = new NuObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/4Notes.mid") ;
 //    addAndMakeVisible(myObstacle); //NuObstacleComponent class
 //    addAndMakeVisible(Copter);    //CopterComponent Class
     
