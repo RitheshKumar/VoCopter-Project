@@ -20,6 +20,8 @@ public:
 
     bool getMidiData( float * note );
     int  getMidiLen() { return midiLen; }
+    float getNote(int index){ return noteNumber[index]; }
+    float getTime(int index){ return timeStamps[index]; }
 
 private:
     //File* filePtr;

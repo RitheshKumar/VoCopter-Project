@@ -13,11 +13,11 @@
 MainContentComponent::MainContentComponent() : currentHeight(0),
                                                xpos(winWidth*0.15),
                                                ypos(winHeight*0.5-25),
-                                               obsX(winWidth*0.15),
                                                keyRelease(0)
 {
 
 
+    obsX = winWidth*0.15;
 
     //Notice that the order is important
     addAndMakeVisible(startButton);
@@ -32,7 +32,7 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
     stopButton.setColour(TextButton::textColourOnId, Colours::black);
     
     
-    myObstacle = new NuObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
 //    addAndMakeVisible(myObstacle); //NuObstacleComponent class
 //    addAndMakeVisible(Copter);    //CopterComponent Class
     
@@ -120,18 +120,27 @@ void MainContentComponent::timerCallback() {
 //    std::cout<<processingAudio->getFreq()<<std::endl;
     myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
 //    std::cout<<obsX<<std::endl;
-    currentHeight = myObstacle->getObstacleHeight() + 135;
-    if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){
-        addAndMakeVisible(hitLabel);
-    }
-    else {
-        removeChildComponent(&hitLabel);
-    }
+//    currentHeight = myObstacle->getObstacleHeight() + 135;
+//    if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){
+//        addAndMakeVisible(hitLabel);
+//    }
+//    else {
+//        removeChildComponent(&hitLabel);
+//    }
     
     if ( keyRelease == true ) {
         ypos += 5;
         Copter.setBounds((int)xpos,(int)ypos,80,60);
     }
+   // int localTime = (int)(processingAudio->getTime()*100.f);
+   // int intTime   = (int)(processingAudio->getTime())*100;
+
+   // if( (localTime-intTime < 6) && (localTime-intTime >= 0) ) {
+        //myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
+   // }
+
+   // std::cout<<localTime<<std::endl;
+//    std::cout<<processingAudio->getTime()<<std::endl;
     
 }
 

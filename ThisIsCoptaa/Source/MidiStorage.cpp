@@ -53,7 +53,6 @@ void MidiStorage::readMidiData(char *filePath) {
             midiEvent =  midiSequence->getEventPointer(i); //Make sure the index doesn't exceed your no. of timeStamps. It starts from 0.
 
             if ( midiEvent->message.isNoteOn() ) {
-//                std::cout<<midiEvent->message.getDescription()<<";  ";
                 noteNumber[i] =  midiEvent->message.getNoteNumber();
                 timeStamps[i] =  midiEvent->message.getTimeStamp();
 
@@ -69,7 +68,7 @@ void MidiStorage::readMidiData(char *filePath) {
         Logger::writeToLog("Error in Reading Midi File - It doesn't exist");
     }
 
-    midiLen = NumEvents; std::cout<<"noteNumber: "<<midiLen<<std::endl;
+    midiLen = NumEvents; //std::cout<<"noteNumber: "<<midiLen<<std::endl;
 
     FileRW::fileWrite( noteNumber, NumEvents, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/midiIn.txt");
     FileRW::fileWrite( timeStamps, NumEvents, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/tStmpIn.txt");

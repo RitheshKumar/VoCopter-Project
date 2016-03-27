@@ -36,6 +36,7 @@ public:
                                 int numSamples) override ;
 
     float getFreq() { return freq; }
+    float getTime() { return time; }
 
 private:
     SimpleCorrelation *correlation;

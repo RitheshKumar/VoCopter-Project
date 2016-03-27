@@ -35,11 +35,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../Source/NuObstacleComponent.cpp"
-            timestampString = "479759130.695773"
+            timestampString = "480796199.431235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "NuObstacleComponent::getObstacleHeight()"
             landmarkType = "5">
          </BreakpointContent>

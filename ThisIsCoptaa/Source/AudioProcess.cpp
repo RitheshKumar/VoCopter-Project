@@ -39,7 +39,8 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
             //memcpy( outputChannelData[i], inputChannelData[0], sizeof(float)*numSamples );
         }
     }
-    time+=numSamples;
+    time+=(numSamples*1.f)/sampleRate;
+//    std::cout<<time<<std::endl;
 //    float actTime = time/sampleRate;
 //    if ( actTime - (int)actTime == 0.0f)
 //        std::cout<<actTime<<std::endl;

@@ -13,6 +13,7 @@
 #include "CopterComponent.h"
 #include "AudioProcess.h"
 #include "NuObstacleComponent.h"
+#include "ObstacleComponent.h"
 
 
 //==============================================================================
@@ -41,14 +42,15 @@ public:
 private:
     TextButton startButton, stopButton;
     
-    NuObstacleComponent *myObstacle;
+    ObstacleComponent *myObstacle;
     CopterComponent Copter;
     
     AudioProcess *processingAudio;
     AudioDeviceManager deviceManager;
     
     int winWidth = 600, winHeight = 400, cnt = 0, currentHeight;
-    float xpos, ypos,obsX;
+    float xpos, ypos;
+    float obsX;
     bool keyRelease;
     
     Label hitLabel,gameOverLabel;

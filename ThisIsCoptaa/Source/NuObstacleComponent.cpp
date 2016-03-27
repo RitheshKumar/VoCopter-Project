@@ -16,15 +16,10 @@ NuObstacleComponent::NuObstacleComponent(char *midiFilePath) : midiData(midiFile
                                                                pathHeight(75),
                                                                pathPosition(60)
 {
-//    int count = 0;
-//    for (int i=0; i< midiData.getMidiLen(); i++) {
-//        if( midiData.getMidiData(<#float *note#>)
-//        count++;
-//    }
+
 
     obstacleLength = midiData.getMidiLen();
     int midiLen = midiData.getMidiLen() + 1;
-//    float *randomVar  = new float[ midiLen ];
     obstacleHeight =  new float[ midiLen ];
 
     for (int i = 0; i<obstacleLength; i++) {
@@ -99,7 +94,7 @@ void NuObstacleComponent::paint(Graphics &g) {
         //               (i+1)*400,    round(getHeight()/2)+obstacleHeight[i],
         //               130);
          //}
-//        if ( obstacleHeight[i] < 0.5f ) {
+        if ( obstacleHeight[i] < 0.5f ) {
             g.drawLine( i*pathWidth,       round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]),
                        (i+1)*pathWidth,    round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]),
                        pathHeight);
@@ -108,17 +103,17 @@ void NuObstacleComponent::paint(Graphics &g) {
 //                       pathHeight);
 //            prevHeight = round(getHeight()/2)+pathPosition*(1-obstacleHeight[i]);
 //            //std::cout<<round(getHeight()/2)-obstacleHeight[i];
-//        }
-//        else {
-//            g.drawLine( i*pathWidth,       round(getHeight()/2)-pathPosition*obstacleHeight[i],
-//                       (i+1)*pathWidth,    round(getHeight()/2)-pathPosition*obstacleHeight[i],
-//                       pathHeight);
+        }
+        else {
+            g.drawLine( i*pathWidth,       round(getHeight()/2)-pathPosition*obstacleHeight[i],
+                       (i+1)*pathWidth,    round(getHeight()/2)-pathPosition*obstacleHeight[i],
+                       pathHeight);
 //            g.drawLine(i*(pathWidth/2.f),      prevHeight,
 //                       (i+1)*(pathWidth/2.f), round(getHeight()/2)-pathPosition*obstacleHeight[i],
 //                       pathHeight);
 //            prevHeight =round(getHeight()/2)-pathPosition*obstacleHeight[i];
 //            //std::cout<<round(getHeight()/2)+obstacleHeight[i];
-//        }
+        }
 
 //        std::cout<<std::endl;
 
