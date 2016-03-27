@@ -24,6 +24,7 @@ MidiStorage::~MidiStorage() {
     delete [] noteNumber;
     delete [] timeStamps;
 }
+
 void MidiStorage::readMidiData(char *filePath) {
     
     File *filePtr = new File (filePath);
@@ -36,69 +37,55 @@ void MidiStorage::readMidiData(char *filePath) {
         MidiFile fileMIDI;
         const MidiMessageSequence *midiSequence;
         MidiMessageSequence::MidiEventHolder *midiEvent;
-        MidiMessage midiVal;
 
-
-        /*bool midiReadSuccessfully =*/ fileMIDI.readFrom(*fileInputStream); // note the *
-//        //Logger::writeToLog("Successfully read midi file:"+std::to_string(midiReadSuccessfully));
-//        //Logger::writeToLog("No. of Tracks in file: "+std::to_string(fileMIDI.getNumTracks()));
-
+        
+        fileMIDI.readFrom(*fileInputStream); // read the MIDI file
+        fileMIDI.convertTimestampTicksToSeconds();
+   
         midiSequence = fileMIDI.getTrack(1);    //Track indices start from 1; Also we want only one track to exist
-//        //Logger::writeToLog("Total No. of events in the track is : "+ std::to_string( midiSequence->getNumEvents()));
 
         NumEvents = midiSequence->getNumEvents();
-//        noteNumber.resize(NumEvents);
+
         noteNumber = new float[NumEvents];
         timeStamps = new float[NumEvents];
 
-//        std::cout<<"The sequence of timeStamps are:\n";
-        for (int i=0; i<midiSequence->getNumEvents(); i++) {
+        for (int i=0; i<NumEvents; i++) {
             midiEvent =  midiSequence->getEventPointer(i); //Make sure the index doesn't exceed your no. of timeStamps. It starts from 0.
-            midiVal =  midiEvent->message;
-            noteNumber[i] =  midiVal.getNoteNumber();
-            timeStamps[i] =  midiVal.getTimeStamp();
-//            std::cout<<timeStamps[i]<<std::endl;
-            //std::cout<<noteNumber[i]<<" "<<midiVal.getMidiNoteName(noteNumber[i],true,true,4)<<std::endl;
+
+            if ( midiEvent->message.isNoteOn() ) {
+//                std::cout<<midiEvent->message.getDescription()<<";  ";
+                noteNumber[i] =  midiEvent->message.getNoteNumber();
+                timeStamps[i] =  midiEvent->message.getTimeStamp();
+
+            }
+            else {
+                noteNumber[i] =  -1.f;
+                timeStamps[i] =  midiEvent->message.getTimeStamp();
+            }
         }
-//        delete fileInputStream; fileInputStream = 0;//You don't need this! Juce does it for you. Also, you called a scopedPointer on it. Duh.
-
-        //Logger::writeToLog("The Note no. is: " + std::to_string(noteNumber));
-        //Logger::writeToLog("Therefore the note is: " + midiVal.getMidiNoteName(noteNumber,true,true,4)); //octave no. for middle C is 4
-        //Logger::writeToLog("Further, its frequency in Hz is: "+ std::to_string(midiVal.getMidiNoteInHertz(noteNumber,440.0)));
-
 
     }
     else {
         Logger::writeToLog("Error in Reading Midi File - It doesn't exist");
     }
 
-    tStampLen = NumEvents;
-    //Filter Outliers Notes
+    midiLen = NumEvents; std::cout<<"noteNumber: "<<midiLen<<std::endl;
+
     FileRW::fileWrite( noteNumber, NumEvents, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/midiIn.txt");
-    MathOperation::filterOutliers(noteNumber, NumEvents) ;
-    midiLen = NumEvents; //std::cout<<"noteNumber: "<<midiLen<<std::endl;
-    FileRW::fileWrite( noteNumber, midiLen, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/midiOut.txt");
+    FileRW::fileWrite( timeStamps, NumEvents, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/tStmpIn.txt");
+
     
-    //Filter Outliers TimeStamps
-    FileRW::fileWrite( timeStamps, tStampLen, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/tStmpIn.txt");
-    filterTimeStamps();
-    //Do this after calling filterTimeStamps()
-    tStampLen = NumEvents; //std::cout<<"timeStamps: "<<tStampLen<<std::endl;
-    FileRW::fileWrite( timeStamps, tStampLen, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/tStmpOut.txt");
-    
-    
-//    delete filePtr; filePtr = 0;
     
 }
 
-void MidiStorage::filterTimeStamps() {
-    float *tempStmp = new float[(tStampLen-3)/2];
-    for (int i = 3,cnt = 0; i<tStampLen; i+=2, cnt++) {
-        tempStmp[cnt] = timeStamps[i];
-    }
-    delete [] timeStamps; timeStamps = 0;
-    timeStamps = tempStmp;
-}
+//void MidiStorage::filterTimeStamps() {
+//    float *tempStmp = new float[(tStampLen-3)/2];
+//    for (int i = 3,cnt = 0; i<tStampLen; i+=2, cnt++) {
+//        tempStmp[cnt] = timeStamps[i];
+//    }
+//    delete [] timeStamps; timeStamps = 0;
+//    timeStamps = tempStmp;
+//}
 
 bool MidiStorage::getMidiData(float *note) {
     if( cnt != midiLen ) {

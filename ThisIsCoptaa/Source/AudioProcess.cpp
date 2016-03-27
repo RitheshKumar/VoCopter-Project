@@ -11,6 +11,8 @@
 AudioProcess::AudioProcess ()  {
     isTracking = false;
     freq = 0.0f;
+    time = 0.0f;
+    sampleRate = 0;
 }
 
 
@@ -37,13 +39,17 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
             //memcpy( outputChannelData[i], inputChannelData[0], sizeof(float)*numSamples );
         }
     }
+    time+=numSamples;
+//    float actTime = time/sampleRate;
+//    if ( actTime - (int)actTime == 0.0f)
+//        std::cout<<actTime<<std::endl;
 }
 
 void AudioProcess::audioDeviceAboutToStart (AudioIODevice* device){
 
     int   blockSize = 2*(int)device->getCurrentBufferSizeSamples(),
         numChannels = ( device->getActiveInputChannels() ).toInteger();  //getActiveInputChannels() returns a juce::BigInteger
-    float sampleRate  = (int) device->getCurrentSampleRate();
+    sampleRate  = (int) device->getCurrentSampleRate();
     correlation = new SimpleCorrelation( blockSize, numChannels, sampleRate );
 
 }

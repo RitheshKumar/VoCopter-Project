@@ -32,7 +32,7 @@ private:
     
     float *noteNumber,
           *timeStamps;
-    int cnt, midiLen,tStampLen;
+    int cnt, midiLen;
 
     void readMidiData(char *filePath);
     void filterTimeStamps();

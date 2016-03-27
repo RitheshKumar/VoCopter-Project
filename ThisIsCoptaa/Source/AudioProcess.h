@@ -40,7 +40,8 @@ public:
 private:
     SimpleCorrelation *correlation;
     bool isTracking;
-    float freq;
+    float freq,time;
+    int sampleRate;
 
 };
 
