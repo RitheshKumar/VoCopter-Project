@@ -18,6 +18,7 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
 
 
     obsX = winWidth*0.95;
+    gameStartTime = 0.f;
 
     //Notice that the order is important
     addAndMakeVisible(startButton);
@@ -32,7 +33,7 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
     stopButton.setColour(TextButton::textColourOnId, Colours::black);
     
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/allNotes.mid") ;
 //    addAndMakeVisible(myObstacle); //NuObstacleComponent class
 //    addAndMakeVisible(Copter);    //CopterComponent Class
     
@@ -112,12 +113,14 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
 }
 
 void MainContentComponent::timerCallback() {
+    
     float freq  = processingAudio->getFreq() - 200;
     if (freq < 322 && freq > 5) {
         Copter.setBounds(xpos, ypos = 300 - freq, 80,60);
 //        std::cout<<freq<<",";
     }
 //    std::cout<<processingAudio->getFreq()<<std::endl;
+//    std::cout<<myObstacle->getObstacleLength()<<std::endl;
     myObstacle->setBounds(obsX-=10, 0, myObstacle->getObstacleLength(), getHeight());
 //    myObstacle->setBounds(obsX-=10, 0, getWidth()*20, getHeight());
 //    std::cout<<obsX<<std::endl;
@@ -142,6 +145,10 @@ void MainContentComponent::timerCallback() {
 
    // std::cout<<localTime<<std::endl;
 //    std::cout<<processingAudio->getTime()<<std::endl;
+    if ( roundf( processingAudio->getTimeElapsed() - gameStartTime )
+                                   == roundf(myObstacle->getEndTime() + 5) ) { //5 seconds overhead in scrolling
+        gameOver();
+    }
     
 }
 
@@ -153,11 +160,13 @@ void MainContentComponent::buttonClicked (Button *button) {
         addAndMakeVisible(myObstacle);
         addAndMakeVisible(Copter);
         addAndMakeVisible(stopButton);
+        gameStartTime = processingAudio->getTimeElapsed();
         startTimer(50);
     }
     if (button == &stopButton) {
         gameOver();
     }
+
 }
 
 void MainContentComponent::gameOver() {

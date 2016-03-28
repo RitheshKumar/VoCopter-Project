@@ -23,6 +23,7 @@ public:
 
     int getObstacleHeight();
     int getObstacleLength(){ return midiData.getTime(obstacleLength-1)*pathWidth; }
+    float getEndTime(){ return midiData.getTime(obstacleLength-1); }
 
 private:
     MidiStorage midiData;
@@ -33,7 +34,7 @@ private:
               pathPosition;
     float *obstacleHeight;
     
-    void normalizeRange(float *myArray);
+    void noteToPixels(float *myArray);
     
 };
     

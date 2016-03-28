@@ -50,7 +50,7 @@ private:
     
     int winWidth = 900, winHeight = 600, cnt = 0, currentHeight;
     float xpos, ypos;
-    float obsX;
+    float obsX, gameStartTime;
     bool keyRelease;
     
     Label hitLabel,gameOverLabel;

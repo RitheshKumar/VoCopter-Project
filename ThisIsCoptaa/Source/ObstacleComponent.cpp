@@ -11,19 +11,22 @@
 
 
 ObstacleComponent::ObstacleComponent( char *midiFilePath ) : midiData( midiFilePath ),
-                                          pathWidth( 200 ),
-                                          pathHeight( 75 ),
-                                          pathPosition( 60 )
+                                                             pathWidth( 200 ),
+                                                             pathHeight( 25 ),
+                                                             pathPosition( 60 )
 {
     obstacleLength = midiData.getMidiLen();
 
+    //Get the notes from midiStorage class
     obstacleHeight = new float[obstacleLength];
     for (int i = 0; i<obstacleLength; i++) {
         obstacleHeight[i] = midiData.getNote( i );
     }
 
     //Normalize noteValues
-    normalizeRange( obstacleHeight );
+    noteToPixels( obstacleHeight );
+    
+
 }
 
 
@@ -34,45 +37,61 @@ ObstacleComponent::~ObstacleComponent( ) {
 void ObstacleComponent::paint(Graphics &g) {
 
     g.fillAll(Colours::black);
-    g.setColour(Colours::cornflowerblue);
+    
+    bool firstNoteDrawn = false;
+    float curTime, curNextTime;
+    Path interNotePath;
+    
     
     for ( int noteIdx=0; noteIdx < obstacleLength-1; noteIdx++ ) {
+
+        curTime     = midiData.getTime(noteIdx);
+        curNextTime = midiData.getTime( noteIdx+1 );
+
         if ( midiData.getNote(noteIdx) == -1 ) {
-            continue;
-//            g.drawLine( midiData.getTime( noteIdx )*pathWidth,      round(getHeight()/2)+pathPosition*(1-obstacleHeight[noteIdx]),
-//                        midiData.getTime( noteIdx+1 )*pathWidth,    round(getHeight()/2)+pathPosition*(1-obstacleHeight[noteIdx]),
-//                        2*getHeight());
+            //DrawInterNotes
+            if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime < 0.20f ) ){
+                interNotePath.addQuadrilateral(curTime*pathWidth,     obstacleHeight[noteIdx-1]-pathHeight,
+                                               curNextTime*pathWidth, obstacleHeight[noteIdx+1]-pathHeight,
+                                               curNextTime*pathWidth, obstacleHeight[noteIdx+1]+pathHeight,
+                                               curTime*pathWidth,     obstacleHeight[noteIdx-1]+pathHeight);
+                g.setColour(Colours::lightslategrey);
+                g.fillPath(interNotePath);
+                g.strokePath (interNotePath, PathStrokeType (0.5f));
+                
+
+            }
+            else if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime > 0.20f ) ) {
+                Rectangle<int> pauseFill(curTime*pathWidth, 0, (curNextTime-curTime)*pathWidth, getHeight());
+                g.fillCheckerBoard(pauseFill, 50, 15, Colours::darkgrey, Colours::black);
+                
+            }
+
         }
         else {
             
-            g.drawLine( midiData.getTime( noteIdx )*pathWidth,      round(getHeight()/2)+pathPosition*(1-obstacleHeight[noteIdx]),
-                        midiData.getTime( noteIdx+1 )*pathWidth,    round(getHeight()/2)+pathPosition*(1-obstacleHeight[noteIdx]),
-                        pathHeight);
-
+            g.setColour(Colours::cornflowerblue);
+            g.drawLine( curTime*pathWidth, obstacleHeight[noteIdx],
+                        curNextTime*pathWidth, obstacleHeight[noteIdx],
+                        pathHeight*2 );
+            firstNoteDrawn  = true;
         }
-    }
+      }
     
-    g.setColour(Colours::cornflowerblue);
 
 }
 
 
-void ObstacleComponent::normalizeRange(float *myArray) {
+void ObstacleComponent::noteToPixels(float *myArray) {
     
-    float max = 0.0f, min = 127.0f;
-    
-    for (int i=0; i<obstacleLength; i++) {
-        if ( myArray[i]>max) {
-            max = myArray[i];
+    int maxNoteNumber = 59;
+    for (int noteIdx=0; noteIdx<obstacleLength; noteIdx++) {
+        if( myArray[noteIdx] == -1) {
+            continue;
         }
-        if(myArray[i]<min && myArray[i] > 0) {
-            min = myArray[i];
+        else {
+            myArray[noteIdx] = pathHeight/2.f + pathHeight*(maxNoteNumber - myArray[noteIdx]);
         }
-    }
-    
-    
-    for (int i=0; i<obstacleLength; i++) {
-        myArray[i] = (myArray[i]-min)/(max-min);
     }
 
 }

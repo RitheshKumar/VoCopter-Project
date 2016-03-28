@@ -62,6 +62,7 @@ void MidiStorage::readMidiData(char *filePath) {
                 timeStamps[i] =  midiEvent->message.getTimeStamp();
             }
         }
+        
 
     }
     else {
