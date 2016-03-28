@@ -11,7 +11,7 @@
 
 
 ObstacleComponent::ObstacleComponent( char *midiFilePath ) : midiData( midiFilePath ),
-                                          pathWidth( 100 ),
+                                          pathWidth( 200 ),
                                           pathHeight( 75 ),
                                           pathPosition( 60 )
 {
@@ -40,8 +40,8 @@ void ObstacleComponent::paint(Graphics &g) {
         if ( midiData.getNote(noteIdx) == -1 ) {
             continue;
 //            g.drawLine( midiData.getTime( noteIdx )*pathWidth,      round(getHeight()/2)+pathPosition*(1-obstacleHeight[noteIdx]),
-//                       midiData.getTime( noteIdx+1 )*pathWidth,    round(getHeight()/2)+pathPosition*(1-obstacleHeight[noteIdx]),
-//                       getHeight());
+//                        midiData.getTime( noteIdx+1 )*pathWidth,    round(getHeight()/2)+pathPosition*(1-obstacleHeight[noteIdx]),
+//                        2*getHeight());
         }
         else {
             
@@ -51,6 +51,8 @@ void ObstacleComponent::paint(Graphics &g) {
 
         }
     }
+    
+    g.setColour(Colours::cornflowerblue);
 
 }
 

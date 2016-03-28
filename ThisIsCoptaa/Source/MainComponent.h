@@ -48,7 +48,7 @@ private:
     AudioProcess *processingAudio;
     AudioDeviceManager deviceManager;
     
-    int winWidth = 600, winHeight = 400, cnt = 0, currentHeight;
+    int winWidth = 900, winHeight = 600, cnt = 0, currentHeight;
     float xpos, ypos;
     float obsX;
     bool keyRelease;

@@ -17,7 +17,7 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
 {
 
 
-    obsX = winWidth*0.15;
+    obsX = winWidth*0.95;
 
     //Notice that the order is important
     addAndMakeVisible(startButton);
@@ -75,7 +75,7 @@ void MainContentComponent::resized()
     startButton.setBounds(getWidth()/2-50, getHeight()/2-20, 100, 40);
     
     Copter.setBounds(xpos,ypos,/*getWidth()*0.3,getHeight()*0.3*/80,60);
-    myObstacle->setBounds(/*obsX*/0, 0, getWidth(), getHeight());
+    myObstacle->setBounds(obsX, 0, getWidth(), getHeight());
     stopButton.setBounds(getWidth()-45, 20, 40, 20);
     hitLabel.setBounds(round(getWidth()/2)-40,round(getHeight()/2),80,50);
     
@@ -114,11 +114,12 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
 void MainContentComponent::timerCallback() {
     float freq  = processingAudio->getFreq() - 200;
     if (freq < 322 && freq > 5) {
-        Copter.setBounds(xpos, ypos = 300 - freq, 80, 60);
+        Copter.setBounds(xpos, ypos = 300 - freq, 80,60);
 //        std::cout<<freq<<",";
     }
 //    std::cout<<processingAudio->getFreq()<<std::endl;
-    myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
+    myObstacle->setBounds(obsX-=10, 0, myObstacle->getObstacleLength(), getHeight());
+//    myObstacle->setBounds(obsX-=10, 0, getWidth()*20, getHeight());
 //    std::cout<<obsX<<std::endl;
 //    currentHeight = myObstacle->getObstacleHeight() + 135;
 //    if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){

@@ -10,6 +10,7 @@
 
 CopterBody::CopterBody() {
     copterImage = ImageCache::getFromMemory(BinaryData::copterFoto_png, BinaryData::copterFoto_pngSize);
+ 
 }
 
 CopterBody::~CopterBody() {

@@ -21,7 +21,8 @@ public:
 
     void paint(Graphics &g);
 
-    int getObstacleHeight(); 
+    int getObstacleHeight();
+    int getObstacleLength(){ return midiData.getTime(obstacleLength-1)*pathWidth; }
 
 private:
     MidiStorage midiData;
