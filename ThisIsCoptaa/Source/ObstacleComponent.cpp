@@ -11,6 +11,7 @@
 
 
 ObstacleComponent::ObstacleComponent( char *midiFilePath ) : midiData( midiFilePath ),
+                                                             timeIdx(0),
                                                              pathWidth( 200 ),
                                                              pathHeight( 25 ),
                                                              pathPosition( 60 )
@@ -94,4 +95,20 @@ void ObstacleComponent::noteToPixels(float *myArray) {
         }
     }
 
+}
+
+
+float ObstacleComponent::getObstacleHeight(float curTime) {
+    if( timeIdx != obstacleLength-1) {
+        if( curTime <= midiData.getTime(timeIdx) ) {
+            return obstacleHeight[timeIdx];
+        }
+        else {
+            return obstacleHeight[timeIdx++];
+        }
+  
+    }
+    else {
+        return 0;
+    }
 }

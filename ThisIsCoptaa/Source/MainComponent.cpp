@@ -88,7 +88,7 @@ bool MainContentComponent::keyPressed(const KeyPress& key)
     //std::cout<<ypos<<",";
     switch (key.getTextCharacter()) {
         case 'w':
-            Copter.setBounds(xpos,ypos-=5,/*getWidth()*0.3,getHeight()*0.3*/80,60);
+            Copter.setBounds(xpos,ypos-=8,/*getWidth()*0.3,getHeight()*0.3*/80,60);
             return true;
             break;
             
@@ -114,12 +114,14 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
 
 void MainContentComponent::timerCallback() {
     
-    float freq  = processingAudio->getFreq() - 200;
-    if (freq < 322 && freq > 5) {
-        Copter.setBounds(xpos, ypos = 300 - freq, 80,60);
-//        std::cout<<freq<<",";
-    }
+//    int noteIn  = 69 + 12*log2f(processingAudio->getFreq()/440.f);
+//    std::cout<<noteIn<<std::endl;
 //    std::cout<<processingAudio->getFreq()<<std::endl;
+//    if (freq < 322 && freq > 5) {
+//        Copter.setBounds(xpos, ypos = 300 - freq, 80,60);
+////        std::cout<<freq<<",";
+//    }
+    
 //    std::cout<<myObstacle->getObstacleLength()<<std::endl;
     myObstacle->setBounds(obsX-=10, 0, myObstacle->getObstacleLength(), getHeight());
 //    myObstacle->setBounds(obsX-=10, 0, getWidth()*20, getHeight());
@@ -132,19 +134,23 @@ void MainContentComponent::timerCallback() {
 //        removeChildComponent(&hitLabel);
 //    }
     
+    //It takes 3.2xx seconds for the copter to enter the obstacles from gameStart
+    if (  obsX < (0.15*winWidth + 80)    ) {
+        int curObsPos = (int)myObstacle->getObstacleHeight( processingAudio->getTimeElapsed() - gameStartTime - 3.22 );
+
+        if ( (  curObsPos + 50 < ypos   ||   (curObsPos -50) > ypos  ) && curObsPos >= 0 ){
+            addAndMakeVisible(hitLabel);
+        }
+        else if( curObsPos != -1 ){
+            removeChildComponent(&hitLabel);
+        }
+
+    }
     if ( keyRelease == true ) {
         ypos += 5;
         Copter.setBounds((int)xpos,(int)ypos,80,60);
     }
-   // int localTime = (int)(processingAudio->getTime()*100.f);
-   // int intTime   = (int)(processingAudio->getTime())*100;
 
-   // if( (localTime-intTime < 6) && (localTime-intTime >= 0) ) {
-        //myObstacle->setBounds(obsX-=5, 0, getWidth()*20, getHeight());
-   // }
-
-   // std::cout<<localTime<<std::endl;
-//    std::cout<<processingAudio->getTime()<<std::endl;
     if ( roundf( processingAudio->getTimeElapsed() - gameStartTime )
                                    == roundf(myObstacle->getEndTime() + 5) ) { //5 seconds overhead in scrolling
         gameOver();
