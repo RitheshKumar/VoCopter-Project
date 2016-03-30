@@ -32,7 +32,7 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
 
         freq = correlation->correlate( inputChannelData ); //How can I actually pass a const float** as a parameter??
                                                            //You can't!
-
+        std::cout<<freq<<std::endl;
              
      } 
     // We need to clear the output buffers, in case they're full of junk..

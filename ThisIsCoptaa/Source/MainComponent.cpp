@@ -33,7 +33,7 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
     stopButton.setColour(TextButton::textColourOnId, Colours::black);
     
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/allNotes.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
 //    addAndMakeVisible(myObstacle); //NuObstacleComponent class
 //    addAndMakeVisible(Copter);    //CopterComponent Class
     
@@ -116,7 +116,8 @@ void MainContentComponent::timerCallback() {
     
 //    int noteIn  = 69 + 12*log2f(processingAudio->getFreq()/440.f);
 //    std::cout<<noteIn<<std::endl;
-//    std::cout<<processingAudio->getFreq()<<std::endl;
+//    float freq = processingAudio->getFreq();
+//    std::cout<<freq<<std::endl;
 //    if (freq < 322 && freq > 5) {
 //        Copter.setBounds(xpos, ypos = 300 - freq, 80,60);
 ////        std::cout<<freq<<",";

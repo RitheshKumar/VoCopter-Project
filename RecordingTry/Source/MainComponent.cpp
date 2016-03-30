@@ -66,7 +66,7 @@ public:
         deviceManager.initialise( 1, 2, 0, true, String::empty, 0);
         deviceManager.addAudioCallback( processingAudio );
 
-        startTimer(100);
+        startTimer(50);
         
     }
 
@@ -99,7 +99,7 @@ public:
     }
 
    void timerCallback() override {
-        pitchLabel.setText(std::to_string(processingAudio->getFreq()),dontSendNotification);
+        pitchLabel.setText(std::to_string(processingAudio->getFreq()),sendNotificationSync);
     }
 
 private:

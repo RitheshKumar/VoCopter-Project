@@ -41,6 +41,7 @@ private:
     float **_ppfAucorr,
           _fSampleRate,
           _fFrequency;
+    int curFreq,prevFreq;
 
     //Private Functions
     void reset();

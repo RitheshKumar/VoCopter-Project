@@ -14,7 +14,9 @@ SimpleCorrelation::SimpleCorrelation( int iMaxBlockSize, int iNumChannels, float
                                                                                _iAcfBufLen(2* iMaxBlockSize - 1),
                                                                                _ppfAucorr( new float*[iNumChannels] ),
                                                                                _fSampleRate( fSampleRate ),
-                                                                               _fFrequency(0.0f)
+                                                                               _fFrequency(0.0f),
+                                                                               curFreq(0),
+                                                                               prevFreq(0)
 {
 
     iter   = 0;
@@ -75,6 +77,29 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int nu
     }
 
 //    FileRW::fileWrite( _ppfAucorr, _iAcfBufLen, 1, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/CorrelationOutput.txt" );
+    curFreq = (int) (69 + 12*log2f(freq/440.f) );
+    curFreq = curFreq%12;
+    if (curFreq == 7) {
+        std::cout<<"G";
+    }
+    else if( curFreq == 5) {
+        std::cout<<"F";
+    }
+    else if (curFreq < 9){
+        std::cout<<(char) ( 67 + curFreq/2);
+        if (curFreq == 1 || curFreq == 3 || curFreq == 6 || curFreq == 8) {
+            std::cout<<"#";
+        }
+        
+    }
+    else  {
+        std::cout<< (char) ( 65 + (curFreq%3)/2 );
+        if (curFreq == 10) {
+            std::cout<<"#";
+        }
+    }
+   
+    std::cout<<", "<<curFreq<<std::endl;
 
     if ( freq> 1500) { freq =  0.0f;  }
 
