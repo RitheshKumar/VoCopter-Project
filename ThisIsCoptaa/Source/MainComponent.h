@@ -58,6 +58,7 @@ private:
     //Private Functions
     void buttonClicked (Button *button) override;
     void gameOver();
+    void reset();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

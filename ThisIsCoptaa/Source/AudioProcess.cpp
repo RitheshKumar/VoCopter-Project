@@ -13,6 +13,7 @@ AudioProcess::AudioProcess ()  {
     freq = 0.0f;
     time = 0.0f;
     sampleRate = 0;
+    midiNote   = 0;
 }
 
 
@@ -28,7 +29,7 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
 
     if ( /*isTracking*/1 ) {
 
-        correlation->correlate( (const float**) inputChannelData, freq, numSamples ); 
+        correlation->correlate( (const float**) inputChannelData, freq, midiNote, numSamples );
         
              
      } 

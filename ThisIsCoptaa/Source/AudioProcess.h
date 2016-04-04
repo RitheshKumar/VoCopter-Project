@@ -35,14 +35,17 @@ public:
                                 float** outputChannelData, int numOutputChannels,
                                 int numSamples) override ;
 
-    float getFreq() { return freq; }
+    float getFreqIn() { return freq; }
     float getTimeElapsed() { return time; }
+    int getMidiIn() { return midiNote; }
 
 private:
     SimpleCorrelation *correlation;
     bool isTracking;
-    float freq,time;
-    int sampleRate;
+    float freq,
+          time;
+    int sampleRate,
+        midiNote;
 
 };
 

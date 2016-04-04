@@ -25,7 +25,7 @@ public:
     
     //==============================================================================
     
-    void correlate ( const float** inputData, float &freq, int numSamples );
+    void correlate ( const float** inputData, float &freq, int &midiNote, int numSamples );
 
     //==============================================================================
     

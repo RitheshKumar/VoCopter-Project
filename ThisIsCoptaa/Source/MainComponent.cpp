@@ -10,18 +10,10 @@
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent() : currentHeight(0),
-                                               xpos(winWidth*0.15),
-                                               ypos(winHeight*0.5-25),
-                                               keyRelease(0)
-{
+MainContentComponent::MainContentComponent(): myObstacle(0){
+    
+    reset();
 
-
-    obsX = winWidth*0.95;
-    gameStartTime = 0.f;
-
-    //Notice that the order is important
-    addAndMakeVisible(startButton);
     startButton.setButtonText("Start!");
     startButton.addListener(this);
     stopButton.setButtonText("Stop");
@@ -31,12 +23,6 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
     startButton.setColour(TextButton::textColourOnId, Colours::black);
     stopButton.setColour(TextButton::buttonColourId, Colours::red);
     stopButton.setColour(TextButton::textColourOnId, Colours::black);
-    
-    
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/OnlyTime.mid") ;
-//    addAndMakeVisible(myObstacle); //NuObstacleComponent class
-//    addAndMakeVisible(Copter);    //CopterComponent Class
-    
     
     processingAudio = new AudioProcess();
     deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
@@ -50,6 +36,26 @@ MainContentComponent::MainContentComponent() : currentHeight(0),
 
     setSize (winWidth, winHeight);
     setWantsKeyboardFocus(true);
+}
+
+void MainContentComponent::reset() {
+    
+    xpos = winWidth*0.15;
+    keyRelease = 0;
+    obsX = winWidth*0.95;
+    gameStartTime = 0.f;
+
+    //Notice that the order is important
+    addAndMakeVisible(startButton);
+    
+    if (myObstacle!= nullptr) {
+        delete myObstacle;
+    }
+    myObstacle = 0;
+    
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/allNotes.mid") ;
+    ypos       = myObstacle->getInitialHeight()-35;
+    
 }
 
 MainContentComponent::~MainContentComponent()
@@ -114,32 +120,39 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
 
 void MainContentComponent::timerCallback() {
     
-//    int noteIn  = 69 + 12*log2f(processingAudio->getFreq()/440.f);
-//    std::cout<<noteIn<<std::endl;
-//    float freq = processingAudio->getFreq();
-//    std::cout<<freq<<std::endl;
-//    if (freq < 322 && freq > 5) {
-//        Copter.setBounds(xpos, ypos = 300 - freq, 80,60);
-////        std::cout<<freq<<",";
-//    }
-    
 //    std::cout<<myObstacle->getObstacleLength()<<std::endl;
     myObstacle->setBounds(obsX-=10, 0, myObstacle->getObstacleLength(), getHeight());
-//    myObstacle->setBounds(obsX-=10, 0, getWidth()*20, getHeight());
-//    std::cout<<obsX<<std::endl;
-//    currentHeight = myObstacle->getObstacleHeight() + 135;
-//    if( ( (currentHeight >= ypos) || (currentHeight+75 <= ypos) ) && Copter.isShowing() ){
-//        addAndMakeVisible(hitLabel);
-//    }
-//    else {
-//        removeChildComponent(&hitLabel);
-//    }
     
     //It takes 3.2xx seconds for the copter to enter the obstacles from gameStart
-    if (  obsX < (0.15*winWidth + 80)    ) {
-        int curObsPos = (int)myObstacle->getObstacleHeight( processingAudio->getTimeElapsed() - gameStartTime - 3.22 );
+    //Basically you can temporally shift here.
+    int curObsPos = (int)myObstacle->getObstacleHeight( processingAudio->getTimeElapsed() - gameStartTime - 3.5 );
+//    std::cout<<curObsPos<<std::endl;
+//    //if ( curObsPos!= -1 ) {
+    int noteIn = processingAudio->getMidiIn(); //std::cout<<noteIn<<std::endl;
+    int heightDev = curObsPos - ypos;
+    heightDev = (heightDev>0)? heightDev : -heightDev;
+    
+    //Copter placement
+    //25 is the no. of pixels for a note
+//    ypos = winHeight - 12.5 - noteIn*25;
+    if ( curObsPos > 0 ) {
+        ypos = (heightDev >= 300 )? (winHeight - 12.5 - noteIn*25 - winHeight/2) : (winHeight - 12.5 - noteIn*25) ;
+//        std::cout<<heightDev<<", "<<curObsPos<<", "<<ypos<<std::endl;
+//        ypos = curObsPos - 35;
+        ypos -= 35;
+        Copter.setBounds(xpos, ypos, 80, 60); //Fine Tuning copter's position.
+    }
+//    std::cout<<noteIn<<", "<<processingAudio->getFreqIn()<<", "<<ypos<<std::endl;
+//    std::cout<<processingAudio->getMidiIn()<<std::endl;
+//    }
 
-        if ( (  curObsPos + 50 < ypos   ||   (curObsPos -50) > ypos  ) && curObsPos >= 0 ){
+    //Collision Detection
+    
+    if (  obsX < (0.15*winWidth + 80)    ) {
+        
+        curObsPos -= 35;
+
+        if ( (  curObsPos + 12.5 < ypos   ||   (curObsPos -12.5) > ypos  ) && curObsPos >= 0 ){ //Within one semitone difference
             addAndMakeVisible(hitLabel);
         }
         else if( curObsPos != -1 ){
@@ -147,10 +160,11 @@ void MainContentComponent::timerCallback() {
         }
 
     }
-    if ( keyRelease == true ) {
-        ypos += 5;
-        Copter.setBounds((int)xpos,(int)ypos,80,60);
-    }
+    
+    //if ( keyRelease == true ) {
+    //    ypos += 5;
+    //    Copter.setBounds((int)xpos,(int)ypos,80,60);
+    //}
 
     if ( roundf( processingAudio->getTimeElapsed() - gameStartTime )
                                    == roundf(myObstacle->getEndTime() + 5) ) { //5 seconds overhead in scrolling

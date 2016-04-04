@@ -26,10 +26,17 @@ ObstacleComponent::ObstacleComponent( char *midiFilePath ) : midiData( midiFileP
 
     //Normalize noteValues
     noteToPixels( obstacleHeight );
-    
 
 }
 
+float ObstacleComponent::getInitialHeight() {
+    for ( int i=0; i<obstacleLength; i++){
+        if( obstacleHeight[i] != -1){
+            return obstacleHeight[i];
+        }
+    }
+    return 0;
+}
 
 ObstacleComponent::~ObstacleComponent( ) {
 

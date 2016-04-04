@@ -22,14 +22,16 @@ public:
     void paint(Graphics &g);
 
     float getObstacleHeight(float curTime);
+    float getInitialHeight(); 
     int getObstacleLength(){ return midiData.getTime(obstacleLength-1)*pathWidth; }
     float getEndTime(){ return midiData.getTime(obstacleLength-1); }
+    int getCurNote(){ return midiData.getNote(timeIdx); }
 
 private:
     MidiStorage midiData;
     
     int obstacleLength,
-        timeIdx;
+               timeIdx;
     const int pathWidth,
               pathHeight,
               pathPosition;
