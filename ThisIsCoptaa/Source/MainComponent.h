@@ -40,7 +40,7 @@ public:
     void timerCallback() override;
    
 private:
-    TextButton startButton, stopButton;
+    TextButton startButton, stopButton, restartButton;
     
     ObstacleComponent *myObstacle;
     CopterComponent Copter;
@@ -57,6 +57,7 @@ private:
     
     //Private Functions
     void buttonClicked (Button *button) override;
+    void gameStart();
     void gameOver();
     void reset();
     //==============================================================================
