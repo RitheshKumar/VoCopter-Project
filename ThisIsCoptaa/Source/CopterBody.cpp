@@ -9,7 +9,7 @@
 #include "CopterBody.h"
 
 CopterBody::CopterBody() {
-    copterImage = ImageCache::getFromMemory(BinaryData::copterFoto_png, BinaryData::copterFoto_pngSize);
+    copterImage = ImageCache::getFromMemory(BinaryData::copterFoto2_png, BinaryData::copterFoto2_pngSize);
  
 }
 

@@ -48,12 +48,15 @@ private:
     AudioProcess *processingAudio;
     AudioDeviceManager deviceManager;
     
-    int winWidth = 900, winHeight = 600, cnt = 0, currentHeight;
+    int winWidth = 900, winHeight = 600, cnt = 0, currentHeight,
+        copterHits;
     float xpos, ypos;
     float obsX, gameStartTime;
     bool keyRelease;
     
-    Label hitLabel,gameOverLabel;
+    String hitsDisplay;
+    
+    Label hitLabel,gameOverLabel, numHitsLabel;
     
     //Private Functions
     void buttonClicked (Button *button) override;

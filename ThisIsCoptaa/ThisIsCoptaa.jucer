@@ -35,6 +35,10 @@
               file="Source/NuObstacleComponent.cpp"/>
         <FILE id="p93oja" name="NuObstacleComponent.h" compile="0" resource="0"
               file="Source/NuObstacleComponent.h"/>
+        <FILE id="y0yXTk" name="ObstacleComponent.cpp" compile="1" resource="0"
+              file="Source/ObstacleComponent.cpp"/>
+        <FILE id="kSGliD" name="ObstacleComponent.h" compile="0" resource="0"
+              file="Source/ObstacleComponent.h"/>
       </GROUP>
       <FILE id="wyGkWL" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
@@ -42,6 +46,7 @@
       <FILE id="zGELZc" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
     <FILE id="mCLkOl" name="copterFoto.png" compile="0" resource="1" file="Media/copterFoto.png"/>
+    <FILE id="QoELy7" name="copterFoto2.png" compile="0" resource="1" file="Media/copterFoto2.png"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
