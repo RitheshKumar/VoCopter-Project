@@ -98,7 +98,6 @@ void MainContentComponent::resized()
 
 bool MainContentComponent::keyPressed(const KeyPress& key)
 {
-    //std::cout<<ypos<<",";
     switch (key.getTextCharacter()) {
         case 'w':
             Copter.setBounds(xpos,ypos-=8,/*getWidth()*0.3,getHeight()*0.3*/80,60);
@@ -125,21 +124,16 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
     return false;
 }
 
-//extern int noteIn = 0;
 int noteIn, height1, height2,
             height1Dev, height2Dev;
 
 void MainContentComponent::timerCallback() {
     
-//    std::cout<<myObstacle->getObstacleLength()<<std::endl;
     myObstacle->setBounds(obsX-=10, 0, myObstacle->getObstacleLength(), getHeight());
     
     //It takes 3.2xx seconds for the copter to enter the obstacles from gameStart
     //Basically you can temporally shift here.
     int curObsPos = (int)myObstacle->getObstacleHeight( processingAudio->getTimeElapsed() - gameStartTime - 3.22 );
-//    std::cout<<curObsPos<<std::endl;
-//    //if ( curObsPos!= -1 ) {
-//    int noteIn = processingAudio->getMidiIn(); //std::cout<<noteIn<<std::endl;
   
     //Copter placement
     //25 is the no. of pixels for a note
@@ -196,8 +190,6 @@ void MainContentComponent::buttonClicked (Button *button) {
         gameOver();
     }
     if (button == &restartButton) {
-//        removeChildComponent(&gameOverLabel);
-//        removeChildComponent(&restartButton);
         removeAllChildren();
         reset();
         gameStart();
