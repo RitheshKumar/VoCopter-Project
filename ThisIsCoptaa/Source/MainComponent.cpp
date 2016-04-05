@@ -59,7 +59,7 @@ void MainContentComponent::reset() {
     }
     myObstacle = 0;
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/altNotesC.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/allNotes.mid") ;
     ypos       = myObstacle->getInitialHeight()-35;
     
 }
@@ -125,6 +125,10 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
     return false;
 }
 
+//extern int noteIn = 0;
+int noteIn, height1, height2,
+            height1Dev, height2Dev;
+
 void MainContentComponent::timerCallback() {
     
 //    std::cout<<myObstacle->getObstacleLength()<<std::endl;
@@ -132,32 +136,33 @@ void MainContentComponent::timerCallback() {
     
     //It takes 3.2xx seconds for the copter to enter the obstacles from gameStart
     //Basically you can temporally shift here.
-    int curObsPos = (int)myObstacle->getObstacleHeight( processingAudio->getTimeElapsed() - gameStartTime - 3.5 );
+    int curObsPos = (int)myObstacle->getObstacleHeight( processingAudio->getTimeElapsed() - gameStartTime - 3.22 );
 //    std::cout<<curObsPos<<std::endl;
 //    //if ( curObsPos!= -1 ) {
-    int noteIn = 0;//processingAudio->getMidiIn(); //std::cout<<noteIn<<std::endl;
-    int heightDev = curObsPos - ypos;
-    heightDev = (heightDev>0)? heightDev : -heightDev;
-    
+//    int noteIn = processingAudio->getMidiIn(); //std::cout<<noteIn<<std::endl;
+  
     //Copter placement
     //25 is the no. of pixels for a note
-//    ypos = winHeight - 12.5 - noteIn*25;
     if ( curObsPos > 0 ) {
-        ypos = (heightDev >= 300 )? (winHeight - 12.5 - noteIn*25 - winHeight/2) : (winHeight - 12.5 - noteIn*25) ;
-        std::cout<<heightDev/*<<", "<<curObsPos<<", "<<ypos*/<<std::endl;
-//        ypos = curObsPos - 35;
-//        ypos -= 35;
+        noteIn = processingAudio->getMidiIn();
+        
+        height1 = winHeight - 12.5 - noteIn*25;
+        height1Dev = height1 - curObsPos;
+        height1Dev = (height1Dev>0)? height1Dev : -height1Dev;
+        
+        height2 = winHeight - 12.5 - noteIn*25 - winHeight/2;
+        height2Dev = height2 - curObsPos;
+        height2Dev = (height2Dev>0)? height2Dev : -height2Dev;
+
+        ypos = (height1Dev <= height2Dev )? height1 : height2;
+//        std::cout<<noteIn<<", "<<curObsPos<<", "<<ypos<<"     "<<height1Dev<<", "<<height2Dev<<"     ";
+//        std::cout<<height1<<", "<<height2<<std::endl;
         Copter.setBounds(xpos, ypos-35, 80, 60); //Fine Tuning copter's position.
     }
-//    std::cout<<noteIn<<", "<<processingAudio->getFreqIn()<<", "<<ypos<<std::endl;
-//    std::cout<<processingAudio->getMidiIn()<<std::endl;
-//    }
 
     //Collision Detection
     
     if (  obsX < (0.15*winWidth + 80)    ) {
-        
-        curObsPos -= 35;
 
         if ( (  curObsPos + 12.5 < ypos   ||   (curObsPos -12.5) > ypos  ) && curObsPos >= 0 ){ //Within one semitone difference
             addAndMakeVisible(hitLabel);
