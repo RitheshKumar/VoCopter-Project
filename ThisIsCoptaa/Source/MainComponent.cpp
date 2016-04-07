@@ -147,7 +147,7 @@ void MainContentComponent::timerCallback() {
     //Copter placement
     //25 is the no. of pixels for a note
 //    if ( curObsPos > 0 ) {
-//        noteIn = 2;//processingAudio->getMidiIn();
+//        noteIn = processingAudio->getMidiIn();
 //        
 //        height1 = winHeight - 12.5 - noteIn*25;
 //        height1Dev = height1 - curObsPos;

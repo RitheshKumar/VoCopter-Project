@@ -12,6 +12,8 @@ AudioProcess::AudioProcess ()  {
     isTracking = false;
     freq = 0.0f;
     time = 0.0f;
+    bpm  = 60.f/240.f; //Denominator is your tempo/bpm
+    tick = bpm;
     sampleRate = 0;
     midiNote   = 0;
 }
@@ -22,6 +24,8 @@ AudioProcess::~AudioProcess() {
     delete correlation;
 }
 
+//numSamples is 512 for a sample rate of 44100 which is 11.6ms a block
+//This block is called
 void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int numInputChannels,
                                                 float** outputChannelData, int numOutputChannels,
                                                                            int numSamples)        {
@@ -39,9 +43,18 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
             FloatVectorOperations::clear (outputChannelData[i],numSamples);
             //memcpy( outputChannelData[i], inputChannelData[0], sizeof(float)*numSamples );
         }
+        if((time - tick) <= 0.0116f && (time - tick) > 0) {
+//            std::cout<<time - tick<<std::endl;
+            outputChannelData[i][(int)numSamples/2] = 0.5f;
+            if (i == numOutputChannels-1) {
+                tick+=bpm;
+            }
+        }
     }
     time+=(numSamples*1.f)/sampleRate;
 //    std::cout<<time<<std::endl;
+    
+//    tick+=tick;
 //    float actTime = time/sampleRate;
 //    if ( actTime - (int)actTime == 0.0f)
 //        std::cout<<actTime<<std::endl;

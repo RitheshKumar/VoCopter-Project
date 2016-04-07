@@ -43,7 +43,9 @@ private:
     SimpleCorrelation *correlation;
     bool isTracking;
     float freq,
-          time;
+          time,
+          tick,
+          bpm;
     int sampleRate,
         midiNote;
 
