@@ -24,13 +24,6 @@ public:
     float getTime(int index){ return timeStamps[index]; }
 
 private:
-    //File* filePtr;
-    ////ScopedPointer<FileInputStream> fileInputStream;
-    //FileInputStream* fileInputStream;
-    //MidiFile fileMIDI;
-    //const MidiMessageSequence *midiSequence;
-    //MidiMessageSequence::MidiEventHolder *midiEvent;
-    //MidiMessage midiVal;
     
     float *noteNumber,
           *timeStamps;

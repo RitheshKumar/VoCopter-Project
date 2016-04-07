@@ -98,7 +98,6 @@ void MainContentComponent::resized()
     myObstacle->setBounds(obsX, 0, getWidth(), getHeight());
     stopButton.setBounds(getWidth()-45, 20, 40, 20);
     hitLabel.setBounds(round(getWidth()/2)-40,round(getHeight()/2),80,50);
-//    numHitsLabel.setBounds(0, 0, 40, 50);
     numHitsLabel.setBounds(0,0,150,70);
     
     gameOverLabel.setBounds(getWidth()/2-95,getHeight()/2-60, 200, 60 );
