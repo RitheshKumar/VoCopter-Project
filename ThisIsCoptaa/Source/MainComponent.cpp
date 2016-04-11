@@ -17,6 +17,7 @@ MainContentComponent::MainContentComponent(): myObstacle(0){
     
     //Notice that the order is important
     addAndMakeVisible(startButton);
+    addAndMakeVisible(gameLogo);
     
     startButton.setButtonText("Start!");
     startButton.addListener(this);
@@ -92,7 +93,8 @@ void MainContentComponent::resized()
     // update their positions.
     // It is even called when you say setSize
     
-    startButton.setBounds(getWidth()/2-50, getHeight()/2-20, 100, 40);
+    startButton.setBounds(getWidth()/2-50, getHeight()/2+25, 100, 40);
+    gameLogo.setBounds(-125, getHeight()/2-175, 1000, 204);
     
     
     myObstacle->setBounds(obsX, 0, getWidth(), getHeight());
@@ -102,6 +104,7 @@ void MainContentComponent::resized()
     
     gameOverLabel.setBounds(getWidth()/2-95,getHeight()/2-60, 200, 60 );
     restartButton.setBounds(getWidth()/2-50,getHeight()/2+30, 100, 60 );
+    
 }
 
 bool MainContentComponent::keyPressed(const KeyPress& key)
@@ -167,7 +170,7 @@ void MainContentComponent::timerCallback() {
     
     if (  obsX < (0.15*winWidth + 80)    ) {
 
-        if ( (  curObsPos + 12.5 < ypos   ||   (curObsPos -12.5) > ypos  ) && curObsPos > 0 ){ //Within one semitone difference
+        if ( (  curObsPos + 12.5 < ypos   ||   (curObsPos -12.5) > ypos  ) && curObsPos > 0 && copterHits < 15){ //Within one semitone difference
             addAndMakeVisible(hitLabel);
             copterHits++;
             hitsDisplay = "Number of hits: ";
@@ -184,6 +187,10 @@ void MainContentComponent::timerCallback() {
     //    ypos += 5;
     //    Copter.setBounds((int)xpos,(int)ypos,80,60);
     //}
+    
+    if ( roundf( processingAudio->getTimeElapsed() - gameStartTime ) == roundf( gameStartTime + 5 ) ) {
+        removeChildComponent(&gameLogo);
+    }
 
     if ( roundf( processingAudio->getTimeElapsed() - gameStartTime )
                                    == roundf(myObstacle->getEndTime() + 5) ) { //5 seconds overhead in scrolling

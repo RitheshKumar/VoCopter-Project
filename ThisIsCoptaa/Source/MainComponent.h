@@ -14,6 +14,7 @@
 #include "AudioProcess.h"
 #include "NuObstacleComponent.h"
 #include "ObstacleComponent.h"
+#include "voCopterLogo.h"
 
 
 //==============================================================================
@@ -44,6 +45,7 @@ private:
     
     ObstacleComponent *myObstacle;
     CopterComponent Copter;
+    voCopterLogo gameLogo;
     
     AudioProcess *processingAudio;
     AudioDeviceManager deviceManager;
@@ -57,6 +59,7 @@ private:
     String hitsDisplay;
     
     Label hitLabel,gameOverLabel, numHitsLabel;
+
     
     //Private Functions
     void buttonClicked (Button *button) override;

@@ -43,13 +43,13 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
             FloatVectorOperations::clear (outputChannelData[i],numSamples);
             //memcpy( outputChannelData[i], inputChannelData[0], sizeof(float)*numSamples );
         }
-        if((time - tick) <= 0.0116f && (time - tick) > 0) {
-//            std::cout<<time - tick<<std::endl;
-            outputChannelData[i][(int)numSamples/2] = 0.5f;
-            if (i == numOutputChannels-1) {
-                tick+=bpm;
-            }
-        }
+//        if((time - tick) <= 0.0116f && (time - tick) > 0) {
+////            std::cout<<time - tick<<std::endl;
+//            outputChannelData[i][(int)numSamples/2] = 0.5f;
+//            if (i == numOutputChannels-1) {
+//                tick+=bpm;
+//            }
+//        }
     }
     time+=(numSamples*1.f)/sampleRate;
 //    std::cout<<time<<std::endl;
