@@ -33,7 +33,6 @@ MainContentComponent::MainContentComponent(): myObstacle(0){
     restartButton.setColour(TextButton::buttonColourId, Colours::yellow);
     restartButton.setColour(TextButton::textColourOnId, Colours::black);
     
-//    std::cout<<myObstacle->getStartNote();
     processingAudio = new AudioProcess(myObstacle->getStartNote()+12);
     deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
     deviceManager.addAudioCallback(processingAudio);
@@ -59,7 +58,7 @@ void MainContentComponent::reset() {
     xpos = winWidth*0.15;
     keyRelease = 0;
     obsX = winWidth*0.95;
-    gameStartTime = 0.f;
+    gameStartTime = 0.0f;
     copterHits = 0;
 
     
@@ -189,11 +188,11 @@ void MainContentComponent::timerCallback() {
     //    Copter.setBounds((int)xpos,(int)ypos,80,60);
     //}
     
-    if ( roundf( processingAudio->getTimeElapsed() - gameStartTime ) == roundf( gameStartTime + 5 ) ) {
+    if ( roundf( processingAudio->getTimeElapsed() - gameStartTime ) == 5 ) {
         removeChildComponent(&gameLogo);
     }
     
-    if ( roundf( processingAudio->getTimeElapsed() - gameStartTime ) == roundf( gameStartTime + 2 ) ) {
+    if ( roundf( processingAudio->getTimeElapsed() - gameStartTime ) == 4 ) {
         processingAudio->setNotePlay(false);
     }
 
@@ -216,6 +215,7 @@ void MainContentComponent::buttonClicked (Button *button) {
     }
     if (button == &restartButton) {
         removeAllChildren();
+        stopTimer();
         reset();
         gameStart();
         
