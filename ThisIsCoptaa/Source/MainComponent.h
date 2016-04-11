@@ -51,7 +51,7 @@ private:
     AudioDeviceManager deviceManager;
     
     int winWidth = 900, winHeight = 600, cnt = 0, currentHeight,
-        copterHits;
+        copterHits, curObsPos;
     float xpos, ypos;
     float obsX, gameStartTime;
     bool keyRelease;

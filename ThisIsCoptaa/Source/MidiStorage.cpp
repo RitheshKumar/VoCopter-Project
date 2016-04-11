@@ -102,3 +102,10 @@ bool MidiStorage::getMidiData(float *note) {
     }
 }
 
+float MidiStorage::getStartNote() {
+    int i=0;
+    while (noteNumber[i] == -1) {
+        i++;
+    }
+    return noteNumber[i];
+}

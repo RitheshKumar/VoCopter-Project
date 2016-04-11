@@ -18,13 +18,10 @@
 class AudioProcess  : public AudioIODeviceCallback
 {
 public:
-    AudioProcess ();
+    AudioProcess (int note);
     ~AudioProcess();
     
     //==============================================================================
-
-    void startTracking ();
-    void stopTracking  ();
    
     //==============================================================================
     void audioDeviceAboutToStart (AudioIODevice* device);
@@ -39,13 +36,16 @@ public:
     float getTimeElapsed() { return time; }
     int getMidiIn() { return midiNote; }
 
+    void setNotePlay(bool toggle) { isNoteOn = toggle; }
+
 private:
     SimpleCorrelation *correlation;
-    bool isTracking;
+    bool isNoteOn;
     float freq,
           time,
           tick,
           bpm;
+    float currentAngle, startFreq;
     int sampleRate,
         midiNote;
 

@@ -26,6 +26,7 @@ public:
     int getObstacleLength(){ return midiData.getTime(obstacleLength-1)*pathWidth; }
     float getEndTime(){ return midiData.getTime(obstacleLength-1); }
     int getCurNote(){ return midiData.getNote(timeIdx); }
+    int getStartNote(){ return midiData.getStartNote(); }
 
 private:
     MidiStorage midiData;
