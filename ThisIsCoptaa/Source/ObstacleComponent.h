@@ -23,7 +23,7 @@ public:
 
     float getObstacleHeight(float curTime);
     float getInitialHeight(); 
-    int getObstacleLength(){ return midiData.getTime(obstacleLength-1)*pathWidth; }
+    int getObstacleLength(){ return midiData.getTime(obstacleLength-1)*pathWidth + 2*0.95*900 ; }
     float getEndTime(){ return midiData.getTime(obstacleLength-1); }
     int getCurNote(){ return midiData.getNote(timeIdx); }
     int getStartNote(){ return midiData.getStartNote(); }

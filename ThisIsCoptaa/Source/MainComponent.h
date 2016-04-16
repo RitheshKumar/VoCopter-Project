@@ -33,12 +33,13 @@ public:
     
     void paint (Graphics&);
     void resized();
-    
+        
     //these are things that i added
     //an audio app component has all these and extra audio related fns
     bool keyPressed(const KeyPress& key) override;
     bool keyStateChanged(bool isKeyDown) override;
     void timerCallback() override;
+    void mouseDown(const MouseEvent & event) override;
    
 private:
     TextButton startButton, stopButton, restartButton;
@@ -54,18 +55,24 @@ private:
         copterHits, curObsPos;
     float xpos, ypos;
     float obsX, gameStartTime;
-    bool keyRelease;
+    bool keyRelease, isjBMode;
     
     String hitsDisplay;
     
-    Label hitLabel,gameOverLabel, numHitsLabel;
+    Label hitLabel,gameOverLabel, numHitsLabel,noteLabel,jBModeLabel;
 
+    Viewport obstacleScroll;
     
     //Private Functions
     void buttonClicked (Button *button) override;
     void gameStart();
     void gameOver();
     void reset();
+    void jawKneeBoyMode();
+    
+    void collisionDetection();
+    void gamePlayEvents();
+    void copterPlacement();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

@@ -48,8 +48,11 @@ void ObstacleComponent::paint(Graphics &g) {
     
     bool firstNoteDrawn = false;
     float curTime, curNextTime;
+    int offset = 0.95*900;
     Path interNotePath;
     
+    g.setColour(Colours::skyblue);
+    g.fillRect(0, 0, offset, getHeight());
     
     for ( int noteIdx=0; noteIdx < obstacleLength-1; noteIdx++ ) {
 
@@ -59,10 +62,10 @@ void ObstacleComponent::paint(Graphics &g) {
         if ( midiData.getNote(noteIdx) == -1 ) {
             //DrawInterNotes
             if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime < 0.20f ) ){
-                interNotePath.addQuadrilateral(curTime*pathWidth,     obstacleHeight[noteIdx-1]-pathHeight,
-                                               curNextTime*pathWidth, obstacleHeight[noteIdx+1]-pathHeight,
-                                               curNextTime*pathWidth, obstacleHeight[noteIdx+1]+pathHeight,
-                                               curTime*pathWidth,     obstacleHeight[noteIdx-1]+pathHeight);
+                interNotePath.addQuadrilateral(curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]-pathHeight,
+                                               curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]-pathHeight,
+                                               curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]+pathHeight,
+                                               curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]+pathHeight);
                 g.setColour(Colours::lightslategrey);
                 g.fillPath(interNotePath);
                 g.strokePath (interNotePath, PathStrokeType (0.5f));
@@ -70,7 +73,7 @@ void ObstacleComponent::paint(Graphics &g) {
 
             }
             else if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime > 0.20f ) ) {
-                Rectangle<int> pauseFill(curTime*pathWidth, 0, (curNextTime-curTime)*pathWidth, getHeight());
+                Rectangle<int> pauseFill(curTime*pathWidth + offset, 0, (curNextTime-curTime)*pathWidth, getHeight());
                 g.fillCheckerBoard(pauseFill, 50, 15, Colours::darkgrey, Colours::black);
                 
             }
@@ -79,12 +82,15 @@ void ObstacleComponent::paint(Graphics &g) {
         else {
             
             g.setColour(Colours::cornflowerblue);
-            g.drawLine( curTime*pathWidth, obstacleHeight[noteIdx],
-                        curNextTime*pathWidth, obstacleHeight[noteIdx],
+            g.drawLine( curTime*pathWidth + offset,     obstacleHeight[noteIdx],
+                        curNextTime*pathWidth + offset, obstacleHeight[noteIdx],
                         pathHeight*2 );
             firstNoteDrawn  = true;
         }
-      }
+    }
+    
+    g.setColour(Colours::skyblue);
+    g.fillRect( (int)curNextTime*pathWidth+offset, 0, offset+200, getHeight() );
     
 
 }
