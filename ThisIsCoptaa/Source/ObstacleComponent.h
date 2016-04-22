@@ -27,6 +27,8 @@ public:
     float getEndTime(){ return midiData.getTime(obstacleLength-1); }
     int getCurNote(){ return midiData.getNote(timeIdx); }
     int getStartNote(){ return midiData.getStartNote(); }
+    
+    void setCurTime(float curTime){ time += curTime; }
 
 private:
     MidiStorage midiData;
@@ -36,7 +38,8 @@ private:
     const int pathWidth,
               pathHeight,
               pathPosition;
-    float *obstacleHeight;
+    float *obstacleHeight,
+           time;
     
     void noteToPixels(float *myArray);
     

@@ -151,8 +151,9 @@ void MainContentComponent::timerCallback() {
         noteLabel.setText(std::to_string(processingAudio->getMidiIn()), dontSendNotification);
     }
     else {
-//        myObstacle->setBounds(obsX-=10.5, 0, myObstacle->getObstacleLength(), getHeight());
+        myObstacle->setBounds(obsX-=10.5, 0, myObstacle->getObstacleLength(), getHeight());
 //        obstacleScroll.setViewPosition(obsX+=10.5, 0);
+        
         copterPlacement();
         
         collisionDetection();
@@ -171,7 +172,9 @@ int noteIn, height1, height2,
 void MainContentComponent::copterPlacement() {
     //It takes 3.2xx seconds for the copter to enter the obstacles from gameStart
     //Basically you can temporally shift here.
-    curObsPos = (int)myObstacle->getObstacleHeight( processingAudio->getTimeElapsed() - gameStartTime - 3.20 );
+    float curTime = processingAudio->getTimeElapsed() - gameStartTime - 3.20;
+    curObsPos = (int)myObstacle->getObstacleHeight( curTime );
+    myObstacle->setCurTime( 10.5 );
     //    std::cout<<curObsPos<<std::endl;
     
     //Copter placement

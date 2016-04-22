@@ -47,16 +47,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../Source/ObstacleComponent.cpp"
-            timestampString = "482528315.630245"
+            filePath = "../../Source/MainComponent.cpp"
+            timestampString = "483040874.455545"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "ObstacleComponent::paint(Graphics &amp;g)"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "MainContentComponent::timerCallback()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

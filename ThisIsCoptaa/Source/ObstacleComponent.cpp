@@ -54,40 +54,92 @@ void ObstacleComponent::paint(Graphics &g) {
     g.setColour(Colours::skyblue);
     g.fillRect(0, 0, offset, getHeight());
     
+    
     for ( int noteIdx=0; noteIdx < obstacleLength-1; noteIdx++ ) {
 
         curTime     = midiData.getTime(noteIdx);
         curNextTime = midiData.getTime( noteIdx+1 );
+        
+        if ( curTime*pathWidth + offset < (100 + time) && curNextTime*pathWidth + offset > (-800 + time) ) {
 
-        if ( midiData.getNote(noteIdx) == -1 ) {
-            //DrawInterNotes
-            if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime < 0.20f ) ){
-                interNotePath.addQuadrilateral(curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]-pathHeight,
-                                               curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]-pathHeight,
-                                               curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]+pathHeight,
-                                               curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]+pathHeight);
-                g.setColour(Colours::lightslategrey);
-                g.fillPath(interNotePath);
-                g.strokePath (interNotePath, PathStrokeType (0.5f));
-                
+            if ( midiData.getNote(noteIdx) == -1 ) {
+                //DrawInterNotes
+                if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime < 0.20f ) ){
+                    interNotePath.addQuadrilateral(curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]-pathHeight,
+                                                   curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]-pathHeight,
+                                                   curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]+pathHeight,
+                                                   curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]+pathHeight);
+                    g.setColour(Colours::lightslategrey);
+                    g.fillPath(interNotePath);
+                    g.strokePath (interNotePath, PathStrokeType (0.5f));
+                    
+
+                }
+                else if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime > 0.20f ) ) {
+                    Rectangle<int> pauseFill(curTime*pathWidth + offset, 0, (curNextTime-curTime)*pathWidth, getHeight());
+                    g.fillCheckerBoard(pauseFill, 50, 15, Colours::darkgrey, Colours::black);
+                    
+                }
 
             }
-            else if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime > 0.20f ) ) {
-                Rectangle<int> pauseFill(curTime*pathWidth + offset, 0, (curNextTime-curTime)*pathWidth, getHeight());
-                g.fillCheckerBoard(pauseFill, 50, 15, Colours::darkgrey, Colours::black);
+            else {
                 
+                g.setColour(Colours::cornflowerblue);
+                g.drawLine( curTime*pathWidth + offset,     obstacleHeight[noteIdx],
+                            curNextTime*pathWidth + offset, obstacleHeight[noteIdx],
+                            pathHeight*2 );
+                firstNoteDrawn  = true;
             }
-
-        }
-        else {
             
-            g.setColour(Colours::cornflowerblue);
-            g.drawLine( curTime*pathWidth + offset,     obstacleHeight[noteIdx],
-                        curNextTime*pathWidth + offset, obstacleHeight[noteIdx],
-                        pathHeight*2 );
-            firstNoteDrawn  = true;
         }
+        
     }
+    
+//    for ( int noteIdx=0; noteIdx < obstacleLength-1; noteIdx++ ) {
+    
+
+//        int noteIdx = 0;
+//        
+//        while ( curTime*pathWidth + offset < (100 + time) && curNextTime*pathWidth + offset > (-800 + time) && noteIdx < obstacleLength-1) {
+//            
+//            curTime     = midiData.getTime(noteIdx);
+//            curNextTime = midiData.getTime( noteIdx+1 );
+//            
+//            if ( midiData.getNote(noteIdx) == -1 ) {
+//                //DrawInterNotes
+//                if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime < 0.20f ) ){
+//                    interNotePath.addQuadrilateral(curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]-pathHeight,
+//                                                   curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]-pathHeight,
+//                                                   curNextTime*pathWidth + offset, obstacleHeight[noteIdx+1]+pathHeight,
+//                                                   curTime*pathWidth + offset,     obstacleHeight[noteIdx-1]+pathHeight);
+//                    g.setColour(Colours::lightslategrey);
+//                    g.fillPath(interNotePath);
+//                    g.strokePath (interNotePath, PathStrokeType (0.5f));
+//                    
+//                    
+//                }
+//                else if( noteIdx!= obstacleLength-2 && firstNoteDrawn && ( curNextTime - curTime > 0.20f ) ) {
+//                    Rectangle<int> pauseFill(curTime*pathWidth + offset, 0, (curNextTime-curTime)*pathWidth, getHeight());
+//                    g.fillCheckerBoard(pauseFill, 50, 15, Colours::darkgrey, Colours::black);
+//                    
+//                }
+//                
+//            }
+//            else {
+//                
+//                g.setColour(Colours::cornflowerblue);
+//                g.drawLine( curTime*pathWidth + offset,     obstacleHeight[noteIdx],
+//                           curNextTime*pathWidth + offset, obstacleHeight[noteIdx],
+//                           pathHeight*2 );
+//                firstNoteDrawn  = true;
+//            }
+//            
+//            noteIdx += 1;
+//            
+//        }
+    
+//    }
+
     
     g.setColour(Colours::skyblue);
     g.fillRect( (int)curNextTime*pathWidth+offset, 0, offset+200, getHeight() );
