@@ -68,7 +68,7 @@ void MainContentComponent::reset() {
     }
     myObstacle = 0;
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/jingleBells.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/stairwayToHeaven.mid") ;
     ypos       = myObstacle->getInitialHeight()-35;
     
     isjBMode = false;
@@ -100,9 +100,8 @@ void MainContentComponent::resized()
     gameLogo.setBounds(-125, getHeight()/2-175, 1000, 204);
     
     
-    myObstacle->setBounds(0, 0, myObstacle->getObstacleLength(), getHeight());
-    obstacleScroll.setBounds(0,0, getWidth(),getHeight());
-    obstacleScroll.setScrollBarsShown(false, false);
+    myObstacle->setBounds(obsX, 0, getWidth(), getHeight());
+
     
     stopButton.setBounds(getWidth()-45, 20, 40, 20);
     hitLabel.setBounds(round(getWidth()/2)-40,round(getHeight()/2),80,50);
@@ -151,8 +150,9 @@ void MainContentComponent::timerCallback() {
         noteLabel.setText(std::to_string(processingAudio->getMidiIn()), dontSendNotification);
     }
     else {
+//        myObstacle->setBounds(0, 0, myObstacle->getObstacleLength(), getHeight());
         myObstacle->setBounds(obsX-=10.5, 0, myObstacle->getObstacleLength(), getHeight());
-//        obstacleScroll.setViewPosition(obsX+=10.5, 0);
+
         
         copterPlacement();
         
@@ -175,8 +175,7 @@ void MainContentComponent::copterPlacement() {
     float curTime = processingAudio->getTimeElapsed() - gameStartTime - 3.20;
     curObsPos = (int)myObstacle->getObstacleHeight( curTime );
     myObstacle->setCurTime( 10.5 );
-    //    std::cout<<curObsPos<<std::endl;
-    
+
     //Copter placement
     //25 is the no. of pixels for a note
     if ( curObsPos > 0 ) {
@@ -252,12 +251,8 @@ void MainContentComponent::buttonClicked (Button *button) {
 void MainContentComponent::gameStart() {
     
     resized();
-    addAndMakeVisible(obstacleScroll);
-    obstacleScroll.setViewedComponent(myObstacle,true);
-    obstacleScroll.setViewPosition(0, 0);
-    obstacleScroll.setScrollOnDragEnabled(true);
-//    obstacleScroll.autoScroll(200, 0, 0, 10);
-    
+
+    addAndMakeVisible(myObstacle);
     addAndMakeVisible(Copter);
     Copter.setBounds(xpos,ypos,/*getWidth()*0.3,getHeight()*0.3*/80,60);
     addAndMakeVisible(stopButton);
@@ -281,7 +276,6 @@ void MainContentComponent::gameOver() {
 
 void MainContentComponent::mouseDown(const MouseEvent & event) {
     isjBMode = true;
-//    std::cout<<"mouseDown "<<isjBMode<<"\n";
     jawKneeBoyMode();
 }
 

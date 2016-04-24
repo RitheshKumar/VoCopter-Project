@@ -61,7 +61,7 @@ private:
     
     Label hitLabel,gameOverLabel, numHitsLabel,noteLabel,jBModeLabel;
 
-    Viewport obstacleScroll;
+//    Viewport obstacleScroll;
     
     //Private Functions
     void buttonClicked (Button *button) override;

@@ -105,7 +105,7 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int &m
 
     //if ( freq> 1500) { freq =  0.0f;  }
 
-//    reset(); //This function uses a lot of CPU!!
+    reset(); //This function uses a lot of CPU!!
 
 }
 
