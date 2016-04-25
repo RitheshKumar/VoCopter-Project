@@ -67,10 +67,11 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int &m
                         endIndex = i;
                 }
             }
-//            _ppfAucorr[c][i-1] = 0.0f; //Instead do the resetting here!
         }
+        
+//        std::cout<<maxVal<<std::endl;
 
-        if (startIndex != endIndex && endIndex != 0) {
+        if (startIndex != endIndex && endIndex != 0 && maxVal > 50.0f) {
             freq = _fSampleRate/(endIndex+1-numSamples); //since indexing starts from 0
         }
 
@@ -103,8 +104,7 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int &m
    
 //    std::cout<<", "<<midiNote<<std::endl;
 
-    //if ( freq> 1500) { freq =  0.0f;  }
-
+    
     reset(); //This function uses a lot of CPU!!
 
 }

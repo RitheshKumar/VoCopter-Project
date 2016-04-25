@@ -45,28 +45,30 @@ private:
     TextButton startButton, stopButton, restartButton;
     
     ObstacleComponent *myObstacle;
-    CopterComponent Copter;
+    CopterComponent *Copter;
     voCopterLogo gameLogo;
+    OwnedArray<CopterComponent> livesLeft;
     
     AudioProcess *processingAudio;
     AudioDeviceManager deviceManager;
     
     int winWidth = 900, winHeight = 600, cnt = 0, currentHeight,
-        copterHits, curObsPos;
+        copterHits, curObsPos, lifeIdx;
     float xpos, ypos;
-    float obsX, gameStartTime;
+    float obsX, gameStartTime, newlifeTime;
     bool keyRelease, isjBMode;
     
     String hitsDisplay;
     
-    Label hitLabel,gameOverLabel, numHitsLabel,noteLabel,jBModeLabel;
+    Label hitLabel,gameOverLabel, numHitsLabel,
+          noteLabel,jBModeLabel, scoreLabel;
 
-//    Viewport obstacleScroll;
     
     //Private Functions
     void buttonClicked (Button *button) override;
     void gameStart();
     void gameOver();
+    void newLife();
     void reset();
     void jawKneeBoyMode();
     

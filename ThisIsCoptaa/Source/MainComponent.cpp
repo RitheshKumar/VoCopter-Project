@@ -50,8 +50,18 @@ MainContentComponent::MainContentComponent(): myObstacle(0){
     
     gameLogo.setInterceptsMouseClicks(true, true);
     
+    
+    //Add lives imagery
+    for (int i = 0; i < 5; ++i)
+    {
+        CopterComponent* d = new CopterComponent();
+        livesLeft.add (d);
+    }
+    
+    
     setSize (winWidth, winHeight);
     setWantsKeyboardFocus(true);
+    
 }
 
 void MainContentComponent::reset() {
@@ -60,7 +70,9 @@ void MainContentComponent::reset() {
     keyRelease = 0;
     obsX = winWidth*0.95;
     gameStartTime = 0.0f;
+    newlifeTime = 0.0f;
     copterHits = 0;
+    lifeIdx = 4;
 
     
     if (myObstacle!= nullptr) {
@@ -68,7 +80,7 @@ void MainContentComponent::reset() {
     }
     myObstacle = 0;
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/stairwayToHeaven.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/allNotes.mid") ;
     ypos       = myObstacle->getInitialHeight()-35;
     
     isjBMode = false;
@@ -107,11 +119,15 @@ void MainContentComponent::resized()
     hitLabel.setBounds(round(getWidth()/2)-40,round(getHeight()/2),80,50);
     numHitsLabel.setBounds(0,0,150,70);
     
-    gameOverLabel.setBounds(getWidth()/2-95,getHeight()/2-60, 200, 60 );
-    restartButton.setBounds(getWidth()/2-50,getHeight()/2+30, 100, 60 );
+    gameOverLabel.setBounds(getWidth()/2-95,getHeight()/2-120, 200, 60 );
+    scoreLabel.setBounds(getWidth()/2-180,getHeight()/2-70, 400, 60);
+    restartButton.setBounds(getWidth()/2-50,getHeight()/2+20, 100, 60 );
     
     noteLabel.setBounds(getWidth()/2-50, getHeight()/2+25, 100, 40);
     jBModeLabel.setBounds(150, getHeight()/2-50, 1000, 60);
+    
+//    CopterComponent* d = livesLeft.getUnchecked(0);
+//    livesLeft.getUnchecked(0)->setBoundsToFit(20, 20, 80, 60, Justification::centred, true);
     
 }
 
@@ -119,12 +135,12 @@ bool MainContentComponent::keyPressed(const KeyPress& key)
 {
     switch (key.getTextCharacter()) {
         case 'w':
-            Copter.setBounds(xpos,ypos-=8,/*getWidth()*0.3,getHeight()*0.3*/80,60);
+            Copter->setBounds(xpos,ypos-=8,/*getWidth()*0.3,getHeight()*0.3*/80,60);
             return true;
             break;
             
         case 's':
-            Copter.setBounds(xpos,ypos+=5,/*getWidth()*0.3,getHeight()*0.3*/80,60);
+            Copter->setBounds(xpos,ypos+=5,/*getWidth()*0.3,getHeight()*0.3*/80,60);
             return true;
             break;
             
@@ -146,14 +162,15 @@ bool MainContentComponent::keyStateChanged(bool isKeyDown) {
 
 
 void MainContentComponent::timerCallback() {
+    
     if (isjBMode) {
         noteLabel.setText(std::to_string(processingAudio->getMidiIn()), dontSendNotification);
     }
     else {
 //        myObstacle->setBounds(0, 0, myObstacle->getObstacleLength(), getHeight());
         myObstacle->setBounds(obsX-=10.5, 0, myObstacle->getObstacleLength(), getHeight());
+        myObstacle->setCurTime( 10.5 );
 
-        
         copterPlacement();
         
         collisionDetection();
@@ -174,32 +191,35 @@ void MainContentComponent::copterPlacement() {
     //Basically you can temporally shift here.
     float curTime = processingAudio->getTimeElapsed() - gameStartTime - 3.20;
     curObsPos = (int)myObstacle->getObstacleHeight( curTime );
-    myObstacle->setCurTime( 10.5 );
+    
+    noteIn = processingAudio->getMidiIn();
+    ypos = winHeight - 12.5 - noteIn*25;
+    Copter->setBounds(xpos, ypos-35, 80, 60); //Fine Tuning copter's position.
 
     //Copter placement
     //25 is the no. of pixels for a note
-    if ( curObsPos > 0 ) {
-        noteIn = processingAudio->getMidiIn();
-        
-        height1 = winHeight - 12.5 - noteIn*25;
-        height1Dev = height1 - curObsPos;
-        height1Dev = (height1Dev>0)? height1Dev : -height1Dev;
-        
-        height2 = winHeight - 12.5 - noteIn*25 - winHeight/2;
-        height2Dev = height2 - curObsPos;
-        height2Dev = (height2Dev>0)? height2Dev : -height2Dev;
-        
-        ypos = (height1Dev <= height2Dev )? height1 : height2;
-        //        std::cout<<noteIn<<", "<<curObsPos<<", "<<ypos<<"     "<<height1Dev<<", "<<height2Dev<<"     ";
-        //        std::cout<<height1<<", "<<height2<<std::endl;
-        Copter.setBounds(xpos, ypos-35, 80, 60); //Fine Tuning copter's position.
-    }
+//    if ( curObsPos > 0 ) {
+//        noteIn = processingAudio->getMidiIn();
+//        
+//        height1 = winHeight - 12.5 - noteIn*25; ypos = height1;
+//        height1Dev = height1 - curObsPos;
+//        height1Dev = (height1Dev>0)? height1Dev : -height1Dev;
+//        
+//        height2 = winHeight - 12.5 - noteIn*25 - winHeight/2;
+//        height2Dev = height2 - curObsPos;
+//        height2Dev = (height2Dev>0)? height2Dev : -height2Dev;
+//        
+//        ypos = (height1Dev <= height2Dev )? height1 : height2;
+//        //        std::cout<<noteIn<<", "<<curObsPos<<", "<<ypos<<"     "<<height1Dev<<", "<<height2Dev<<"     ";
+//        //        std::cout<<height1<<", "<<height2<<std::endl;
+//        Copter.setBounds(xpos, ypos-35, 80, 60); //Fine Tuning copter's position.
+//    }
 }
 
 void MainContentComponent::collisionDetection() {
     if (  obsX < (0.15*winWidth + 80)    ) {
         
-        if ( (  curObsPos + 25 < ypos   ||   (curObsPos -25) > ypos  ) && curObsPos > 0 ){ //Within one semitone difference
+        if ( (  curObsPos + 50 < ypos   ||   (curObsPos -50) > ypos  ) && curObsPos > 0 ){ //Within one semitone difference
             addAndMakeVisible(hitLabel);
             copterHits++;
             hitsDisplay = "Number of hits: ";
@@ -211,6 +231,20 @@ void MainContentComponent::collisionDetection() {
         }
         
     }
+    
+    if( copterHits%10 == 0 && copterHits > 0 && (processingAudio->getTimeElapsed() - newlifeTime) > 1.0f){
+        newLife();
+    }
+    if(copterHits > 50) {
+        gameOver();
+    }
+}
+
+
+void MainContentComponent::newLife() {
+    newlifeTime = processingAudio->getTimeElapsed();
+    removeChildComponent(livesLeft.getUnchecked(lifeIdx--));
+    Copter = livesLeft.getUnchecked(lifeIdx);
 }
 
 void MainContentComponent::gamePlayEvents() {
@@ -253,8 +287,14 @@ void MainContentComponent::gameStart() {
     resized();
 
     addAndMakeVisible(myObstacle);
+    
+    livesLeft.getUnchecked(1)->setBounds(20,20,80,60);addAndMakeVisible(livesLeft.getUnchecked(1));
+    livesLeft.getUnchecked(2)->setBounds(45,20,80,60);addAndMakeVisible(livesLeft.getUnchecked(2));
+    livesLeft.getUnchecked(3)->setBounds(20,45,80,60);addAndMakeVisible(livesLeft.getUnchecked(3));
+    livesLeft.getUnchecked(4)->setBounds(45,45,80,60);addAndMakeVisible(livesLeft.getUnchecked(4));
+    Copter = livesLeft.getUnchecked(0);
     addAndMakeVisible(Copter);
-    Copter.setBounds(xpos,ypos,/*getWidth()*0.3,getHeight()*0.3*/80,60);
+    Copter->setBounds(xpos,ypos,80,60);
     addAndMakeVisible(stopButton);
     hitsDisplay = "Number of hits: ";
     hitsDisplay += copterHits;
@@ -262,6 +302,7 @@ void MainContentComponent::gameStart() {
     addAndMakeVisible(numHitsLabel);
     gameStartTime = processingAudio->getTimeElapsed();
     processingAudio->setNotePlay(true);
+    myObstacle->resetTime();
     startTimer(50);
 }
 
@@ -269,7 +310,32 @@ void MainContentComponent::gameOver() {
     stopTimer();
     isjBMode = false;
     removeAllChildren();
+    
     addAndMakeVisible(&gameOverLabel);
+    
+    
+    hitsDisplay = "You scored ";
+    if (  obsX < (0.15*winWidth + 80)    ) {
+        int completionScore = (int)(myObstacle->getPercentComplete()*100.f);
+        if ( completionScore > 94.f ) {
+//            std::cout<<(int)((1.0f - (copterHits*1.0f/50.f) )*100.0f)<<std::endl;
+            hitsDisplay += completionScore + (int)((1.0f - (copterHits*1.0f/50.f) )*100.0f);
+        }
+        else {
+            hitsDisplay += completionScore;
+        }
+        
+    }
+    else {
+        hitsDisplay += 0;
+    }
+    hitsDisplay += " points!";
+    scoreLabel.setFont(Font(40));
+    scoreLabel.setText(hitsDisplay, dontSendNotification);
+    scoreLabel.setColour(Label::textColourId, Colours::green);
+    addAndMakeVisible(&scoreLabel);
+    
+    
     addAndMakeVisible(restartButton);
 }
 

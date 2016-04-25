@@ -114,7 +114,7 @@ float ObstacleComponent::getObstacleHeight(float curTime) {
             return obstacleHeight[timeIdx];
         }
         else {
-            return obstacleHeight[timeIdx++];
+            return obstacleHeight[timeIdx++]; //note that I am also updating the timeIdx here :)
         }
   
     }

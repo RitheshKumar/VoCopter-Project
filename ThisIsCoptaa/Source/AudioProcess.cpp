@@ -55,12 +55,12 @@ void AudioProcess::audioDeviceIOCallback (const float** inputChannelData,  int n
             if (outputChannelData[i] != nullptr) {
                 FloatVectorOperations::clear (outputChannelData[i],numSamples);
             }
-            //        if((time - tick) <= 0.0116f && (time - tick) > 0) {
-            //            outputChannelData[i][(int)numSamples/2] = 0.5f;
-            //            if (i == numOutputChannels-1) {
-            //                tick+=bpm;
-            //            }
-            //        }
+//                    if((time - tick) <= 0.0116f && (time - tick) > 0) {
+//                        outputChannelData[i][(int)numSamples/2] = 0.5f;
+//                        if (i == numOutputChannels-1) {
+//                            tick+=bpm;
+//                        }
+//                    }
         }
         
     }
