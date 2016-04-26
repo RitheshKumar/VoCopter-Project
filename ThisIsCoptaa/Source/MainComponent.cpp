@@ -72,7 +72,7 @@ void MainContentComponent::reset() {
     gameStartTime = 0.0f;
     newlifeTime = 0.0f;
     copterHits = 0;
-    lifeIdx = 4;
+    lifeIdx = 0;
 
     
     if (myObstacle!= nullptr) {
@@ -80,7 +80,7 @@ void MainContentComponent::reset() {
     }
     myObstacle = 0;
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/allNotes.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/jingleBells.mid") ;
     ypos       = myObstacle->getInitialHeight()-35;
     
     isjBMode = false;
@@ -220,6 +220,7 @@ void MainContentComponent::collisionDetection() {
     if (  obsX < (0.15*winWidth + 80)    ) {
         
         if ( (  curObsPos + 50 < ypos   ||   (curObsPos -50) > ypos  ) && curObsPos > 0 ){ //Within one semitone difference
+//            std::cout<<curObsPos<<std::endl;
             addAndMakeVisible(hitLabel);
             copterHits++;
             hitsDisplay = "Number of hits: ";
@@ -232,19 +233,23 @@ void MainContentComponent::collisionDetection() {
         
     }
     
-    if( copterHits%10 == 0 && copterHits > 0 && (processingAudio->getTimeElapsed() - newlifeTime) > 1.0f){
-        newLife();
-    }
     if(copterHits > 50) {
         gameOver();
     }
+    
+    if( copterHits%10 == 0 && copterHits > 0 && (processingAudio->getTimeElapsed() - newlifeTime) > 1.0f){
+        newLife();
+    }
+ 
 }
 
 
 void MainContentComponent::newLife() {
     newlifeTime = processingAudio->getTimeElapsed();
-    removeChildComponent(livesLeft.getUnchecked(lifeIdx--));
-    Copter = livesLeft.getUnchecked(lifeIdx);
+    if (lifeIdx>=0 && lifeIdx<4){
+        removeChildComponent(livesLeft.getUnchecked(lifeIdx++));
+        Copter = livesLeft.getUnchecked(lifeIdx);
+    }
 }
 
 void MainContentComponent::gamePlayEvents() {

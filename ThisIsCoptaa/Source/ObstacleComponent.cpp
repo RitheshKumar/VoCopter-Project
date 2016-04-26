@@ -55,7 +55,7 @@ void ObstacleComponent::paint(Graphics &g) {
         curTime     = midiData.getTime(noteIdx);
         curNextTime = midiData.getTime( noteIdx+1 );
 
-        if ( curTime*pathWidth < (150 + time) && curNextTime*pathWidth > (-850 + time) ) {
+        if ( curTime*pathWidth < (150 + time) && curNextTime*pathWidth > (-1000 + time) ) { //850 & 150
 
             if ( midiData.getNote(noteIdx) == -1 ) {
                 //DrawInterNotes
@@ -109,12 +109,18 @@ void ObstacleComponent::noteToPixels(float *myArray) {
 
 
 float ObstacleComponent::getObstacleHeight(float curTime) {
+
     if( timeIdx != obstacleLength-1) {
-        if( curTime <= midiData.getTime(timeIdx) ) {
+        float nowMidiTime = midiData.getTime(timeIdx);
+        
+        if( curTime <= nowMidiTime && nowMidiTime-curTime < 0.10f ) {
             return obstacleHeight[timeIdx];
         }
-        else {
+        else if(curTime > nowMidiTime){
             return obstacleHeight[timeIdx++]; //note that I am also updating the timeIdx here :)
+        }
+        else {
+            return 0;
         }
   
     }

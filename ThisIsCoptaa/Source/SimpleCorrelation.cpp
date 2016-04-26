@@ -71,7 +71,7 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int &m
         
 //        std::cout<<maxVal<<std::endl;
 
-        if (startIndex != endIndex && endIndex != 0 && maxVal > 50.0f) {
+        if (startIndex != endIndex && endIndex != 0 && maxVal > 10.0f) {
             freq = _fSampleRate/(endIndex+1-numSamples); //since indexing starts from 0
         }
 
@@ -79,30 +79,30 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, int &m
     }
 
 //    FileRW::fileWrite( _ppfAucorr, _iAcfBufLen, 1, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/CorrelationOutput.txt" );
-//    std::cout<< freq <<", ";
+//    std::cout<< freq <<"\n";
     midiNote = roundFloatToInt( 69 + 12*log2f(freq/440.f) ); //std::cout<<midiNote<<std::endl;
     midiNote = midiNote%12; //std::cout<<midiNote<<std::endl;
-//    if (midiNote == 7) {
-//        std::cout<<"G";
-//    }
-//    else if( midiNote == 5) {
-//        std::cout<<"F";
-//    }
-//    else if (midiNote < 9){
-//        std::cout<<(char) ( 67 + midiNote/2);
-//        if (midiNote == 1 || midiNote == 3 || midiNote == 6 || midiNote == 8) {
-//            std::cout<<"#";
-//        }
-//        
-//    }
-//    else  {
-//        std::cout<< (char) ( 65 + (midiNote%3)/2 );
-//        if (midiNote == 10) {
-//            std::cout<<"#";
-//        }
-//    }
+    if (midiNote == 7) {
+        std::cout<<"G";
+    }
+    else if( midiNote == 5) {
+        std::cout<<"F";
+    }
+    else if (midiNote < 9){
+        std::cout<<(char) ( 67 + midiNote/2);
+        if (midiNote == 1 || midiNote == 3 || midiNote == 6 || midiNote == 8) {
+            std::cout<<"#";
+        }
+        
+    }
+    else  {
+        std::cout<< (char) ( 65 + (midiNote%3)/2 );
+        if (midiNote == 10) {
+            std::cout<<"#";
+        }
+    }
    
-//    std::cout<<", "<<midiNote<<std::endl;
+    std::cout<<", "<<midiNote<<std::endl;
 
     
     reset(); //This function uses a lot of CPU!!
