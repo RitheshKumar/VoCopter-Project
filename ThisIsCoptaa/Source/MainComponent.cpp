@@ -80,7 +80,7 @@ void MainContentComponent::reset() {
     }
     myObstacle = 0;
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/jingleBells.mid") ;
+    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/ThisIsCoptaa/MidiFiles/stairwayToHeaven.mid") ;
     ypos       = myObstacle->getInitialHeight()-35;
     
     isjBMode = false;
@@ -184,8 +184,9 @@ void MainContentComponent::timerCallback() {
     
 }
 
-int noteIn, height1, height2,
+int height1, height2,
     height1Dev, height2Dev;
+float noteIn;
 void MainContentComponent::copterPlacement() {
     //It takes 3.2xx seconds for the copter to enter the obstacles from gameStart
     //Basically you can temporally shift here.

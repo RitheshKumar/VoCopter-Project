@@ -34,7 +34,7 @@ public:
 
     float getFreqIn() { return freq; }
     float getTimeElapsed() { return time; }
-    int getMidiIn() { return midiNote; }
+    float getMidiIn() { return midiNote; }
 
     void setNotePlay(bool toggle) { isNoteOn = toggle; }
 
@@ -45,9 +45,9 @@ private:
           time,
           tick,
           bpm;
-    float currentAngle, startFreq;
-    int sampleRate,
-        midiNote;
+    float currentAngle, startFreq,
+          midiNote;
+    int sampleRate;
 
 };
 
