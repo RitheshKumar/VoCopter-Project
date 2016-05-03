@@ -81,8 +81,8 @@ void SimpleCorrelation::correlate ( const float** inputData, float &freq, float 
 //    FileRW::fileWrite( _ppfAucorr, _iAcfBufLen, 1, (char *)"/Users/Rithesh/Documents/Learn C++/ASE/notes/Matlab_ASE/CorrelationOutput.txt" );
 //    std::cout<< freq <<"\n";
     if (freq!= 0) {
-        midiNote = ( 69 + 12*log2f(freq/440.f) ); //std::cout<<midiNote<<std::endl;
-        std::fmod(midiNote, 12);std::cout<<midiNote<<std::endl;
+        midiNote = ( 69 + 12*log2f(freq/440.f) );
+        midiNote = std::fmod(midiNote, 24);
     }
 
 //    midiNote = midiNote%12; //std::cout<<midiNote<<std::endl;
