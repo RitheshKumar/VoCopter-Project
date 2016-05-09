@@ -6,10 +6,10 @@ It converts a raw MIDI file into obstacles. Player has to maneuver the copter th
 ------
 
 ## Gameplay
-- Once you hit start, starting note is played as a reference to player.
+- Once game starts, starting note is played as a reference to player.
 - Player has to sing to negotiate the copter.
-- There are 5 lives, every 10 hits lose a life.
-- Game score is based on no. of hits and percentage of obstacle hits.
+- There are 5 lives; every 10 hits lose a life.
+- Game score is based on no. of hits and percentage of song completed.
 
 ## Game Screenshots
 ![screenshot1](https://raw.githubusercontent.com/RitheshKumar/VoCopter-Project/master/Media/gameBegin.png)
