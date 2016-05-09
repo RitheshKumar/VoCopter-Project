@@ -7,6 +7,6 @@ VoCopter is a voice controlled video game, written using the JUCE framework
 ![screenshot3](https://raw.githubusercontent.com/RitheshKumar/VoCopter-Project/master/Media/gameOver.png)
 
 =========
-For more details, contact [me](ritheshrkumar@gmail.com)
+For more details, contact [me](mailto:ritheshrkumar@gmail.com)
 
 
