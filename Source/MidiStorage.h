@@ -15,7 +15,7 @@
 
 class MidiStorage {
 public:
-    MidiStorage(char *filePath);
+    MidiStorage(const char *filePath);
     ~MidiStorage();
 
     bool getMidiData( float * note );
@@ -30,7 +30,7 @@ private:
           *timeStamps;
     int cnt, midiLen;
 
-    void readMidiData(char *filePath);
+    void readMidiData(const char *filePath);
     void filterTimeStamps();
 };
 

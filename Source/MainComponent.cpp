@@ -11,13 +11,17 @@
 
 
 //==============================================================================
-MainContentComponent::MainContentComponent(): myObstacle(0){
+MainContentComponent::MainContentComponent(): myObstacle(0),
+                                              fileFilter(("*.mid"), ("*"), ("Midi files")),
+                                              chooseMidi(0)
+{
     
     reset();
     
     //Notice that the order is important
     addAndMakeVisible(startButton);
     addAndMakeVisible(gameLogo);
+    addAndMakeVisible(chooseMidi);
     
     startButton.setButtonText("Start!");
     startButton.addListener(this);
@@ -80,7 +84,17 @@ void MainContentComponent::reset() {
     }
     myObstacle = 0;
     
-    myObstacle = new ObstacleComponent((char *)"~/Documents/Fall_2015/VoCopter Project/MidiFiles/stairwayToHeaven.mid") ;
+    if (chooseMidi!=nullptr){
+        delete chooseMidi;
+    }
+    chooseMidi = 0;
+
+    chooseMidi = new FileBrowserComponent( FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles,
+                                           File::getSpecialLocation(File::userDesktopDirectory),
+                                          &fileFilter, NULL);
+    
+
+    myObstacle = new ObstacleComponent((char *)"../stairwayToHeaven.mid") ;
     ypos       = myObstacle->getInitialHeight()-35;
     
     isjBMode = false;
@@ -92,6 +106,9 @@ MainContentComponent::~MainContentComponent()
 //    deviceManager.removeAudioCallback(processingAudio);
     delete myObstacle;
     myObstacle = 0;
+    
+    delete chooseMidi;
+    chooseMidi = 0;
 }
 
 void MainContentComponent::paint (Graphics& g)
@@ -110,6 +127,7 @@ void MainContentComponent::resized()
     
     startButton.setBounds(getWidth()/2-50, getHeight()/2+25, 100, 40);
     gameLogo.setBounds(-125, getHeight()/2-175, 1000, 204);
+    chooseMidi->setBounds(getWidth()/2-150, getHeight()/2+75, 300, 150);
     
     
     myObstacle->setBounds(obsX, 0, getWidth(), getHeight());
@@ -273,6 +291,12 @@ void MainContentComponent::buttonClicked (Button *button) {
     
     if (button == &startButton) {
         removeChildComponent(&startButton);
+        
+//        String myString = (chooseMidi->getSelectedFile(1)).getFullPathName();
+//        std::cout<<myString<<std::endl;
+//        myObstacle  = new ObstacleComponent((myString.toStdString()).c_str());
+//         ypos       = myObstacle->getInitialHeight()-35;
+        
         gameStart();
     }
     if (button == &stopButton) {
@@ -293,6 +317,7 @@ void MainContentComponent::gameStart() {
     resized();
 
     addAndMakeVisible(myObstacle);
+    removeChildComponent(chooseMidi);
     
     livesLeft.getUnchecked(1)->setBounds(20,20,80,60);addAndMakeVisible(livesLeft.getUnchecked(1));
     livesLeft.getUnchecked(2)->setBounds(45,20,80,60);addAndMakeVisible(livesLeft.getUnchecked(2));
@@ -348,7 +373,7 @@ void MainContentComponent::gameOver() {
 
 void MainContentComponent::mouseDown(const MouseEvent & event) {
     isjBMode = true;
-    jawKneeBoyMode();
+//    jawKneeBoyMode();
 }
 
 

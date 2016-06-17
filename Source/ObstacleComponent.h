@@ -16,7 +16,7 @@ class ObstacleComponent : public Component
 {
 public:
 
-    ObstacleComponent ( char *midiFilePath );
+    ObstacleComponent ( const char *midiFilePath );
     ~ObstacleComponent( );
 
     void paint(Graphics &g);

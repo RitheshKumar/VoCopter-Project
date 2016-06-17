@@ -10,10 +10,10 @@
 #include "MathOperation.h"
 #include "FileRW.h"
 
-MidiStorage::MidiStorage(char *filePath) : noteNumber(0),
-                                           timeStamps(0),
-                                           cnt(0),
-                                           midiLen(0)
+MidiStorage::MidiStorage(const char *filePath) : noteNumber(0),
+                                                 timeStamps(0),
+                                                 cnt(0),
+                                                 midiLen(0)
 
 {
     readMidiData(filePath);
@@ -25,7 +25,7 @@ MidiStorage::~MidiStorage() {
     delete [] timeStamps;
 }
 
-void MidiStorage::readMidiData(char *filePath) {
+void MidiStorage::readMidiData(const char *filePath) {
     
     File *filePtr = new File (filePath);
     bool fileExists = filePtr->existsAsFile();

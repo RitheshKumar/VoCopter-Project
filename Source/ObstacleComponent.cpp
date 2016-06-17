@@ -10,11 +10,11 @@
 #include "fileRW.h"
 
 
-ObstacleComponent::ObstacleComponent( char *midiFilePath ) : midiData( midiFilePath ),
-                                                             timeIdx(0),
-                                                             pathWidth( 200 ),
-                                                             pathHeight( 25 ),
-                                                             pathPosition( 60 )
+ObstacleComponent::ObstacleComponent(const char *midiFilePath ) : midiData( midiFilePath ),
+                                                                  timeIdx(0),
+                                                                  pathWidth( 200 ),
+                                                                  pathHeight( 25 ),
+                                                                  pathPosition( 60 )
 {
     obstacleLength = midiData.getMidiLen();
 

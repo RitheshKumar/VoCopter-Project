@@ -62,6 +62,10 @@ private:
     
     Label hitLabel,gameOverLabel, numHitsLabel,
           noteLabel,jBModeLabel, scoreLabel;
+    
+    WildcardFileFilter fileFilter;
+    FileBrowserComponent *chooseMidi;
+    
 
     
     //Private Functions
