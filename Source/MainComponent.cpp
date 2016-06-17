@@ -92,9 +92,16 @@ void MainContentComponent::reset() {
     chooseMidi = new FileBrowserComponent( FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles,
                                            File::getSpecialLocation(File::userDesktopDirectory),
                                           &fileFilter, NULL);
-    
 
-    myObstacle = new ObstacleComponent((char *)"../stairwayToHeaven.mid") ;
+    
+//    String filePath = File::getCurrentWorkingDirectory().getFullPathName()
+//                        + "/stairwayToHeaven.mid";
+    
+    String filePath = (File::getSpecialLocation(File::currentApplicationFile)).getFullPathName()
+                          + "/Contents/Resources/stairwayToHeaven.mid";
+    std::cout<<filePath<<std::endl;
+    
+    myObstacle = new ObstacleComponent(filePath.toStdString().c_str()) ;
     ypos       = myObstacle->getInitialHeight()-35;
     
     isjBMode = false;
@@ -127,10 +134,10 @@ void MainContentComponent::resized()
     
     startButton.setBounds(getWidth()/2-50, getHeight()/2+25, 100, 40);
     gameLogo.setBounds(-125, getHeight()/2-175, 1000, 204);
-    chooseMidi->setBounds(getWidth()/2-150, getHeight()/2+75, 300, 150);
+//    chooseMidi->setBounds(getWidth()/2-150, getHeight()/2+75, 300, 150);
     
-    
-    myObstacle->setBounds(obsX, 0, getWidth(), getHeight());
+    if(myObstacle != nullptr)
+        myObstacle->setBounds(obsX, 0, getWidth(), getHeight());
 
     
     stopButton.setBounds(getWidth()-45, 20, 40, 20);
@@ -239,7 +246,6 @@ void MainContentComponent::collisionDetection() {
     if (  obsX < (0.15*winWidth + 80)    ) {
         
         if ( (  curObsPos + 50 < ypos   ||   (curObsPos -50) > ypos  ) && curObsPos > 0 ){ //Within one semitone difference
-//            std::cout<<curObsPos<<std::endl;
             addAndMakeVisible(hitLabel);
             copterHits++;
             hitsDisplay = "Number of hits: ";
@@ -297,6 +303,10 @@ void MainContentComponent::buttonClicked (Button *button) {
 //        myObstacle  = new ObstacleComponent((myString.toStdString()).c_str());
 //         ypos       = myObstacle->getInitialHeight()-35;
         
+        processingAudio = new AudioProcess(myObstacle->getStartNote()+12);
+        deviceManager.initialise( 1, 2, 0, true, String::empty, 0 );
+        deviceManager.addAudioCallback(processingAudio);
+        
         gameStart();
     }
     if (button == &stopButton) {
@@ -349,7 +359,6 @@ void MainContentComponent::gameOver() {
     if (  obsX < (0.15*winWidth + 80)    ) {
         int completionScore = (int)(myObstacle->getPercentComplete()*100.f);
         if ( completionScore > 94.f ) {
-//            std::cout<<(int)((1.0f - (copterHits*1.0f/50.f) )*100.0f)<<std::endl;
             hitsDisplay += completionScore + (int)((1.0f - (copterHits*1.0f/50.f) )*100.0f);
         }
         else {
