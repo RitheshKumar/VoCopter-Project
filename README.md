@@ -3,6 +3,8 @@ VoCopter is a voice controlled video game, written using the JUCE framework.
 
 It converts a raw MIDI file into obstacles. Player has to maneuver the copter through the obstacles by singing the right pitch.
 
+[Demo-video](https://www.youtube.com/watch?v=I1Zh_YTYQr0)<br>
+
 ------
 
 ## Gameplay
